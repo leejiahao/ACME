@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Basic Layout - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="/LIB/jquery-easyui-1.4/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/LIB/jquery-easyui-1.4/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="je.css">
+</head>
+<body class="easyui-layout">
+	<div data-options="region:'north'" style="height:50px"></div>
+	
+	<div data-options="region:'south',split:true" style="height:40px;"></div>
+	<div data-options="region:'center',title:'',iconCls:'icon-ok'" style="height:auto;" >
+		<div id="p" class="easyui-panel" title="" 
+			border="true" style="padding:10px;border-color:red;border-width:0px;height:100%;">
+		    <p>Start and review your ACME verification jobs.</p>
+
+		    <div id="acme_tab" class="easyui-tabs" data-options="plain:true">
+		    	<!-- Job List -->
+		        <div title="My Jobs" style="padding:10px;">
+		        	<p>Query executed ACME verification jobs.</p>
+				    <table id="tt" class="easyui-datagrid" style="width:98%;"
+				    		data-options="
+				    			rownumbers:true,
+				    			singleSelect:true,
+				    			pagination:true,
+				    			pageSize:20,
+				    			url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',
+				    			method:'get',
+				    			fitColumns:true,
+				    			toolbar:'#tb_my_jobs'">				        
+					    <thead>
+					        <tr>
+					            <th data-options="field:'productid',width:100">Code</th>
+					            <th data-options="field:'productname',width:100">Name</th>
+					            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+					        </tr>
+					    </thead>
+					</table>
+					<!-- My Jobs Toolbar -->
+					<div id="tb_my_jobs" style="padding:5px;height:auto">
+					    <div style="margin-bottom:0px">
+					        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="startAcmeJobTab();">New Job</a>
+					        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete Job</a>
+					        <a href="#" class="easyui-linkbutton" plain="true"></a>
+					        <!-- 
+					        Date From: <input class="easyui-datebox" style="width:80px">
+					        To: <input class="easyui-datebox" style="width:80px">
+					         -->
+					        Test Vehicle: 
+					        <select class="easyui-combobox" panelHeight="auto" style="width:100px">
+					            <option value="java">Java</option>
+					            <option value="c">C</option>
+					            <option value="basic">Basic</option>
+					            <option value="perl">Perl</option>
+					            <option value="python">Python</option>
+					        </select>
+					        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Query</a>
+					    </div>
+					</div>
+		        </div>
+		        <!-- Job Creation -->
+		        <div title="New Job" style="padding:10px">
+		        	<p>Start ACME verification job.</p>
+					<div id="submit_job" class="easyui-layout" style="width:98%;height:400px;">
+					    <div data-options="region:'west',title:'Job Stages',split:true" style="padding:2px;width:250px;">
+					    	<div id="submit_job_flow_svg" class="easyui-panel" data-options="fit:true,border:true" style="overflow:hidden;" >
+					    	</div>
+					    </div>
+					    <div data-options="region:'center',title:'',border:false" style="padding:0px;">
+
+							<div id="job_stage_tab" class="easyui-tabs" data-options="fit:true,plain:true,tabPosition:'bottom'">
+							    <div title="Choose Vehicle" style="padding:3px;">
+
+									<div id="job_stage_tv" class="easyui-layout" data-options="fit:true" >
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="job_stage_tv_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-forward',plain:false" onclick="setupGds();">Setup GDS</a>
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;" >Choose Vehicle</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+									    	<form id="ff" method="post">
+												<select id="cc" class="easyui-combogrid" name="dept" style="width:500px;"
+												        data-options="
+												            panelWidth:500,
+												            value:'Koi',
+												            idField:'productid',
+												            textField:'productname',
+												            url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',
+												            columns:[[
+												                {field:'productid',title:'Code',width:60},
+												                {field:'productname',title:'Name',width:120},
+												                {field:'listprice',title:'Price',width:100}
+												            ]]
+												        "></select>
+											</form>
+									    </div>
+									</div>
+
+							    </div>
+							    
+							    <div title="Setup GDS" style="overflow:auto;padding:3px;">
+
+									<div id="job_stage_gds" class="easyui-layout" data-options="fit:true" >
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="job_stage_gds_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-forward',plain:false" onclick="chooseDrcDeck();">Choose DRC Deck</a>
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-back',plain:false"  onclick="chooseVehicle();">Choose Vehicle</a>
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;">Setup GDS</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+
+										<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:180px;padding:5px;;">
+											<div class="easyui-panel" data-options="fit:true,border:false" align="center" style="padding:5px;vertical-align:bottom">
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds();">Submit Job <br> Submit Job </a>
+											</div>
+										</div>
+
+									    <div data-options="region:'center',title:'',border:false" style="padding:0px;">
+									    	<div style="margin-bottom:5px"></div>
+											<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
+												<input type="radio" name="gds_source_type" value="asm_gds"  checked onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
+												<input type="radio" name="gds_source_type" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
+											</div>
+											<div style="margin-bottom:5px"></div>
+											<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
+												<div id="seleteCompleteGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
+												
+													<form id="upload_gds_form" method="post">
+														<table cellpadding="5">
+															<tr>
+																<td>Name:</td>
+																<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:500px"></input></td>
+															</tr>
+														</table>
+													</form>
+
+												</div>
+												<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
+												
+													<form id="compose_gds_form" method="post">
+														<table cellpadding="5">
+															<tr>
+																<td>DUT List:</td>
+																<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:500px"></input></td>
+															</tr>
+															<tr>
+																<td>Placement:</td>
+																<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:500px"></input></td>
+															</tr>
+															<tr>
+																<td>Cell GDS:</td>
+																<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:500px"></input></td>
+															</tr>
+														</table>
+													</form>
+												
+												</div>
+											</div>
+									    </div>
+									</div>
+
+							    </div>
+							    
+							    <div title="Choose DRC Deck" style="overflow:auto;padding:3px;">
+
+									<div id="job_stage_drc" class="easyui-layout" data-options="fit:true" >
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="job_stage_drc_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-forward',plain:false" onclick="chooseLvsDeck();">Choose LVS Deck</a>
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-back',plain:false"  onclick="setupGds();">Setup GDS</a>
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;">Choose DRC Deck</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+
+										<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:180px;padding:5px;;">
+											<div class="easyui-panel" data-options="fit:true,border:false" align="center" style="padding:5px;vertical-align:bottom">
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds();">Submit Job Submit Job </a>
+											</div>
+										</div>
+
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_drc_deck" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+
+							    <div title="Choose LVS Deck" style="padding:3px;">
+
+									<div id="job_stage_lvs" class="easyui-layout" data-options="fit:true" >
+
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="job_stage_lvs_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-forward',plain:false" onclick="chooseRcDeck();">Choose RC Deck</a>
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-back',plain:false" onclick="chooseDrcDeck();">Choose DRC Deck</a>
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;">Choose LVS Deck</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    
+										<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:180px;padding:5px;;">
+											<div class="easyui-panel" data-options="fit:true,border:false" align="center" style="padding:5px;vertical-align:bottom">
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds();">Submit Job Submit Job </a>
+											</div>
+										</div>
+
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_lvs_deck" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+
+							    <div title="Choose RC Deck" style="padding:3px;">
+
+									<div id="job_stage_rc" class="easyui-layout" data-options="fit:true" >
+
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="job_stage_rc_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-forward',plain:false" onclick="chooseSpiceModel();">Choose SPICE Model</a>
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-back',plain:false" onclick="chooseLvsDeck();">Choose LVS Deck</a>
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;">Choose RC Deck</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    
+										<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:180px;padding:5px;;">
+											<div class="easyui-panel" data-options="fit:true,border:false" align="center" style="padding:5px;vertical-align:bottom">
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds();">Submit Job Submit Job </a>
+											</div>
+										</div>
+
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_rc_deck" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+
+							    <div title="Choose SPICE Model" style="padding:3px;">
+
+									<div id="job_stage_spice" class="easyui-layout" data-options="fit:true" >
+
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="job_stage_spice_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-forward',plain:false">Submit Job</a>
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+														<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-job-back',plain:false" onclick="chooseRcDeck();">Choose RC Deck</a>
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;">Choose SPICE Model</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+
+										<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:180px;padding:5px;;">
+											<div class="easyui-panel" data-options="fit:true,border:false" align="center" style="padding:5px;vertical-align:bottom">
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds();">Submit Job Submit Job </a>
+											</div>
+										</div>
+
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_spice_model" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							</div>
+
+					    </div>
+					</div>
+		        </div>
+
+		        <!-- Test Vehicle -->
+		        <div title="Maintain Test Vehicle" style="padding:10px">
+		        	<p>Maintain ACME test vehicles.</p>
+					<div id="submit_job" class="easyui-layout" style="width:98%;height:400px;">
+						<!-- Test Vehicle Tree -->
+					    <div data-options="region:'west',title:'Test Vehicles',split:true" style="width:250px;">
+					    
+					    	<ul class="easyui-tree" data-options="url:'get_data.php'"></ul>
+					    
+					    </div>
+					    
+					    <!-- Maintain Vehicle Panel -->
+					    <div data-options="region:'center',title:'',border:false" style="padding:0px;">
+
+							<div id="tb_maintain_vehicle" class="easyui-tabs" data-options="fit:true,plain:true,tabPosition:'bottom'">
+								<!-- Control Circuit -->
+							    <div title="Define Control Circuit" style="padding:3px;">
+
+									<div id="control_circuit" class="easyui-layout" data-options="fit:true" >
+										<!-- Vehicle Title -->
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="tv_config_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;" >Control Circuit</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    <!-- Control Circuit Panel -->
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_vehicle" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+								<!-- Define DRC Deck -->
+							    <div title="Define DRC Deck" style="padding:3px;">
+
+									<div id="control_circuit" class="easyui-layout" data-options="fit:true" >
+										<!-- Vehicle Title -->
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="tv_config_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;" >DRC Deck</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    <!-- Control Circuit Panel -->
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_vehicle" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+								<!-- Define LVS Deck -->
+							    <div title="Define LVS Deck" style="padding:3px;">
+
+									<div id="control_circuit" class="easyui-layout" data-options="fit:true" >
+										<!-- Vehicle Title -->
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="tv_config_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;" >LVS Deck</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    <!-- Control Circuit Panel -->
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_vehicle" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+								<!-- Define RC Deck -->
+							    <div title="Define RC Deck" style="padding:3px;">
+
+									<div id="control_circuit" class="easyui-layout" data-options="fit:true" >
+										<!-- Vehicle Title -->
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="tv_config_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;" >RC Deck</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    <!-- Control Circuit Panel -->
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_vehicle" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+								<!-- Define SPICE Model -->
+							    <div title="Define SPICE Model" style="padding:3px;">
+
+									<div id="control_circuit" class="easyui-layout" data-options="fit:true" >
+										<!-- Vehicle Title -->
+									    <div data-options="region:'north',title:'',split:false,collapsible:false" style="height:40px;">
+									    
+											<div id="tv_config_title" class="easyui-layout" data-options="fit:true" >
+												<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;" align="right">
+
+													</div>
+												</div>
+											    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;">
+													<div class="easyui-panel" data-options="border:false" style="padding:5px;">
+
+													</div>
+											    </div>
+											    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;">
+													<div class="easyui-panel" data-options="border:false" style="padding:1px;" align="center">
+														<a href="#" class="easyui-linkbutton" data-options="plain:true" style="font-weight: bold;" >SPICE Model</a>
+													</div>
+											    </div>
+											</div>
+											
+									    </div>
+									    <!-- Control Circuit Panel -->
+									    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+										    <table id="tt_vehicle" class="easyui-datagrid" style="width:98%;"
+										    		data-options="rownumbers:true,singleSelect:true,pagination:true,pageSize:20,url:'/LIB/jquery-easyui-1.4/demo/datagrid/datagrid_data1.json',method:'get',fitColumns:true">				        
+											    <thead>
+											        <tr>
+											            <th data-options="field:'productid',width:100">Code</th>
+											            <th data-options="field:'productname',width:100">Name</th>
+											            <th data-options="field:'listprice',width:100,align:'right'">Price</th>
+											        </tr>
+											    </thead>
+											</table>
+									    </div>
+									</div>
+
+							    </div>
+							    
+							</div>
+						</div>
+					</div>
+		        </div>
+		        <!-- Help Page -->
+		        <div title="Help" data-options="iconCls:'icon-help'" style="padding:10px">
+		        	<p>Click tab strip to swap tab panel content.</p>
+					<div id="submit_job" class="easyui-layout" style="width:98%;height:400px;">
+					    <div data-options="region:'west',title:'Help Topics',split:true" style="width:250px;"></div>
+					    <div data-options="region:'center',title:''" style="padding:3px;">
+
+							<div id="job_stage_tv3" class="easyui-layout" data-options="fit:true" >
+							    <div data-options="region:'north',title:'',split:false,collapsible:false,border:true" style="height:40px;">
+									<div id="job_stage_tv_title3" class="easyui-layout" data-options="fit:true" >
+										<div data-options="region:'east',title:'',split:false,collapsible:false,border:false" style="width:20%;"></div>
+									    <div data-options="region:'west',title:'',collapsible:false,border:false" style="width:20%;"></div>
+									    <div data-options="region:'center',title:'',collapsible:false,border:false" style="padding:5px;"></div>
+									</div>
+							    </div>
+							    <div data-options="region:'center',title:'',border:false" style="padding:5px;">
+							    </div>
+							</div>
+
+					    </div>
+					</div>
+		        </div>
+		    </div>
+		</div>
+
+	</div>
+	
+    <script type="text/javascript" src="/LIB/jquery-easyui-1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/LIB/jquery-easyui-1.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/LIB/raphael/raphael-min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+	
+</body>
+
+</html>

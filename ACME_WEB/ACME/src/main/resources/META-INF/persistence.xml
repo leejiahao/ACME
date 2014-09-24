@@ -1,0 +1,54 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+	https://raw.github.com/impetus-opensource/Kundera/Kundera-2.0.4/kundera-core/src/test/resources/META-INF/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="cassandra-pu">
+		<provider>com.impetus.kundera.KunderaPersistence</provider>
+		<class>com.moriah.acme.entities.AcmeBasicGeom</class>
+		<class>com.moriah.acme.entities.AcmeEmp</class>
+		<class>com.moriah.acme.entities.AcmeDept</class>
+		<class>com.moriah.acme.entities.AcmeTv</class>
+		<class>com.moriah.acme.entities.AcmeTvOwner</class>
+		<class>com.moriah.acme.entities.AcmeControlCircuit</class>
+		<class>com.moriah.acme.entities.AcmeDrcDeck</class>
+		<class>com.moriah.acme.entities.AcmeLvsDeck</class>
+		<class>com.moriah.acme.entities.AcmeRcDeck</class>
+		<class>com.moriah.acme.entities.AcmeSpiceModel</class>
+		<class>com.moriah.acme.entities.AcmeFile</class>
+		<class>com.moriah.acme.entities.AcmeFileOwner</class>
+		<class>com.moriah.acme.entities.AcmeGds</class>
+		<class>com.moriah.acme.entities.AcmeGdsOwner</class>
+		<class>com.moriah.acme.entities.AcmeJob</class>
+		<class>com.moriah.acme.entities.AcmeJobDrc</class>
+		<class>com.moriah.acme.entities.AcmeJobLvs</class>
+		<class>com.moriah.acme.entities.AcmeJobRc</class>
+		<class>com.moriah.acme.entities.AcmeJobSpice</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="kundera.nodes" value="192.168.56.101" />
+			<property name="kundera.port" value="9160" />
+			<property name="kundera.keyspace" value="acme_space" />
+			<property name="kundera.dialect" value="cassandra" />
+			<!-- 
+			<property name="kundera.ddl.auto.prepare" value="create" />
+			 -->
+			<property name="kundera.client" value="thrift" />
+			<property name="kundera.client.lookup.class"
+				value="com.impetus.client.cassandra.thrift.ThriftClientFactory" />
+				
+			<!-- 
+			<property name="kundera.cache.provider.class"
+				value="com.impetus.kundera.cache.ehcache.EhCacheProvider" />
+			<property name="kundera.cache.config.resource" value="/ehcache-test.xml" />
+			 -->
+			<!-- 
+			<property name="kundera.client.property" value="kunderaCounter.xml" />
+			 -->
+			 <property name="kundera.username" value="acme" />
+			 <property name="kundera.password" value="acme_pw" />
+		</properties>
+	</persistence-unit>
+
+</persistence>
