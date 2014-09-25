@@ -15,7 +15,7 @@
 		        <div data-options="region:'east',title:'',split:false" style="width:400px;border-width:0px;border-color:red;background-color:Maroon;">&nbsp;</div>
 		        <div data-options="region:'west',title:'',split:false" style="width:100px;border-width:0px;border-color:blue;background:url('images/logo_250x250.jpg') no-repeat center center;background-size: 50% 100%;">&nbsp;</div>
 		        <div data-options="region:'center',title:'',iconCls:'icon-ok'" style="vertical-align:top;overflow:hidden;border-width:0px;border-color:blue;">
-		        	<h2 style="font: italic bold 18px Georgia, serif;">eDevelopment 3.0</h2>
+		        	<h2 style="font: italic bold 18px Georgia, serif;">Advanced Computation Model Emulation</h2>
 		        </div>
 			</div>
 
@@ -72,13 +72,154 @@
 		        	<h2>Apply Simulation Job</h2>
 		        	<p>To start a APCM placement and select options for executing simulation task.</p>
 					<div id="submit_job" class="easyui-layout" style="width:98%;height:350px;">
-						<div data-options="region:'north',title:'',split:false" style="padding:2px;height:70px;">
-							<input id="cb_tv_list" class="easyui-combobox" name="geomCd" data-options="valueField:'geomCd',textField:'geomName',url:'./ws/rs/tech/list',method:'get'" style="width:100px;">
+						<div data-options="region:'north',title:'',split:false" style="padding:5px;height:40px;">
+							<div class="easyui-panel" data-options="border:false">
+								<label>Select vehicle: </label>
+								<input id="cb_tv_list" class="easyui-combobox" name="geomCd" data-options="valueField:'geomCd',textField:'geomName',url:'./ws/rs/tech/list',method:'get'" style="width:100px;">
+							</div>
+							
 					    </div>
 					    <div data-options="region:'west',title:'',split:false" style="padding:2px;width:50%;">
+					    	<p>Select verification job input GDS file.</p>
+					    	<div style="margin-bottom:5px"></div>
+							<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
+								<input type="radio" name="gds_source_type" value="asm_gds"  checked onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
+								<input type="radio" name="gds_source_type" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
+							</div>
+							<div style="margin-bottom:5px"></div>
+							<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
+								<div id="seleteCompleteGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
+								
+									<form id="upload_gds_form" method="post">
+										<table cellpadding="5">
+											<tr>
+												<td>Name:</td>
+												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+											</tr>
+										</table>
+									</form>
 
+								</div>
+								<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
+								
+									<form id="compose_gds_form" method="post">
+										<table cellpadding="5">
+											<tr>
+												<td>DUT List:</td>
+												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+											</tr>
+											<tr>
+												<td>Placement:</td>
+												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+											</tr>
+											<tr>
+												<td>Cell GDS:</td>
+												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+											</tr>
+										</table>
+									</form>
+								
+								</div>
+							</div>
 					    </div>
-					    <div data-options="region:'center',title:'',border:true" style="padding:0px;width:50%;">
+					    <div data-options="region:'center',title:'',border:true" style="padding:5px;width:50%;">
+					    
+							<p>Select verification deck files.</p>
+							<div style="margin:20px 0"></div>
+							
+							<table cellpadding="5">
+								<tr>
+									<td>DRC Deck:</td>
+									<td>
+										<select class="easyui-combogrid" style="width:230px" data-options="
+										        panelWidth: 500,
+										        idField: 'itemid',
+										        textField: 'productname',
+										        url: 'datagrid_data1.json',
+										        method: 'get',
+										        columns: [[
+										            {field:'itemid',title:'Item ID',width:80},
+										            {field:'productname',title:'Product',width:120},
+										            {field:'listprice',title:'List Price',width:80,align:'right'},
+										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
+										            {field:'attr1',title:'Attribute',width:200},
+										            {field:'status',title:'Status',width:60,align:'center'}
+										        ]],
+										        fitColumns: true
+										    ">
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>LVS Deck:</td>
+									<td>
+										<select class="easyui-combogrid" style="width:230px" data-options="
+										        panelWidth: 500,
+										        idField: 'itemid',
+										        textField: 'productname',
+										        url: 'datagrid_data1.json',
+										        method: 'get',
+										        columns: [[
+										            {field:'itemid',title:'Item ID',width:80},
+										            {field:'productname',title:'Product',width:120},
+										            {field:'listprice',title:'List Price',width:80,align:'right'},
+										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
+										            {field:'attr1',title:'Attribute',width:200},
+										            {field:'status',title:'Status',width:60,align:'center'}
+										        ]],
+										        fitColumns: true
+										    ">
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>RC Deck:</td>
+									<td>
+										<select class="easyui-combogrid" style="width:230px" data-options="
+										        panelWidth: 500,
+										        idField: 'itemid',
+										        textField: 'productname',
+										        url: 'datagrid_data1.json',
+										        method: 'get',
+										        columns: [[
+										            {field:'itemid',title:'Item ID',width:80},
+										            {field:'productname',title:'Product',width:120},
+										            {field:'listprice',title:'List Price',width:80,align:'right'},
+										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
+										            {field:'attr1',title:'Attribute',width:200},
+										            {field:'status',title:'Status',width:60,align:'center'}
+										        ]],
+										        fitColumns: true
+										    ">
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>SPICE Model:</td>
+									<td>
+										<select class="easyui-combogrid" style="width:230px" data-options="
+										        panelWidth: 500,
+										        idField: 'itemid',
+										        textField: 'productname',
+										        url: 'datagrid_data1.json',
+										        method: 'get',
+										        columns: [[
+										            {field:'itemid',title:'Item ID',width:80},
+										            {field:'productname',title:'Product',width:120},
+										            {field:'listprice',title:'List Price',width:80,align:'right'},
+										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
+										            {field:'attr1',title:'Attribute',width:200},
+										            {field:'status',title:'Status',width:60,align:'center'}
+										        ]],
+										        fitColumns: true
+										    ">
+										</select>
+									</td>
+								</tr>
+							</table>
+							
+
+					    
 					    </div>
 				    </div>
 	        	</div>
@@ -190,12 +331,12 @@
 									    <div data-options="region:'center',title:'',border:false" style="padding:0px;">
 									    	<div style="margin-bottom:5px"></div>
 											<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
-												<input type="radio" name="gds_source_type" value="asm_gds"  checked onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
-												<input type="radio" name="gds_source_type" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
+												<input type="radio" name="gds_source_type_OLD" value="asm_gds"  onclick="seleteCompleteGds();" checked>Select Complsed GDS &nbsp;&nbsp;
+												<input type="radio" name="gds_source_type_OLD" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
 											</div>
 											<div style="margin-bottom:5px"></div>
 											<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
-												<div id="seleteCompleteGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
+												<div id="seleteCompleteGds_OLD" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
 												
 													<form id="upload_gds_form" method="post">
 														<table cellpadding="5">
@@ -207,7 +348,7 @@
 													</form>
 
 												</div>
-												<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
+												<div id="seleteComposeNewGds_OLD" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
 												
 													<form id="compose_gds_form" method="post">
 														<table cellpadding="5">
