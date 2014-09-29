@@ -82,6 +82,8 @@ public class ProjectResource {
 		tv.setTvDesc(tvDesc);
 		tv.setTechCd(techCd);
 		tv.setTm6(tm6);
+		String tvFullName = techCd + "/" + tvName;
+		tv.setTvFullName(tvFullName);
 
 		tv.setCreateUser("CHLEEZO");
 		tv.setUpdateUser("CHLEEZO");

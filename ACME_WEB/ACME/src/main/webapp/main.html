@@ -61,7 +61,13 @@
 					        To: <input class="easyui-datebox" style="width:80px">
 					         -->
 					        Test Vehicle: 
-					        <input id="cb_tech_list" class="easyui-combobox" name="geomCd" data-options="valueField:'geomCd',textField:'geomName',url:'./ws/rs/tech/list',method:'get'" style="width:100px;">
+					        <input id="cb_new_job_tech_list" class="easyui-combobox" name="tvId" 
+					        	data-options="
+					        		valueField:'tvId',
+					        		textField:'tvFullName',
+					        		url:'./ws/rs/project/list',
+					        		method:'get'" 
+				        		style="width:100px;">
 					        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Query</a>
 					    </div>
 					</div>
@@ -75,11 +81,18 @@
 						<div data-options="region:'north',title:'',split:false" style="padding:5px;height:40px;">
 							<div class="easyui-panel" data-options="border:false">
 								<label>Select vehicle: </label>
-								<input id="cb_tv_list" class="easyui-combobox" name="geomCd" data-options="valueField:'geomCd',textField:'geomName',url:'./ws/rs/tech/list',method:'get'" style="width:100px;">
+								<input id="cb_new_job_tv" class="easyui-combobox" name="tvId" 
+									data-options="
+										valueField:'tvId',
+										textField:'tvFullName',
+										url:'./ws/rs/project/list',
+										method:'get',
+										onSelect: onSelectJobTv" 
+									style="width:100px;">
 							</div>
 							
 					    </div>
-					    <div data-options="region:'west',title:'',split:false" style="padding:2px;width:50%;">
+					    <div data-options="region:'west',title:'',split:false" style="padding:5px;width:50%;">
 					    	<p>Select verification job input GDS file.</p>
 					    	<div style="margin-bottom:5px"></div>
 							<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
@@ -131,95 +144,62 @@
 								<tr>
 									<td>DRC Deck:</td>
 									<td>
-										<select class="easyui-combogrid" style="width:230px" data-options="
-										        panelWidth: 500,
-										        idField: 'itemid',
-										        textField: 'productname',
-										        url: 'datagrid_data1.json',
-										        method: 'get',
-										        columns: [[
-										            {field:'itemid',title:'Item ID',width:80},
-										            {field:'productname',title:'Product',width:120},
-										            {field:'listprice',title:'List Price',width:80,align:'right'},
-										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
-										            {field:'attr1',title:'Attribute',width:200},
-										            {field:'status',title:'Status',width:60,align:'center'}
-										        ]],
-										        fitColumns: true
-										    ">
-										</select>
+										<input id="cb_new_job_drc_deck_list" class="easyui-combobox" name="deckId" 
+											data-options="
+												valueField:'deckId',
+												textField:'deckName',
+												url:'./ws/rs/project/drc_deck/list',
+												method:'get'" 
+											style="width:230px;">
 									</td>
 								</tr>
 								<tr>
 									<td>LVS Deck:</td>
 									<td>
-										<select class="easyui-combogrid" style="width:230px" data-options="
-										        panelWidth: 500,
-										        idField: 'itemid',
-										        textField: 'productname',
-										        url: 'datagrid_data1.json',
-										        method: 'get',
-										        columns: [[
-										            {field:'itemid',title:'Item ID',width:80},
-										            {field:'productname',title:'Product',width:120},
-										            {field:'listprice',title:'List Price',width:80,align:'right'},
-										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
-										            {field:'attr1',title:'Attribute',width:200},
-										            {field:'status',title:'Status',width:60,align:'center'}
-										        ]],
-										        fitColumns: true
-										    ">
-										</select>
+										<input id="cb_new_job_lvs_deck_list" class="easyui-combobox" name="deckId" 
+											data-options="
+												valueField:'deckId',
+												textField:'deckName',
+												url:'./ws/rs/project/lvs_deck/list',
+												method:'get'" 
+											style="width:230px;">
 									</td>
 								</tr>
 								<tr>
 									<td>RC Deck:</td>
 									<td>
-										<select class="easyui-combogrid" style="width:230px" data-options="
-										        panelWidth: 500,
-										        idField: 'itemid',
-										        textField: 'productname',
-										        url: 'datagrid_data1.json',
-										        method: 'get',
-										        columns: [[
-										            {field:'itemid',title:'Item ID',width:80},
-										            {field:'productname',title:'Product',width:120},
-										            {field:'listprice',title:'List Price',width:80,align:'right'},
-										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
-										            {field:'attr1',title:'Attribute',width:200},
-										            {field:'status',title:'Status',width:60,align:'center'}
-										        ]],
-										        fitColumns: true
-										    ">
-										</select>
+										<input id="cb_new_job_rc_deck_list" class="easyui-combobox" name="deckId" 
+											data-options="
+												valueField:'deckId',
+												textField:'deckName',
+												url:'./ws/rs/project/rc_deck/list',
+												method:'get'" 
+											style="width:230px;">
 									</td>
 								</tr>
 								<tr>
 									<td>SPICE Model:</td>
 									<td>
-										<select class="easyui-combogrid" style="width:230px" data-options="
-										        panelWidth: 500,
-										        idField: 'itemid',
-										        textField: 'productname',
-										        url: 'datagrid_data1.json',
-										        method: 'get',
-										        columns: [[
-										            {field:'itemid',title:'Item ID',width:80},
-										            {field:'productname',title:'Product',width:120},
-										            {field:'listprice',title:'List Price',width:80,align:'right'},
-										            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
-										            {field:'attr1',title:'Attribute',width:200},
-										            {field:'status',title:'Status',width:60,align:'center'}
-										        ]],
-										        fitColumns: true
-										    ">
-										</select>
+										<input id="cb_new_job_spice_model_list" class="easyui-combobox" name="deckId" 
+											data-options="
+												valueField:'modelId',
+												textField:'modelName',
+												url:'./ws/rs/project/spice_model/list',
+												method:'get'" 
+											style="width:230px;">
 									</td>
 								</tr>
 							</table>
 							
 
 					    
+					    </div>
+					    
+						<div data-options="region:'south',title:'',split:false" style="padding:5px;height:40px;">
+							<div class="easyui-panel" data-options="border:false">
+								<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds()">Submit New Job</a>
+							</div>
+							
 					    </div>
 				    </div>
 	        	</div>
@@ -1135,7 +1115,7 @@
 																</tr>
 																<tr>
 																	<td>Model File:</td>
-																	<td><input class="easyui-filebox" name="modelFile" data-options="prompt:'Choose a model file...'" style="width:300px"></input></td>
+																	<td><input class="easyui-filebox" name="modelFile" data-options="prompt:'Choose a model file...'" style="width:300px;"></input></td>
 																</tr>
 																<tr>
 																	<td>Primary:</td>

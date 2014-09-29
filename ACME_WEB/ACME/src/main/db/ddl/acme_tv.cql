@@ -7,9 +7,10 @@ DROP TABLE acme_tv;
 
 CREATE TABLE acme_tv (
     tv_id uuid PRIMARY KEY,
-    tv_name text,
-    tm6 text,
     tech_cd text,
+    tm6 text,
+    tv_name text,
+    tv_full_name text,
     tv_desc text,
     status text,
     update_time timestamp,
@@ -24,6 +25,7 @@ CREATE TABLE acme_tv (
 CREATE INDEX acme_tv_idx_tv_name ON acme_tv (tv_name);
 CREATE INDEX acme_tv_idx_tm6 ON acme_tv (tm6);
 CREATE INDEX acme_tv_idx_tech_cd ON acme_tv (tech_cd);
+CREATE INDEX acme_tv_idx_tv_full_name ON acme_tv (tv_full_name);
 CREATE INDEX acme_tv_idx_status ON acme_tv (status);
 CREATE INDEX acme_tv_idx_update_time ON acme_tv (update_time);
 CREATE INDEX acme_tv_idx_update_user ON acme_tv (update_user);

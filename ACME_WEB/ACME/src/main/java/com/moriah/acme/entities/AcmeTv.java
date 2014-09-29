@@ -20,6 +20,9 @@ public class AcmeTv {
     @Column(name = "tv_name")
     private String tvName;
     
+    @Column(name = "tv_full_name")
+    private String tvFullName;
+    
     @Column(name = "tm6")
     private String tm6;
     
@@ -126,5 +129,13 @@ public class AcmeTv {
 	
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String getTvFullName() {
+		return tvFullName;
+	}
+
+	public void setTvFullName(String tvFullName) {
+		this.tvFullName = tvFullName;
 	}
 }
