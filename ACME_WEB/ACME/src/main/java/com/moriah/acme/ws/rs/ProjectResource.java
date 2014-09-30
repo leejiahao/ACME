@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.ProjectService;
+import com.moriah.acme.utils.FileUtils;
 import com.moriah.acme.entities.AcmeTv;
 import com.moriah.acme.entities.AcmeControlCircuit;
 import com.moriah.acme.entities.AcmeDrcDeck;
@@ -45,26 +46,6 @@ public class ProjectResource {
 	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "D://temp/test/ACME/";
 
 	private ProjectService projectService = ServiceUtil.getProjectService();
-	
-	// save uploaded file to a defined location on the server
-	private void saveFile(
-			InputStream uploadedInputStream,
-			String serverLocation) {
-		try {
-			OutputStream outpuStream = new FileOutputStream(new File(serverLocation));
-			int read = 0;
-			byte[] bytes = new byte[1024];
-
-			outpuStream = new FileOutputStream(new File(serverLocation));
-			while ((read = uploadedInputStream.read(bytes)) != -1) {
-				outpuStream.write(bytes, 0, read);
-			}
-			outpuStream.flush();
-			outpuStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@POST
 	@Path("/new")
@@ -201,7 +182,7 @@ public class ProjectResource {
 		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ circuitName + "_CC_" + contentDispositionHeader.getFileName();
 		
 		// save the file to the server
-		saveFile(fileInputStream, filePath);
+		FileUtils.saveFile(fileInputStream, filePath);
 		
 		String output = "createControlCircuit:" + filePath;
 		log.info("createControlCircuit output: {} information successfully created.", output);
@@ -264,7 +245,7 @@ public class ProjectResource {
 		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ deckName + "_DRC_" + contentDispositionHeader.getFileName();
 		
 		// save the file to the server
-		saveFile(fileInputStream, filePath);
+		FileUtils.saveFile(fileInputStream, filePath);
 		
 		String output = "createDrcDeck:" + filePath;
 		log.info("createDrcDeck output: {} information successfully created.", output);
@@ -327,7 +308,7 @@ public class ProjectResource {
 		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ deckName + "_LVS_" + contentDispositionHeader.getFileName();
 		
 		// save the file to the server
-		saveFile(fileInputStream, filePath);
+		FileUtils.saveFile(fileInputStream, filePath);
 		
 		String output = "createLvsDeck:" + filePath;
 		log.info("createLvsDeck output: {} information successfully created.", output);
@@ -390,7 +371,7 @@ public class ProjectResource {
 		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ deckName + "_RC_" + contentDispositionHeader.getFileName();
 		
 		// save the file to the server
-		saveFile(fileInputStream, filePath);
+		FileUtils.saveFile(fileInputStream, filePath);
 		
 		String output = "createRcDeck:" + filePath;
 		log.info("createRcDeck output: {} information successfully created.", output);
@@ -453,7 +434,7 @@ public class ProjectResource {
 		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ modelName + "_SPICE_" + contentDispositionHeader.getFileName();
 		
 		// save the file to the server
-		saveFile(fileInputStream, filePath);
+		FileUtils.saveFile(fileInputStream, filePath);
 		
 		String output = "createSpiceModel:" + filePath;
 		log.info("createSpiceModel output: {} information successfully created.", output);

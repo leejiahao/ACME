@@ -25,6 +25,24 @@ function onSelectJobTv(rec) {
 
 }
 
+$('#form_add_job').form({
+    url:'./ws/rs/job/new',
+    onSubmit: function(){
+        // do some check
+        // return false to prevent submit;
+    	$('#dialog_submit_add_job').dialog('open');
+    },
+    success:function(data){
+    	$('#dialog_submit_add_job').dialog('close');
+    	 $('#tb_job_list').tree('reload');
+    }
+});
+
+function submitNewJob() {
+	$('#form_add_job').form('submit');
+}
+
+
 /* SVG - start */
 
 var innderRadius = 18;

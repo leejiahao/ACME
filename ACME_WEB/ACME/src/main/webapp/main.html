@@ -78,134 +78,140 @@
 		        	<h2>Apply Simulation Job</h2>
 		        	<p>To start a APCM placement and select options for executing simulation task.</p>
 					<div id="submit_job" class="easyui-layout" style="width:98%;height:350px;">
-						<div data-options="region:'north',title:'',split:false" style="padding:5px;height:40px;">
-							<div class="easyui-panel" data-options="border:false">
-								<label>Select vehicle: </label>
-								<input id="cb_new_job_tv" class="easyui-combobox" name="tvId" 
-									data-options="
-										valueField:'tvId',
-										textField:'tvFullName',
-										url:'./ws/rs/project/list',
-										method:'get',
-										onSelect: onSelectJobTv" 
-									style="width:100px;">
-							</div>
-							
-					    </div>
-					    <div data-options="region:'west',title:'',split:false" style="padding:5px;width:50%;">
-					    	<p>Select verification job input GDS file.</p>
-					    	<div style="margin-bottom:5px"></div>
-							<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
-								<input type="radio" name="gds_source_type" value="asm_gds"  checked onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
-								<input type="radio" name="gds_source_type" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
-							</div>
-							<div style="margin-bottom:5px"></div>
-							<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
-								<div id="seleteCompleteGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
+
+						<form id="form_add_job" method="post" enctype="multipart/form-data">
+							<div data-options="region:'north',title:'',split:false" style="padding:5px;height:40px;">
+								<div class="easyui-panel" data-options="border:false">
+									<label>Select vehicle: </label>
+									<input id="cb_new_job_tv" class="easyui-combobox" name="tvId" 
+										data-options="
+											valueField:'tvId',
+											textField:'tvFullName',
+											url:'./ws/rs/project/list',
+											method:'get',
+											onSelect: onSelectJobTv" 
+										style="width:100px;">
+								</div>
 								
-									<form id="upload_gds_form" method="post">
+						    </div>
+						    <div data-options="region:'west',title:'',split:false" style="padding:5px;width:50%;">
+						    	<p>Select verification job input GDS file.</p>
+						    	<div style="margin-bottom:5px"></div>
+								<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
+									<input type="radio" name="gds_source_type" value="asm_gds"  checked onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
+									<input type="radio" name="gds_source_type" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
+								</div>
+								<div style="margin-bottom:5px"></div>
+								<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
+									<div id="seleteCompleteGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
+									
 										<table cellpadding="5">
 											<tr>
 												<td>Name:</td>
-												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td><input class="easyui-filebox" name="completeGdsFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
 											</tr>
 										</table>
-									</form>
-
-								</div>
-								<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
-								
-									<form id="compose_gds_form" method="post">
+	
+									</div>
+									<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
+									
 										<table cellpadding="5">
 											<tr>
 												<td>DUT List:</td>
-												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td><input class="easyui-filebox" name="dutListFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
 											</tr>
 											<tr>
 												<td>Placement:</td>
-												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td><input class="easyui-filebox" name="placementFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
 											</tr>
 											<tr>
 												<td>Cell GDS:</td>
-												<td><input class="easyui-filebox" name="gdsFileName" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td><input class="easyui-filebox" name="cellGdsFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
 											</tr>
 										</table>
-									</form>
-								
+									
+									</div>
 								</div>
-							</div>
-					    </div>
-					    <div data-options="region:'center',title:'',border:true" style="padding:5px;width:50%;">
+						    </div>
+						    <div data-options="region:'center',title:'',border:true" style="padding:5px;width:50%;">
+						    
+								<p>Select verification deck files.</p>
+								<div style="margin:20px 0"></div>
+								
+								<table cellpadding="5">
+									<tr>
+										<td>DRC Deck:</td>
+										<td>
+											<input id="cb_new_job_drc_deck_list" class="easyui-combobox" name="drcDeckId" 
+												data-options="
+													valueField:'deckId',
+													textField:'deckName',
+													url:'./ws/rs/project/drc_deck/list',
+													method:'get'" 
+												style="width:230px;">
+										</td>
+									</tr>
+									<tr>
+										<td>LVS Deck:</td>
+										<td>
+											<input id="cb_new_job_lvs_deck_list" class="easyui-combobox" name="lvsDeckId" 
+												data-options="
+													valueField:'deckId',
+													textField:'deckName',
+													url:'./ws/rs/project/lvs_deck/list',
+													method:'get'" 
+												style="width:230px;">
+										</td>
+									</tr>
+									<tr>
+										<td>RC Deck:</td>
+										<td>
+											<input id="cb_new_job_rc_deck_list" class="easyui-combobox" name="rcDeckId" 
+												data-options="
+													valueField:'deckId',
+													textField:'deckName',
+													url:'./ws/rs/project/rc_deck/list',
+													method:'get'" 
+												style="width:230px;">
+										</td>
+									</tr>
+									<tr>
+										<td>SPICE Model:</td>
+										<td>
+											<input id="cb_new_job_spice_model_list" class="easyui-combobox" name="spiceModelId" 
+												data-options="
+													valueField:'modelId',
+													textField:'modelName',
+													url:'./ws/rs/project/spice_model/list',
+													method:'get'" 
+												style="width:230px;">
+										</td>
+									</tr>
+								</table>
+								
+	
+						    
+						    </div>
+							<div data-options="region:'south',title:'',split:false" style="padding:5px;height:40px;">
+								<div class="easyui-panel" data-options="border:false">
+									<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="submitNewJob()">Submit New Job</a>
+								</div>
+						    </div>
+					    </form>
 					    
-							<p>Select verification deck files.</p>
-							<div style="margin:20px 0"></div>
-							
-							<table cellpadding="5">
-								<tr>
-									<td>DRC Deck:</td>
-									<td>
-										<input id="cb_new_job_drc_deck_list" class="easyui-combobox" name="deckId" 
-											data-options="
-												valueField:'deckId',
-												textField:'deckName',
-												url:'./ws/rs/project/drc_deck/list',
-												method:'get'" 
-											style="width:230px;">
-									</td>
-								</tr>
-								<tr>
-									<td>LVS Deck:</td>
-									<td>
-										<input id="cb_new_job_lvs_deck_list" class="easyui-combobox" name="deckId" 
-											data-options="
-												valueField:'deckId',
-												textField:'deckName',
-												url:'./ws/rs/project/lvs_deck/list',
-												method:'get'" 
-											style="width:230px;">
-									</td>
-								</tr>
-								<tr>
-									<td>RC Deck:</td>
-									<td>
-										<input id="cb_new_job_rc_deck_list" class="easyui-combobox" name="deckId" 
-											data-options="
-												valueField:'deckId',
-												textField:'deckName',
-												url:'./ws/rs/project/rc_deck/list',
-												method:'get'" 
-											style="width:230px;">
-									</td>
-								</tr>
-								<tr>
-									<td>SPICE Model:</td>
-									<td>
-										<input id="cb_new_job_spice_model_list" class="easyui-combobox" name="deckId" 
-											data-options="
-												valueField:'modelId',
-												textField:'modelName',
-												url:'./ws/rs/project/spice_model/list',
-												method:'get'" 
-											style="width:230px;">
-									</td>
-								</tr>
-							</table>
-							
-
-					    
-					    </div>
-					    
-						<div data-options="region:'south',title:'',split:false" style="padding:5px;height:40px;">
-							<div class="easyui-panel" data-options="border:false">
-								<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:false" onclick="setupGds()">Submit New Job</a>
-							</div>
-							
-					    </div>
+						<div id="dialog_submit_add_job" class="easyui-dialog" title="Adding new job" style="width:300px;height:150px;"
+						        data-options="iconCls:'icon-save',resizable:true,closable:false,closed:true,modal:true">
+								<div class="easyui-panel" data-options="fit:true,border:false" style="padding:1px;" align="center">
+									<p>Adding new job ...</p>
+									
+									<div id="pg_submit_add_job" class="easyui-progressbar" style="width:200px;"></div>
+								</div>
+						</div>
 				    </div>
 	        	</div>
 		        
 		        <!-- Job Creation -->
-		        <div title="Job Application Complex" style="padding:10px">
+		        <div title="Job Execution Status" style="padding:10px">
 		        	<h2>Apply Simulation Job</h2>
 		        	<p>To start a APCM placement and select options for executing simulation task.</p>
 					<div id="submit_job2" class="easyui-layout" style="width:98%;height:350px;">
@@ -1201,6 +1207,9 @@
 		    </div>
 		</div>
 
+	</div>
+	<div id="welcome_dialog" class="easyui-dialog" data-options="title:'ACME System'" 
+		style="width:787px;height:481px;background:url('images/innovationbulb_2361x1444.jpg') no-repeat;background-size:100%;color:white;">
 	</div>
 	
     <script type="text/javascript" src="/LIB/jquery-easyui-1.4/jquery.min.js"></script>
