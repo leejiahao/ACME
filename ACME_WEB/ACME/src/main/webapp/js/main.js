@@ -18,6 +18,7 @@ function addPanel(){
  * Submit JOB 
  */
 function onSelectJobTv(rec) {
+	$('#cb_new_job_control_circuit_list').combobox('reload', './ws/rs/project/control_circuit/list?tvId='+rec.tvId);
 	$('#cb_new_job_drc_deck_list').combobox('reload', './ws/rs/project/drc_deck/list?tvId='+rec.tvId);
 	$('#cb_new_job_lvs_deck_list').combobox('reload', './ws/rs/project/lvs_deck/list?tvId='+rec.tvId);
 	$('#cb_new_job_rc_deck_list').combobox('reload', './ws/rs/project/rc_deck/list?tvId='+rec.tvId);

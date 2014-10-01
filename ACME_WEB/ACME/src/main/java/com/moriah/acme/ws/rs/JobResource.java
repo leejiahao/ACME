@@ -50,19 +50,69 @@ public class JobResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createJob(
 			@FormDataParam("tvId") String strTvId,
+			@FormDataParam("circuitId") String strCircuitId,
 			@FormDataParam("drcDeckId") String strDrcDeckId,
-            @FormDataParam("completeGdsFile") InputStream completeGdsFileInputStream,
-            @FormDataParam("completeGdsFile") FormDataContentDisposition completeGdsFileContentDispositionHeader
+			@FormDataParam("lvsDeckId") String strLvsDeckId,
+			@FormDataParam("rcDeckId") String strRcDeckId,
+			@FormDataParam("spiceModelId") String strSpiceModelId,
+            @FormDataParam("cellInfoFile") InputStream cellInfoFileInputStream,
+            @FormDataParam("cellInfoFile") FormDataContentDisposition cellInfoFileContentDispositionHeader,
+            @FormDataParam("placementFile") InputStream placementFileInputStream,
+            @FormDataParam("placementFile") FormDataContentDisposition placementFileContentDispositionHeader,
+            @FormDataParam("sourceCellGdsFile") InputStream sourceCellGdsFileInputStream,
+            @FormDataParam("sourceCellGdsFile") FormDataContentDisposition sourceCellGdsFileContentDispositionHeader,
+            @FormDataParam("netlistFile") InputStream netlistFileInputStream,
+            @FormDataParam("netlistFile") FormDataContentDisposition netlistFileContentDispositionHeader,
+            @FormDataParam("testbenchFile") InputStream testbenchFileInputStream,
+            @FormDataParam("testbenchFile") FormDataContentDisposition testbenchFileContentDispositionHeader,
+            @FormDataParam("composedGdsFile") InputStream composedGdsFileInputStream,
+            @FormDataParam("composedGdsFile") FormDataContentDisposition composedGdsFileContentDispositionHeader
 			) {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createJob tvId: {} information successfully created.", strTvId);
-
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_COMPLETE_GDS_" + completeGdsFileContentDispositionHeader.getFileName();
+		log.info("createJob circuitId: {} information successfully created.", strCircuitId);
+		log.info("createJob drcDeckId: {} information successfully created.", strDrcDeckId);
+		log.info("createJob lvsDeckId: {} information successfully created.", strLvsDeckId);
+		log.info("createJob rcDeckId: {} information successfully created.", strRcDeckId);
+		log.info("createJob spiceModelId: {} information successfully created.", strSpiceModelId);
+		
+		// cell info file
+		String cellInfoFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_CELL_INFO_" + cellInfoFileContentDispositionHeader.getFileName();
 		
 		// save the file to the server
-		FileUtils.saveFile(completeGdsFileInputStream, filePath);
+		FileUtils.saveFile(cellInfoFileInputStream, cellInfoFilePath);
 		
-		String output = "createDrcDeck:" + filePath;
+		// placement file
+		String placementFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_PLACEMENT_" + placementFileContentDispositionHeader.getFileName();
+		
+		// save the file to the server
+		FileUtils.saveFile(placementFileInputStream, placementFilePath);
+		
+		// source cell GDS file
+		String sourceCellGdsFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_SOURCE_CELL_GDS_" + sourceCellGdsFileContentDispositionHeader.getFileName();
+		
+		// save the file to the server
+		FileUtils.saveFile(sourceCellGdsFileInputStream, sourceCellGdsFilePath);
+		
+		// netlist
+		String netlistFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_NETLIST_" + netlistFileContentDispositionHeader.getFileName();
+		
+		// save the file to the server
+		FileUtils.saveFile(netlistFileInputStream, netlistFilePath);
+		
+		// testbench
+		String testbenchFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_TESTBENCH_" + testbenchFileContentDispositionHeader.getFileName();
+		
+		// save the file to the server
+		FileUtils.saveFile(testbenchFileInputStream, testbenchFilePath);
+
+		// composed GDS
+		String composedGdsFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_COMPOSED_GDS_" + composedGdsFileContentDispositionHeader.getFileName();
+		
+		// save the file to the server
+		FileUtils.saveFile(composedGdsFileInputStream, composedGdsFilePath);
+		
+		String output = "createDrcDeck:" + composedGdsFilePath;
 		log.info("createDrcDeck output: {} information successfully created.", output);
 
 		UUID tvId = UUID.fromString(strTvId);

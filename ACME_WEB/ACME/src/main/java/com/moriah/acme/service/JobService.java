@@ -4,6 +4,14 @@ import java.util.List;
 import java.util.UUID;
 
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobDrc;
+import com.moriah.acme.entities.AcmeJobLvs;
+import com.moriah.acme.entities.AcmeJobRc;
+import com.moriah.acme.entities.AcmeJobSpice;
+import com.moriah.acme.entities.AcmeJobControlCircuit;
+import com.moriah.acme.entities.AcmeJobSourceCellGds;
+import com.moriah.acme.entities.AcmeJobNetlist;
+import com.moriah.acme.entities.AcmeJobTestbench;
 
 public interface JobService {
 
@@ -19,14 +27,38 @@ public interface JobService {
 	// update JOB
 	public void updateJob(AcmeJob job);
 	
+	// create Source Cell Gds of JOB
+	public void createSourceCellGdsOfJob(AcmeJobSourceCellGds jobSourceCellGds);
+	
+	// create Control Circuit of JOB
+	public void createControlCircuitOfJob(AcmeJobControlCircuit jobControlCircuit);
+	
+	// create Netlist of JOB
+	public void createNetlistOfJob(AcmeJobNetlist jobNetlist);
+	
+	// create Testbench of JOB
+	public void createTestbenchOfJob(AcmeJobTestbench jobTestbench);
+	
+	// create DRC of JOB
+	public void createDrcDeckOfJob(AcmeJobDrc jobDrc);
+	
 	// update DRC of JOB
 	public void updateDrcDeckOfJob(UUID jobId, UUID deckId);
+	
+	// create LVS of JOB
+	public void createLvsDeckOfJob(AcmeJobLvs jobLvs);
 	
 	// update LVS of JOB
 	public void updateLvDecksOfJob(UUID jobId, UUID deckId);
 	
+	// create RC of JOB
+	public void createRcDeckOfJob(AcmeJobRc jobRc);
+	
 	// update RC of JOB
 	public void updateRcDeckOfJob(UUID jobId, UUID deckId);
+	
+	// create SPICE of JOB
+	public void createSpiceModelOfJob(AcmeJobSpice jobSpice);
 	
 	// update SPICE of JOB
 	public void updateSpiceModelOfJob(UUID jobId, UUID deckId);

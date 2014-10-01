@@ -98,38 +98,46 @@
 						    	<p>Select verification job input GDS file.</p>
 						    	<div style="margin-bottom:5px"></div>
 								<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
-									<input type="radio" name="gds_source_type" value="asm_gds"  checked onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
-									<input type="radio" name="gds_source_type" value="orig_gds" onclick="seleteComposeNewGds();">Compose New GDS
+									<input type="radio" name="gds_source_type" value="orig_gds" checked onclick="seleteComposeNewGds();" >Compose New GDS &nbsp;&nbsp;
+									<input type="radio" name="gds_source_type" value="asm_gds"  onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
 								</div>
 								<div style="margin-bottom:5px"></div>
 								<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
-									<div id="seleteCompleteGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;" >
+									<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;" >
 									
 										<table cellpadding="5">
 											<tr>
-												<td>Name:</td>
-												<td><input class="easyui-filebox" name="completeGdsFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
-											</tr>
-										</table>
-	
-									</div>
-									<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;visibility:hidden;" >
-									
-										<table cellpadding="5">
-											<tr>
-												<td>DUT List:</td>
-												<td><input class="easyui-filebox" name="dutListFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td>Cell Info:</td>
+												<td><input class="easyui-filebox" name="cellInfoFile" data-options="prompt:'Choose a cell information file...'" style="width:290px"></input></td>
 											</tr>
 											<tr>
 												<td>Placement:</td>
-												<td><input class="easyui-filebox" name="placementFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td><input class="easyui-filebox" name="placementFile" data-options="prompt:'Choose a cell placement file...'" style="width:290px"></input></td>
 											</tr>
 											<tr>
-												<td>Cell GDS:</td>
-												<td><input class="easyui-filebox" name="cellGdsFile" data-options="prompt:'Choose a GDS file...'" style="width:230px"></input></td>
+												<td>Source Cell GDS:</td>
+												<td><input class="easyui-filebox" name="sourceCellGdsFile" data-options="prompt:'Choose a source cell GDS file...'" style="width:290px"></input></td>
+											</tr>
+											<tr>
+												<td>Netlist:</td>
+												<td><input class="easyui-filebox" name="netlistFile" data-options="prompt:'Choose a netlist file...'" style="width:290px"></input></td>
+											</tr>
+											<tr>
+												<td>Test-bench:</td>
+												<td><input class="easyui-filebox" name="testbenchFile" data-options="prompt:'Choose a test-bench file...'" style="width:290px"></input></td>
 											</tr>
 										</table>
 									
+									</div>
+									<div id="seleteComposedGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;visibility:hidden;" >
+									
+										<table cellpadding="5">
+											<tr>
+												<td>Composed GDS:</td>
+												<td><input class="easyui-filebox" name="composedGdsFile" data-options="prompt:'Choose a composed GDS file...'" style="width:290px"></input></td>
+											</tr>
+										</table>
+	
 									</div>
 								</div>
 						    </div>
@@ -139,6 +147,18 @@
 								<div style="margin:20px 0"></div>
 								
 								<table cellpadding="5">
+									<tr>
+										<td>Control Circuit:</td>
+										<td>
+											<input id="cb_new_job_control_circuit_list" class="easyui-combobox" name="circuitId" 
+												data-options="
+													valueField:'circuitId',
+													textField:'circuitName',
+													url:'./ws/rs/project/control_circuit/list',
+													method:'get'" 
+												style="width:230px;">
+										</td>
+									</tr>
 									<tr>
 										<td>DRC Deck:</td>
 										<td>

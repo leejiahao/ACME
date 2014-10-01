@@ -8,6 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import com.moriah.acme.dao.AcmeDao;
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobControlCircuit;
+import com.moriah.acme.entities.AcmeJobDrc;
+import com.moriah.acme.entities.AcmeJobLvs;
+import com.moriah.acme.entities.AcmeJobNetlist;
+import com.moriah.acme.entities.AcmeJobRc;
+import com.moriah.acme.entities.AcmeJobSourceCellGds;
+import com.moriah.acme.entities.AcmeJobSpice;
+import com.moriah.acme.entities.AcmeJobTestbench;
 import com.moriah.acme.entities.AcmeTv;
 
 public class JobServiceImpl implements JobService {
@@ -70,6 +78,46 @@ public class JobServiceImpl implements JobService {
         log.info("AcmeJob job {} information successfully updated.", job);
     }
     
+	// create Source Cell Gds of JOB
+    @Override
+	public void createSourceCellGdsOfJob(AcmeJobSourceCellGds jobSourceCellGds)
+	{
+        dao.insert(jobSourceCellGds);
+        log.info("AcmeJobSourceCellGds jobSourceCellGds {} information successfully created.", jobSourceCellGds);
+	}
+	
+	// create Control Circuit of JOB
+	@Override
+	public void createControlCircuitOfJob(AcmeJobControlCircuit jobControlCircuit)
+	{
+        dao.insert(jobControlCircuit);
+        log.info("AcmeJobControlCircuit jobControlCircuit {} information successfully created.", jobControlCircuit);
+	}
+	
+	// create Netlist of JOB
+	@Override
+	public void createNetlistOfJob(AcmeJobNetlist jobNetlist)
+	{
+        dao.insert(jobNetlist);
+        log.info("AcmeJobNetlist jobNetlist {} information successfully created.", jobNetlist);
+	}
+	
+	// create Testbench of JOB
+	@Override
+	public void createTestbenchOfJob(AcmeJobTestbench jobTestbench)
+	{
+        dao.insert(jobTestbench);
+        log.info("AcmeJobTestbench jobTestbench {} information successfully created.", jobTestbench);
+	}
+	
+	// create DRC of JOB
+	@Override
+	public void createDrcDeckOfJob(AcmeJobDrc jobDrc)
+	{
+        dao.insert(jobDrc);
+        log.info("AcmeJobLvs jobLvs {} information successfully created.", jobDrc);
+	}
+    
 	// update DRC of JOB
     @Override
 	public void updateDrcDeckOfJob(UUID jobId, UUID drcDeckId)
@@ -79,6 +127,14 @@ public class JobServiceImpl implements JobService {
         dao.merge(job);
         log.info("AcmeJob job {} information successfully updated.", job);
     }
+    
+	// create LVS of JOB
+    @Override
+	public void createLvsDeckOfJob(AcmeJobLvs jobLvs)
+	{
+        dao.insert(jobLvs);
+        log.info("AcmeJobLvs jobLvs {} information successfully created.", jobLvs);
+	}
 
 	// update LVS of JOB
     @Override
@@ -89,6 +145,14 @@ public class JobServiceImpl implements JobService {
         dao.merge(job);
         log.info("AcmeJob job {} information successfully updated.", job);
     }
+    
+	// create RC of JOB
+    @Override
+	public void createRcDeckOfJob(AcmeJobRc jobRc)
+	{
+        dao.insert(jobRc);
+        log.info("AcmeJobRc jobRc {} information successfully created.", jobRc);
+	}
 	
 	// update RC of JOB
     @Override
@@ -99,6 +163,14 @@ public class JobServiceImpl implements JobService {
         dao.merge(job);
         log.info("AcmeJob job {} information successfully updated.", job);
     }
+    
+	// create SPICE of JOB
+    @Override
+	public void createSpiceModelOfJob(AcmeJobSpice jobSpice)
+	{
+        dao.insert(jobSpice);
+        log.info("AcmeJobSpice jobSpice {} information successfully created.", jobSpice);
+	}
 	
 	// update SPICE of JOB
     @Override
