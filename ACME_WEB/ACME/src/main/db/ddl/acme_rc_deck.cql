@@ -11,6 +11,8 @@ CREATE TABLE acme_rc_deck (
     deck_name text,
     deck_type text,
     deck_desc text,
+    deck_file_path text,
+    deck_file_name text,
     file_id uuid,
     is_primary boolean,
     status text,

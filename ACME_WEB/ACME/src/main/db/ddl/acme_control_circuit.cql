@@ -11,6 +11,9 @@ CREATE TABLE acme_control_circuit (
     circuit_name text,
     circuit_type text,
     circuit_desc text,
+    circuit_gds_file_path text,
+    circuit_gds_file_name text,
+    circuit_gds_top_cell text,
     file_id uuid,
     is_primary boolean,
     status text,
@@ -26,6 +29,8 @@ CREATE TABLE acme_control_circuit (
 CREATE INDEX acme_control_circuit_idx_tv_id ON acme_control_circuit (tv_id);
 CREATE INDEX acme_control_circuit_idx_circuit_name ON acme_control_circuit (circuit_name);
 CREATE INDEX acme_control_circuit_idx_circuit_type ON acme_control_circuit (circuit_type);
+CREATE INDEX acme_control_circuit_idx_circuit_gds_file_path ON acme_control_circuit (circuit_gds_file_path);
+CREATE INDEX acme_control_circuit_idx_circuit_gds_top_cell ON acme_control_circuit (circuit_gds_top_cell);
 CREATE INDEX acme_control_circuit_idx_file_id ON acme_control_circuit (file_id);
 CREATE INDEX acme_control_circuit_idx_is_primary ON acme_control_circuit (is_primary);
 CREATE INDEX acme_control_circuit_idx_status ON acme_control_circuit (status);

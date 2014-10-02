@@ -28,6 +28,12 @@ public class AcmeSpiceModel {
     
     @Column(name = "model_desc")
     private String modelDesc;
+    
+    @Column(name = "model_file_path")
+    private String modelFilePath;
+    
+    @Column(name = "model_file_name")
+    private String modelFileName;
 
     @Column(name = "file_id")
     private UUID fileId;
@@ -148,5 +154,21 @@ public class AcmeSpiceModel {
 
 	public void setIsPrimary(Boolean isPrimary) {
 		this.isPrimary = isPrimary;
+	}
+
+	public String getModelFilePath() {
+		return modelFilePath;
+	}
+
+	public void setModelFilePath(String modelFilePath) {
+		this.modelFilePath = modelFilePath;
+	}
+
+	public String getModelFileName() {
+		return modelFileName;
+	}
+
+	public void setModelFileName(String modelFileName) {
+		this.modelFileName = modelFileName;
 	}
 }

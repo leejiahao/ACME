@@ -44,22 +44,30 @@
 				    			toolbar:'#tb_my_jobs'">				        
 					    <thead>
 					        <tr>
-					            <th data-options="field:'jobId',width:100">ID</th>
-					            <th data-options="field:'jobName',width:100">Name</th>
-					            <th data-options="field:'jobDesc',width:100">Description</th>
+					            <th data-options="field:'jobId',width:30">ID</th>
+					            <th data-options="field:'jobName',width:30">Name</th>
+					            <th data-options="field:'jobDesc',width:60">Description</th>
+					            <th data-options="field:'composedGds',width:50">GDS</th>
+					            <th data-options="field:'drcStatus',width:30">DRC</th>
+					            <th data-options="field:'lvsStatus',width:30">LVS</th>
+					            <th data-options="field:'rcStatus',width:30">RC</th>
+					            <th data-options="field:'spiceStatus',width:30">SPICE</th>
+					            <th data-options="field:'updateTime',width:50">Update Time</th>
+					            <th data-options="field:'createTime',width:50">Create Time</th>
 					        </tr>
 					    </thead>
 					</table>
 					<!-- My Jobs Toolbar -->
 					<div id="tb_my_jobs" style="padding:5px;height:auto">
 					    <div style="margin-bottom:0px">
+					    	<a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="loadJobList()">Reload</a>
 					        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="startAcmeJobTab()">New Job</a>
 					        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete Job</a>
 					        <a href="#" class="easyui-linkbutton" plain="true"></a>
 					        <!-- 
 					        Date From: <input class="easyui-datebox" style="width:80px">
 					        To: <input class="easyui-datebox" style="width:80px">
-					         -->
+					         
 					        Test Vehicle: 
 					        <input id="cb_new_job_tech_list" class="easyui-combobox" name="tvId" 
 					        	data-options="
@@ -69,6 +77,7 @@
 					        		method:'get'" 
 				        		style="width:100px;">
 					        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Query</a>
+					        -->
 					    </div>
 					</div>
 		        </div>
@@ -80,8 +89,21 @@
 					<div id="submit_job" class="easyui-layout" style="width:98%;height:350px;">
 
 						<form id="form_add_job" method="post" enctype="multipart/form-data">
-							<div data-options="region:'north',title:'',split:false" style="padding:5px;height:40px;">
+							<div data-options="region:'north',title:'',split:false" style="padding:5px;height:73px;overflow:hidden;">
 								<div class="easyui-panel" data-options="border:false">
+									<table cellpadding="3">
+										<tr>
+											<td>Job Name:</td>
+											<td><input class="easyui-textbox" type="text" name="jobName" data-options="required:true" style="width:300px;">
+											</td>
+										</tr>
+										<tr>
+											<td>Job Description:</td>
+											<td><input class="easyui-textbox" type="text" name="jobDesc" data-options="required:false" style="width:700px;">
+											</td>
+										</tr>
+									</table>
+									<!-- 
 									<label>Select vehicle: </label>
 									<input id="cb_new_job_tv" class="easyui-combobox" name="tvId" 
 										data-options="
@@ -91,21 +113,22 @@
 											method:'get',
 											onSelect: onSelectJobTv" 
 										style="width:100px;">
+									 -->
 								</div>
 								
 						    </div>
 						    <div data-options="region:'west',title:'',split:false" style="padding:5px;width:50%;">
 						    	<p>Select verification job input GDS file.</p>
-						    	<div style="margin-bottom:5px"></div>
+						    	<div style="margin-bottom:3px"></div>
 								<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
 									<input type="radio" name="gds_source_type" value="orig_gds" checked onclick="seleteComposeNewGds();" >Compose New GDS &nbsp;&nbsp;
 									<input type="radio" name="gds_source_type" value="asm_gds"  onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
 								</div>
-								<div style="margin-bottom:5px"></div>
+
 								<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
 									<div id="seleteComposeNewGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:blue;" >
 									
-										<table cellpadding="5">
+										<table cellpadding="3">
 											<tr>
 												<td>Cell Info:</td>
 												<td><input class="easyui-filebox" name="cellInfoFile" data-options="prompt:'Choose a cell information file...'" style="width:290px"></input></td>
@@ -123,7 +146,7 @@
 												<td><input class="easyui-filebox" name="netlistFile" data-options="prompt:'Choose a netlist file...'" style="width:290px"></input></td>
 											</tr>
 											<tr>
-												<td>Test-bench:</td>
+												<td>Testbench:</td>
 												<td><input class="easyui-filebox" name="testbenchFile" data-options="prompt:'Choose a test-bench file...'" style="width:290px"></input></td>
 											</tr>
 										</table>
@@ -131,7 +154,7 @@
 									</div>
 									<div id="seleteComposedGds" class="easyui-panel" data-options="title:'',border:false,fit:false" style="position:absolute;border-color:red;visibility:hidden;" >
 									
-										<table cellpadding="5">
+										<table cellpadding="3">
 											<tr>
 												<td>Composed GDS:</td>
 												<td><input class="easyui-filebox" name="composedGdsFile" data-options="prompt:'Choose a composed GDS file...'" style="width:290px"></input></td>
@@ -144,9 +167,23 @@
 						    <div data-options="region:'center',title:'',border:true" style="padding:5px;width:50%;">
 						    
 								<p>Select verification deck files.</p>
-								<div style="margin:20px 0"></div>
+								<div style="margin:3px 0"></div>
 								
-								<table cellpadding="5">
+								<table cellpadding="3">
+									<tr>
+										<td>Test Vehicle:</td>
+										<td>
+											<input id="cb_new_job_tv" class="easyui-combobox" name="tvId" 
+												data-options="
+													required:true,
+													valueField:'tvId',
+													textField:'tvFullName',
+													url:'./ws/rs/project/list',
+													method:'get',
+													onSelect: onSelectJobTv" 
+												style="width:100px;">
+										</td>
+									</tr>
 									<tr>
 										<td>Control Circuit:</td>
 										<td>
@@ -164,6 +201,7 @@
 										<td>
 											<input id="cb_new_job_drc_deck_list" class="easyui-combobox" name="drcDeckId" 
 												data-options="
+													required:true,
 													valueField:'deckId',
 													textField:'deckName',
 													url:'./ws/rs/project/drc_deck/list',
@@ -176,6 +214,7 @@
 										<td>
 											<input id="cb_new_job_lvs_deck_list" class="easyui-combobox" name="lvsDeckId" 
 												data-options="
+													required:true,
 													valueField:'deckId',
 													textField:'deckName',
 													url:'./ws/rs/project/lvs_deck/list',
@@ -688,10 +727,12 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'circuitId',width:100">ID</th>
-											            <th data-options="field:'circuitName',width:100">Name</th>
-											            <th data-options="field:'circuitType',width:100">Type</th>
-											            <th data-options="field:'createTime',width:100">Create Date</th>
+											            <th data-options="field:'circuitId',width:30">ID</th>
+											            <th data-options="field:'circuitName',width:50">Name</th>
+											            <th data-options="field:'circuitType',width:50">Type</th>
+											            <th data-options="field:'circuitGdsFileName',width:80">GDS</th>
+											            <th data-options="field:'circuitGdsTopCell',width:50">Top</th>
+											            <th data-options="field:'createTime',width:50">Create Date</th>
 											        </tr>
 											    </thead>
 											</table>
@@ -716,11 +757,15 @@
 																</tr>
 																<tr>
 																	<td>Circuit Type:</td>
-																	<td><input class="easyui-textbox" type="text" name="circuitType" data-options="required:true"></input></td>
+																	<td><input class="easyui-textbox" type="text" name="circuitType" data-options="required:true,value:'DFF588'"></input></td>
 																</tr>
 																<tr>
 																	<td>Circuit GDS:</td>
 																	<td><input class="easyui-filebox" name="circuitFile" data-options="prompt:'Choose a GDS file...'" style="width:300px"></input></td>
+																</tr>
+																<tr>
+																	<td>Top Cell:</td>
+																	<td><input class="easyui-textbox" type="text" name="circuitGdsTopCell" data-options="required:true,value:'TOP'"></input></td>
 																</tr>
 																<tr>
 																	<td>Primary:</td>
@@ -793,10 +838,11 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'deckId',width:100">ID</th>
-											            <th data-options="field:'deckName',width:100">Name</th>
-											            <th data-options="field:'deckType',width:100">Type</th>
-											            <th data-options="field:'createTime',width:100">Create Date</th>
+											            <th data-options="field:'deckId',width:30">ID</th>
+											            <th data-options="field:'deckName',width:50">Name</th>
+											            <th data-options="field:'deckType',width:50">Type</th>
+											            <th data-options="field:'deckFileName',width:80">File</th>
+											            <th data-options="field:'createTime',width:50">Create Date</th>
 											        </tr>
 											    </thead>
 											</table>
@@ -821,7 +867,7 @@
 																</tr>
 																<tr>
 																	<td>Deck Type:</td>
-																	<td><input class="easyui-textbox" type="text" name="deckType" data-options="required:true"></input></td>
+																	<td><input class="easyui-textbox" type="text" name="deckType" data-options="required:true,value:'1P9M'"></input></td>
 																</tr>
 																<tr>
 																	<td>Deck File:</td>
@@ -898,10 +944,11 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'deckId',width:100">ID</th>
-											            <th data-options="field:'deckName',width:100">Name</th>
-											            <th data-options="field:'deckType',width:100">Type</th>
-											            <th data-options="field:'createTime',width:100">Create Date</th>
+											            <th data-options="field:'deckId',width:30">ID</th>
+											            <th data-options="field:'deckName',width:50">Name</th>
+											            <th data-options="field:'deckType',width:50">Type</th>
+											            <th data-options="field:'deckFileName',width:80">File</th>
+											            <th data-options="field:'createTime',width:50">Create Date</th>
 											        </tr>
 											    </thead>
 											</table>
@@ -926,7 +973,7 @@
 																</tr>
 																<tr>
 																	<td>Deck Type:</td>
-																	<td><input class="easyui-textbox" type="text" name="deckType" data-options="required:true"></input></td>
+																	<td><input class="easyui-textbox" type="text" name="deckType" data-options="required:true,value:'1P9M'"></input></td>
 																</tr>
 																<tr>
 																	<td>Deck File:</td>
@@ -1003,10 +1050,11 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'deckId',width:100">ID</th>
-											            <th data-options="field:'deckName',width:100">Name</th>
-											            <th data-options="field:'deckType',width:100">Type</th>
-											            <th data-options="field:'createTime',width:100">Create Date</th>
+											            <th data-options="field:'deckId',width:30">ID</th>
+											            <th data-options="field:'deckName',width:50">Name</th>
+											            <th data-options="field:'deckType',width:50">Type</th>
+											            <th data-options="field:'deckFileName',width:80">File</th>
+											            <th data-options="field:'createTime',width:50">Create Date</th>
 											        </tr>
 											    </thead>
 											</table>
@@ -1031,7 +1079,7 @@
 																</tr>
 																<tr>
 																	<td>Deck Type:</td>
-																	<td><input class="easyui-textbox" type="text" name="deckType" data-options="required:true"></input></td>
+																	<td><input class="easyui-textbox" type="text" name="deckType" data-options="required:true,value:'1P9M'"></input></td>
 																</tr>
 																<tr>
 																	<td>Deck File:</td>
@@ -1109,10 +1157,11 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'modelId',width:100">ID</th>
-											            <th data-options="field:'modelName',width:100">Name</th>
-											            <th data-options="field:'modelType',width:100">Type</th>
-											            <th data-options="field:'createTime',width:100">Create Date</th>
+											            <th data-options="field:'modelId',width:30">ID</th>
+											            <th data-options="field:'modelName',width:50">Name</th>
+											            <th data-options="field:'modelType',width:50">Type</th>
+											            <th data-options="field:'modelFileName',width:80">File</th>
+											            <th data-options="field:'createTime',width:50">Create Date</th>
 											        </tr>
 											    </thead>
 											</table>
@@ -1137,7 +1186,7 @@
 																</tr>
 																<tr>
 																	<td>Model Type:</td>
-																	<td><input class="easyui-textbox" type="text" name="modelType" data-options="required:true"></input></td>
+																	<td><input class="easyui-textbox" type="text" name="modelType" data-options="required:true,value:'1P9M'"></input></td>
 																</tr>
 																<tr>
 																	<td>Model File:</td>
@@ -1237,6 +1286,12 @@
     <script type="text/javascript" src="/LIB/raphael/raphael-min.js"></script>
     <script type="text/javascript" src="/LIB/angular/angular.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    
+    <script type="text/javascript">
+    	$(document).ready(function() {
+    		loadJobList();
+    	});
+    </script>
 	
 </body>
 

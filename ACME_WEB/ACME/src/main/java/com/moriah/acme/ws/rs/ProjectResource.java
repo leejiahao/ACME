@@ -25,6 +25,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.moriah.acme.AcmeConfig;
 import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.ProjectService;
 import com.moriah.acme.utils.FileUtils;
@@ -43,7 +44,7 @@ import com.moriah.acme.entities.AcmeFile;
 public class ProjectResource {
 	private static final Logger log = LoggerFactory.getLogger(ProjectResource.class);
 	
-	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "D://temp/test/ACME/";
+	private static final String SERVER_UPLOAD_LOCATION_FOLDER = AcmeConfig.ACME_PROJECT_PATH;
 
 	private ProjectService projectService = ServiceUtil.getProjectService();
 	
@@ -172,19 +173,23 @@ public class ProjectResource {
 			@FormDataParam("tvId") String tvId,
 			@FormDataParam("circuitName") String circuitName,
 			@FormDataParam("circuitType") String circuitType,
+			@FormDataParam("circuitGdsTopCell") String circuitGdsTopCell,
 			@FormDataParam("isPrimary") String strIsPrimary,
             @FormDataParam("circuitFile") InputStream fileInputStream,
             @FormDataParam("circuitFile") FormDataContentDisposition contentDispositionHeader
-			) {	
+			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createControlCircuit strIsPrimary: {} information successfully created.", strIsPrimary);
 
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ circuitName + "_CC_" + contentDispositionHeader.getFileName();
+		String fileName = contentDispositionHeader.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.CONTROL_CIRCUIT_PATH;
+		String fileFullName = filePath + "/" + fileName;
 		
 		// save the file to the server
-		FileUtils.saveFile(fileInputStream, filePath);
+		FileUtils.mkdir(filePath);
+		FileUtils.saveFile(fileInputStream, fileFullName);
 		
-		String output = "createControlCircuit:" + filePath;
+		String output = "createControlCircuit:" + fileFullName;
 		log.info("createControlCircuit output: {} information successfully created.", output);
 		
 		Boolean isPrimary = false;
@@ -198,6 +203,9 @@ public class ProjectResource {
 		acmeControlCircuit.setCircuitId(circuitId);
 		acmeControlCircuit.setCircuitName(circuitName);
 		acmeControlCircuit.setCircuitType(circuitType);
+		acmeControlCircuit.setCircuitGdsFilePath(filePath);
+		acmeControlCircuit.setCircuitGdsFileName(fileName);
+		acmeControlCircuit.setCircuitGdsTopCell(circuitGdsTopCell);
 		acmeControlCircuit.setIsPrimary(isPrimary);
 
 		acmeControlCircuit.setCreateUser("CHLEEZO");
@@ -238,16 +246,19 @@ public class ProjectResource {
 			@FormDataParam("isPrimary") String strIsPrimary,
             @FormDataParam("deckFile") InputStream fileInputStream,
             @FormDataParam("deckFile") FormDataContentDisposition contentDispositionHeader
-			) {	
+			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createDrcDeck strIsPrimary: {} information successfully created.", strIsPrimary);
-
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ deckName + "_DRC_" + contentDispositionHeader.getFileName();
+		
+		String fileName = contentDispositionHeader.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.DRC_DECK_PATH;
+		String fileFullName = filePath + "/" + fileName;
 		
 		// save the file to the server
-		FileUtils.saveFile(fileInputStream, filePath);
+		FileUtils.mkdir(filePath);
+		FileUtils.saveFile(fileInputStream, fileFullName);
 		
-		String output = "createDrcDeck:" + filePath;
+		String output = "createDrcDeck:" + fileFullName;
 		log.info("createDrcDeck output: {} information successfully created.", output);
 		
 		Boolean isPrimary = false;
@@ -261,6 +272,8 @@ public class ProjectResource {
 		deck.setDeckId(deckId);
 		deck.setDeckName(deckName);
 		deck.setDeckType(deckType);
+		deck.setDeckFilePath(filePath);
+		deck.setDeckFileName(fileName);
 		deck.setIsPrimary(isPrimary);
 
 		deck.setCreateUser("CHLEEZO");
@@ -301,16 +314,19 @@ public class ProjectResource {
 			@FormDataParam("isPrimary") String strIsPrimary,
             @FormDataParam("deckFile") InputStream fileInputStream,
             @FormDataParam("deckFile") FormDataContentDisposition contentDispositionHeader
-			) {	
+			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createLvsDeck strIsPrimary: {} information successfully created.", strIsPrimary);
 
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ deckName + "_LVS_" + contentDispositionHeader.getFileName();
+		String fileName = contentDispositionHeader.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.LVS_DECK_PATH;
+		String fileFullName = filePath + "/" + fileName;
 		
 		// save the file to the server
-		FileUtils.saveFile(fileInputStream, filePath);
+		FileUtils.mkdir(filePath);
+		FileUtils.saveFile(fileInputStream, fileFullName);
 		
-		String output = "createLvsDeck:" + filePath;
+		String output = "createLvsDeck:" + fileFullName;
 		log.info("createLvsDeck output: {} information successfully created.", output);
 		
 		Boolean isPrimary = false;
@@ -324,6 +340,8 @@ public class ProjectResource {
 		deck.setDeckId(deckId);
 		deck.setDeckName(deckName);
 		deck.setDeckType(deckType);
+		deck.setDeckFilePath(filePath);
+		deck.setDeckFileName(fileName);
 		deck.setIsPrimary(isPrimary);
 
 		deck.setCreateUser("CHLEEZO");
@@ -364,16 +382,19 @@ public class ProjectResource {
 			@FormDataParam("isPrimary") String strIsPrimary,
             @FormDataParam("deckFile") InputStream fileInputStream,
             @FormDataParam("deckFile") FormDataContentDisposition contentDispositionHeader
-			) {	
+			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createRcDeck strIsPrimary: {} information successfully created.", strIsPrimary);
 
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ deckName + "_RC_" + contentDispositionHeader.getFileName();
+		String fileName = contentDispositionHeader.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.RC_DECK_PATH;
+		String fileFullName = filePath + "/" + fileName;
 		
 		// save the file to the server
-		FileUtils.saveFile(fileInputStream, filePath);
+		FileUtils.mkdir(filePath);
+		FileUtils.saveFile(fileInputStream, fileFullName);
 		
-		String output = "createRcDeck:" + filePath;
+		String output = "createRcDeck:" + fileFullName;
 		log.info("createRcDeck output: {} information successfully created.", output);
 		
 		Boolean isPrimary = false;
@@ -387,6 +408,8 @@ public class ProjectResource {
 		deck.setDeckId(deckId);
 		deck.setDeckName(deckName);
 		deck.setDeckType(deckType);
+		deck.setDeckFilePath(filePath);
+		deck.setDeckFileName(fileName);
 		deck.setIsPrimary(isPrimary);
 
 		deck.setCreateUser("CHLEEZO");
@@ -427,16 +450,19 @@ public class ProjectResource {
 			@FormDataParam("isPrimary") String strIsPrimary,
             @FormDataParam("modelFile") InputStream fileInputStream,
             @FormDataParam("modelFile") FormDataContentDisposition contentDispositionHeader
-			) {	
+			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createSpiceModel strIsPrimary: {} information successfully created.", strIsPrimary);
 
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ modelName + "_SPICE_" + contentDispositionHeader.getFileName();
+		String fileName = contentDispositionHeader.getFileName();
+		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.SPICE_MODEL_PATH;
+		String fileFullName = filePath + "/" + fileName;
 		
 		// save the file to the server
-		FileUtils.saveFile(fileInputStream, filePath);
+		FileUtils.mkdir(filePath);
+		FileUtils.saveFile(fileInputStream, fileFullName);
 		
-		String output = "createSpiceModel:" + filePath;
+		String output = "createSpiceModel:" + fileFullName;
 		log.info("createSpiceModel output: {} information successfully created.", output);
 		
 		Boolean isPrimary = false;
@@ -450,6 +476,8 @@ public class ProjectResource {
 		model.setModelId(deckId);
 		model.setModelName(modelName);
 		model.setModelType(modelType);
+		model.setModelFilePath(filePath);
+		model.setModelFileName(fileName);
 		model.setIsPrimary(isPrimary);
 
 		model.setCreateUser("CHLEEZO");

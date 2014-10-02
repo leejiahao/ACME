@@ -25,10 +25,11 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.moriah.acme.AcmeConfig;
+import com.moriah.acme.beans.JobCommand;
 import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.JobService;
 import com.moriah.acme.entities.AcmeJob;
-
 import com.moriah.acme.utils.FileUtils;
 
 
@@ -40,7 +41,7 @@ import com.moriah.acme.utils.FileUtils;
 public class JobResource {
 	private static final Logger log = LoggerFactory.getLogger(JobResource.class);
 	
-	private static final String SERVER_UPLOAD_LOCATION_FOLDER = "D://temp/test/ACME/JOB/";
+	private static final String SERVER_UPLOAD_LOCATION_FOLDER = AcmeConfig.ACME_JOB_PATH;
 
 	private JobService jobService = ServiceUtil.getJobService();
 
@@ -50,6 +51,8 @@ public class JobResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createJob(
 			@FormDataParam("tvId") String strTvId,
+			@FormDataParam("jobName") String jobName,
+			@FormDataParam("jobDesc") String jobDesc,
 			@FormDataParam("circuitId") String strCircuitId,
 			@FormDataParam("drcDeckId") String strDrcDeckId,
 			@FormDataParam("lvsDeckId") String strLvsDeckId,
@@ -67,8 +70,14 @@ public class JobResource {
             @FormDataParam("testbenchFile") FormDataContentDisposition testbenchFileContentDispositionHeader,
             @FormDataParam("composedGdsFile") InputStream composedGdsFileInputStream,
             @FormDataParam("composedGdsFile") FormDataContentDisposition composedGdsFileContentDispositionHeader
-			) {	
-		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
+			) throws IOException {
+		// job command
+		JobCommand jobCommand = new JobCommand();
+
+		// job id
+		UUID jobId = UUID.randomUUID();
+
+		log.info("createJob jobId: {} information successfully created.", jobId);
 		log.info("createJob tvId: {} information successfully created.", strTvId);
 		log.info("createJob circuitId: {} information successfully created.", strCircuitId);
 		log.info("createJob drcDeckId: {} information successfully created.", strDrcDeckId);
@@ -76,53 +85,70 @@ public class JobResource {
 		log.info("createJob rcDeckId: {} information successfully created.", strRcDeckId);
 		log.info("createJob spiceModelId: {} information successfully created.", strSpiceModelId);
 		
-		// cell info file
-		String cellInfoFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_CELL_INFO_" + cellInfoFileContentDispositionHeader.getFileName();
+		// job input path
+		String jobInputPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId + "/" + AcmeConfig.JOB_INPUT_PATH;
 		
 		// save the file to the server
-		FileUtils.saveFile(cellInfoFileInputStream, cellInfoFilePath);
+		FileUtils.mkdir(jobInputPath);
 		
-		// placement file
-		String placementFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_PLACEMENT_" + placementFileContentDispositionHeader.getFileName();
+		// job file
+		String jobFile = jobInputPath + "/" + jobId + AcmeConfig.JOB_FILE_SUFFIX;
 		
-		// save the file to the server
-		FileUtils.saveFile(placementFileInputStream, placementFilePath);
+		// cell info file		
+		String cellInfoFileName = cellInfoFileContentDispositionHeader.getFileName();
+		String cellInfoFileFullName = jobInputPath + "/" + cellInfoFileName;
+		FileUtils.saveFile(cellInfoFileInputStream, cellInfoFileFullName);
 		
-		// source cell GDS file
-		String sourceCellGdsFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_SOURCE_CELL_GDS_" + sourceCellGdsFileContentDispositionHeader.getFileName();
+		jobCommand.setInfo(cellInfoFileFullName);
 		
-		// save the file to the server
-		FileUtils.saveFile(sourceCellGdsFileInputStream, sourceCellGdsFilePath);
+		// placement file		
+		String placementFileName = placementFileContentDispositionHeader.getFileName();
+		String placementFileFullName = jobInputPath + "/" + placementFileName;
+		FileUtils.saveFile(placementFileInputStream, placementFileFullName);
+		
+		jobCommand.setPlace(placementFileFullName);
+		
+		// source cell GDS file		
+		String sourceCellGdsFileName = sourceCellGdsFileContentDispositionHeader.getFileName();
+		String sourceCellGdsFileFullName = jobInputPath + "/" + sourceCellGdsFileName;
+		FileUtils.saveFile(sourceCellGdsFileInputStream, sourceCellGdsFileFullName);
+		
+		jobCommand.setSrcGds(sourceCellGdsFileFullName);
 		
 		// netlist
-		String netlistFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_NETLIST_" + netlistFileContentDispositionHeader.getFileName();
+		String netlistFileName = netlistFileContentDispositionHeader.getFileName();
+		String netlistFileFullName = jobInputPath + "/" + netlistFileName;
+		FileUtils.saveFile(netlistFileInputStream, netlistFileFullName);
 		
-		// save the file to the server
-		FileUtils.saveFile(netlistFileInputStream, netlistFilePath);
+		jobCommand.setNetlist(netlistFileFullName);
 		
-		// testbench
-		String testbenchFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_TESTBENCH_" + testbenchFileContentDispositionHeader.getFileName();
+		// testbench		
+		String testbenchFileName = testbenchFileContentDispositionHeader.getFileName();
+		String testbenchFileFullName = jobInputPath + "/" + testbenchFileName;
+		FileUtils.saveFile(testbenchFileInputStream, testbenchFileFullName);
 		
-		// save the file to the server
-		FileUtils.saveFile(testbenchFileInputStream, testbenchFilePath);
+		jobCommand.setTestbench(testbenchFileFullName);
 
-		// composed GDS
-		String composedGdsFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ strTvId + "_COMPOSED_GDS_" + composedGdsFileContentDispositionHeader.getFileName();
+		// composed GDS		
+		String composedGdsFileName = composedGdsFileContentDispositionHeader.getFileName();
+		String composedGdsFileFullName = jobInputPath + "/" + composedGdsFileName;
+		FileUtils.saveFile(composedGdsFileInputStream, composedGdsFileFullName);
 		
-		// save the file to the server
-		FileUtils.saveFile(composedGdsFileInputStream, composedGdsFilePath);
+		// write job file
+		FileUtils.writeStringToFile(jobFile, jobCommand.toString());
 		
-		String output = "createDrcDeck:" + composedGdsFilePath;
-		log.info("createDrcDeck output: {} information successfully created.", output);
+		String output = "composedGdsFileFullName:" + composedGdsFileFullName;
+		log.info("composedGdsFileFullName output: {} information successfully created.", output);
 
 		UUID tvId = UUID.fromString(strTvId);
 		UUID drcDeckId = UUID.fromString(strDrcDeckId);
 
-		UUID jobId = UUID.randomUUID(); 
 		AcmeJob job = new AcmeJob();
 		job.setTvId(tvId);
 		job.setJobId(jobId);
-
+		job.setJobName(jobName);
+		job.setJobDesc(jobDesc);
+		job.setOwner("CHLEEZO");
 		job.setCreateUser("CHLEEZO");
 		job.setUpdateUser("CHLEEZO");
 		job.setStatus("Active");

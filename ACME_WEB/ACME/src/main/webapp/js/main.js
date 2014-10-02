@@ -13,6 +13,15 @@ function addPanel(){
     });
 }
 
+/**
+ * JOB list
+ */
+function loadJobList() {
+	$('#tb_job_list').datagrid('load',{
+		owner: 'CHLEEZO'
+	});
+}
+
 
 /**
  * Submit JOB 
@@ -35,7 +44,8 @@ $('#form_add_job').form({
     },
     success:function(data){
     	$('#dialog_submit_add_job').dialog('close');
-    	 $('#tb_job_list').tree('reload');
+    	//$('#tb_job_list').tree('reload');
+    	loadJobList();
     }
 });
 

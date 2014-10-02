@@ -28,6 +28,15 @@ public class AcmeControlCircuit {
     
     @Column(name = "circuit_desc")
     private String circuitDesc;
+    
+    @Column(name = "circuit_gds_file_path")
+    private String circuitGdsFilePath;
+    
+    @Column(name = "circuit_gds_file_name")
+    private String circuitGdsFileName;
+    
+    @Column(name = "circuit_gds_top_cell")
+    private String circuitGdsTopCell;
 
     @Column(name = "file_id")
     private UUID fileId;
@@ -148,5 +157,29 @@ public class AcmeControlCircuit {
 
 	public void setIsPrimary(Boolean isPrimary) {
 		this.isPrimary = isPrimary;
+	}
+
+	public String getCircuitGdsFilePath() {
+		return circuitGdsFilePath;
+	}
+
+	public void setCircuitGdsFilePath(String circuitGdsFilePath) {
+		this.circuitGdsFilePath = circuitGdsFilePath;
+	}
+
+	public String getCircuitGdsTopCell() {
+		return circuitGdsTopCell;
+	}
+
+	public void setCircuitGdsTopCell(String circuitGdsTopCell) {
+		this.circuitGdsTopCell = circuitGdsTopCell;
+	}
+
+	public String getCircuitGdsFileName() {
+		return circuitGdsFileName;
+	}
+
+	public void setCircuitGdsFileName(String circuitGdsFileName) {
+		this.circuitGdsFileName = circuitGdsFileName;
 	}
 }

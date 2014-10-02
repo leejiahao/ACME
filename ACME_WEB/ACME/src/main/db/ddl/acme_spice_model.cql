@@ -11,6 +11,8 @@ CREATE TABLE acme_spice_model (
     model_name text,
     model_type text,
     model_desc text,
+    model_file_path text,
+    model_file_name text,
     file_id uuid,
     is_primary boolean,
     status text,

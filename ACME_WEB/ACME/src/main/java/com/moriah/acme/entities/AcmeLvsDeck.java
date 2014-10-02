@@ -28,6 +28,12 @@ public class AcmeLvsDeck {
     
     @Column(name = "deck_desc")
     private String deckDesc;
+    
+    @Column(name = "deck_file_path")
+    private String deckFilePath;
+    
+    @Column(name = "deck_file_name")
+    private String deckFileName;
 
     @Column(name = "file_id")
     private UUID fileId;
@@ -148,5 +154,21 @@ public class AcmeLvsDeck {
 
 	public void setIsPrimary(Boolean isPrimary) {
 		this.isPrimary = isPrimary;
+	}
+
+	public String getDeckFilePath() {
+		return deckFilePath;
+	}
+
+	public void setDeckFilePath(String deckFilePath) {
+		this.deckFilePath = deckFilePath;
+	}
+
+	public String getDeckFileName() {
+		return deckFileName;
+	}
+
+	public void setDeckFileName(String deckFileName) {
+		this.deckFileName = deckFileName;
 	}
 }
