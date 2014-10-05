@@ -3,6 +3,7 @@ package com.moriah.acme;
 public class AcmeConfig {
 	public static String LINE_SEPARATOR = System.getProperty("line.separator");
 
+	public static String ACME_JOB_STARTER = "D://temp/test/ACME/BIN/run_apv.sh";
 	public static String ACME_JOB_PROGRAM = "D://temp/test/ACME/BIN/APV";
 	public static String ACME_PROJECT_PATH = "D://temp/test/ACME/PROJECT";
 	public static String ACME_JOB_PATH = "D://temp/test/ACME/JOB";

@@ -37,6 +37,12 @@ public class AcmeControlCircuit {
     
     @Column(name = "circuit_gds_top_cell")
     private String circuitGdsTopCell;
+    
+    @Column(name = "coordinate_file_path")
+    private String coordinateFilePath;
+    
+    @Column(name = "coordinate_file_name")
+    private String coordinateFileName;
 
     @Column(name = "file_id")
     private UUID fileId;
@@ -181,5 +187,21 @@ public class AcmeControlCircuit {
 
 	public void setCircuitGdsFileName(String circuitGdsFileName) {
 		this.circuitGdsFileName = circuitGdsFileName;
+	}
+
+	public String getCoordinateFilePath() {
+		return coordinateFilePath;
+	}
+
+	public void setCoordinateFilePath(String coordinateFilePath) {
+		this.coordinateFilePath = coordinateFilePath;
+	}
+
+	public String getCoordinateFileName() {
+		return coordinateFileName;
+	}
+
+	public void setCoordinateFileName(String coordinateFileName) {
+		this.coordinateFileName = coordinateFileName;
 	}
 }

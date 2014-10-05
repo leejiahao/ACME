@@ -46,6 +46,9 @@ $('#form_add_job').form({
     	$('#dialog_submit_add_job').dialog('close');
     	//$('#tb_job_list').tree('reload');
     	loadJobList();
+    	
+    	// switch back to job list tab
+    	$('#acme_tab').tabs('select', 'Job List');
     }
 });
 
@@ -207,13 +210,13 @@ function chooseSpiceModel() {
 	highlightJobStage(activeStageId);
 }
 
-function seleteCompleteGds() {
-	$("#seleteCompleteGds").css("visibility", "visible");
+function seleteComposedGds() {
+	$("#seleteComposedGds").css("visibility", "visible");
 	$("#seleteComposeNewGds").css("visibility", "hidden");
 }
 
 function seleteComposeNewGds() {
-	$("#seleteCompleteGds").css("visibility", "hidden");
+	$("#seleteComposedGds").css("visibility", "hidden");
 	$("#seleteComposeNewGds").css("visibility", "visible");
 }
 

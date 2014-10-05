@@ -175,21 +175,29 @@ public class ProjectResource {
 			@FormDataParam("circuitType") String circuitType,
 			@FormDataParam("circuitGdsTopCell") String circuitGdsTopCell,
 			@FormDataParam("isPrimary") String strIsPrimary,
-            @FormDataParam("circuitFile") InputStream fileInputStream,
-            @FormDataParam("circuitFile") FormDataContentDisposition contentDispositionHeader
+            @FormDataParam("circuitFile") InputStream circuitFileInputStream,
+            @FormDataParam("circuitFile") FormDataContentDisposition circuitFilecontentDispositionHeader,
+            @FormDataParam("coordinateFile") InputStream coordinateFileInputStream,
+            @FormDataParam("coordinateFile") FormDataContentDisposition coordinateFilecontentDispositionHeader
 			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createControlCircuit strIsPrimary: {} information successfully created.", strIsPrimary);
 
-		String fileName = contentDispositionHeader.getFileName();
-		String filePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.CONTROL_CIRCUIT_PATH;
-		String fileFullName = filePath + "/" + fileName;
+		// circuit file
+		String circuitFileName = circuitFilecontentDispositionHeader.getFileName();
+		String circuitFilePath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + tvId + "/" + AcmeConfig.CONTROL_CIRCUIT_PATH;
+		String circuitFileFullName = circuitFilePath + "/" + circuitFileName;
 		
 		// save the file to the server
-		FileUtils.mkdir(filePath);
-		FileUtils.saveFile(fileInputStream, fileFullName);
+		FileUtils.mkdir(circuitFilePath);
+		FileUtils.saveFile(circuitFileInputStream, circuitFileFullName);
 		
-		String output = "createControlCircuit:" + fileFullName;
+		// coordinate
+		String coordinateFileName = coordinateFilecontentDispositionHeader.getFileName();
+		String coordinateFileFullName = circuitFilePath + "/" + coordinateFileName;
+		FileUtils.saveFile(coordinateFileInputStream, coordinateFileFullName);
+		
+		String output = "createControlCircuit:" + circuitFileFullName;
 		log.info("createControlCircuit output: {} information successfully created.", output);
 		
 		Boolean isPrimary = false;
@@ -203,9 +211,11 @@ public class ProjectResource {
 		acmeControlCircuit.setCircuitId(circuitId);
 		acmeControlCircuit.setCircuitName(circuitName);
 		acmeControlCircuit.setCircuitType(circuitType);
-		acmeControlCircuit.setCircuitGdsFilePath(filePath);
-		acmeControlCircuit.setCircuitGdsFileName(fileName);
+		acmeControlCircuit.setCircuitGdsFilePath(circuitFilePath);
+		acmeControlCircuit.setCircuitGdsFileName(circuitFileName);
 		acmeControlCircuit.setCircuitGdsTopCell(circuitGdsTopCell);
+		acmeControlCircuit.setCoordinateFilePath(circuitFilePath);
+		acmeControlCircuit.setCoordinateFileName(coordinateFileName);
 		acmeControlCircuit.setIsPrimary(isPrimary);
 
 		acmeControlCircuit.setCreateUser("CHLEEZO");

@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -31,6 +32,7 @@ import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.JobService;
 import com.moriah.acme.entities.AcmeJob;
 import com.moriah.acme.utils.FileUtils;
+import com.moriah.acme.utils.ProcessUtils;
 
 
 
@@ -86,6 +88,7 @@ public class JobResource {
 		log.info("createJob spiceModelId: {} information successfully created.", strSpiceModelId);
 		
 		// job input path
+		String jobPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId;
 		String jobInputPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId + "/" + AcmeConfig.JOB_INPUT_PATH;
 		
 		// save the file to the server
@@ -158,6 +161,11 @@ public class JobResource {
 
 		jobService.createJob(job);
 		
+		// start command
+		String command = AcmeConfig.ACME_JOB_STARTER + " " + jobFile;
+		ProcessUtils.exec(command);
+		log.info("createJob command: {} information successfully created.", command);
+		
 		log.info("createJob job: {} information successfully created.", job);
 		
 		return output;
@@ -167,9 +175,11 @@ public class JobResource {
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AcmeJob> getJobByOwner(
-    		@QueryParam("owner") String owner
+    		@QueryParam("owner") String owner,
+    		@CookieParam(value = "ACME_USER_ID") String userId
     		) {
-    	return jobService.findJobListByOwner(owner);
+    	log.info("getJobByOwner userId: {} information successfully received.", userId);
+    	return jobService.findJobListByOwner(userId);
     }
 
 }

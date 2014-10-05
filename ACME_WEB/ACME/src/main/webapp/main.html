@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Basic Layout - jQuery EasyUI Demo</title>
+    <link rel="icon" href="images/favicon.ico">
+
     <link rel="stylesheet" type="text/css" href="/LIB/jquery-easyui-1.4/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="/LIB/jquery-easyui-1.4/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="je.css">
@@ -48,10 +50,12 @@
 					            <th data-options="field:'jobName',width:30">Name</th>
 					            <th data-options="field:'jobDesc',width:60">Description</th>
 					            <th data-options="field:'composedGds',width:50">GDS</th>
+					            <!-- 
 					            <th data-options="field:'drcStatus',width:30">DRC</th>
 					            <th data-options="field:'lvsStatus',width:30">LVS</th>
 					            <th data-options="field:'rcStatus',width:30">RC</th>
 					            <th data-options="field:'spiceStatus',width:30">SPICE</th>
+					             -->
 					            <th data-options="field:'updateTime',width:50">Update Time</th>
 					            <th data-options="field:'createTime',width:50">Create Time</th>
 					        </tr>
@@ -122,7 +126,7 @@
 						    	<div style="margin-bottom:3px"></div>
 								<div class="easyui-panel" data-options="title:'',border:false" style="padding:5px;vertical-align:text-top;">
 									<input type="radio" name="gds_source_type" value="orig_gds" checked onclick="seleteComposeNewGds();" >Compose New GDS &nbsp;&nbsp;
-									<input type="radio" name="gds_source_type" value="asm_gds"  onclick="seleteCompleteGds();">Select Complsed GDS &nbsp;&nbsp;
+									<input type="radio" name="gds_source_type" value="asm_gds"  onclick="seleteComposedGds();">Select Composed GDS &nbsp;&nbsp;
 								</div>
 
 								<div class="easyui-panel" data-options="title:'',border:false,fit:true" style="padding:5px;" >
@@ -741,7 +745,7 @@
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove Control Circuit</a>
 											</div>
 											
-											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:450px;height:270px;"
+											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:500px;height:300px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
 		
@@ -757,7 +761,12 @@
 																</tr>
 																<tr>
 																	<td>Circuit Type:</td>
-																	<td><input class="easyui-textbox" type="text" name="circuitType" data-options="required:true,value:'DFF588'"></input></td>
+																	<td>
+																		<select class="easyui-combobox" name="circuitType" style="width:150px;">
+																			<option value="588">588</option>
+																			<option value="1176">1176</option>
+																		</select>
+																	</td>
 																</tr>
 																<tr>
 																	<td>Circuit GDS:</td>
@@ -766,6 +775,10 @@
 																<tr>
 																	<td>Top Cell:</td>
 																	<td><input class="easyui-textbox" type="text" name="circuitGdsTopCell" data-options="required:true,value:'TOP'"></input></td>
+																</tr>
+																<tr>
+																	<td>Cooridinate:</td>
+																	<td><input class="easyui-filebox" name="coordinateFile" data-options="prompt:'Choose a coordinate file...'" style="width:300px"></input></td>
 																</tr>
 																<tr>
 																	<td>Primary:</td>
