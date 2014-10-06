@@ -16,6 +16,8 @@ CREATE TABLE acme_control_circuit (
     circuit_gds_top_cell text,
     coordinate_file_path text,
     coordinate_file_name text,
+    netlist_file_path text,
+    netlist_file_name text,
     file_id uuid,
     is_primary boolean,
     status text,

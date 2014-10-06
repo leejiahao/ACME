@@ -43,6 +43,8 @@ $('#form_add_job').form({
     	$('#dialog_submit_add_job').dialog('open');
     },
     success:function(data){
+    	$('#pg_submit_add_job').progressbar('setValue', 50);
+    	$('#pg_submit_add_job').progressbar('setValue', 99);
     	$('#dialog_submit_add_job').dialog('close');
     	//$('#tb_job_list').tree('reload');
     	loadJobList();

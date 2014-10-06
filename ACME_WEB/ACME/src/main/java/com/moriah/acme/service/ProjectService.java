@@ -30,11 +30,17 @@ public interface ProjectService {
 	// find control circuit list
 	public List<AcmeControlCircuit> findControlCircuitListByTv(String tvId);
 	
+	// find control circuit by id
+	public AcmeControlCircuit findControlCircuitById(String strCircuitId);
+	
 	// create control circuit
 	public void createControlCircuit(AcmeControlCircuit controlCircuit);
 	
 	// find DRC deck list
 	public List<AcmeDrcDeck> findDrcDeckListByTv(String tvId);
+	
+	// find DRC deck by id
+	public AcmeDrcDeck findDrcDeckById(String strDeckId);
 	
 	// create DRC deck
 	public void createDrcDeck(AcmeDrcDeck deck);
@@ -51,6 +57,9 @@ public interface ProjectService {
 	// find LVS deck list
 	public List<AcmeLvsDeck> findLvsDeckListByTv(String tvId);
 	
+	// find LVS deck by id
+	public AcmeLvsDeck findLvsDeckById(String strDeckId);
+	
 	// create LVS deck
 	public void createLvsDeck(AcmeLvsDeck deck);
 	
@@ -66,6 +75,9 @@ public interface ProjectService {
 	// find RC deck list
 	public List<AcmeRcDeck> findRcDeckListByTv(String tvId);
 	
+	// find RC deck by id
+	public AcmeRcDeck findRcDeckById(String strDeckId);
+	
 	// create RC deck
 	public void createRcDeck(AcmeRcDeck deck);
 	
@@ -80,6 +92,9 @@ public interface ProjectService {
 	
 	// find SPICE model list
 	public List<AcmeSpiceModel> findSpiceModelListByTv(String tvId);
+	
+	// find SPICE model by id
+	public AcmeSpiceModel findSpiceModelById(String strModelId);
 	
 	// create SPICE model
 	public void createSpiceModel(AcmeSpiceModel model);

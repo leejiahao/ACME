@@ -97,6 +97,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
     
     @Override
+    public AcmeControlCircuit findControlCircuitById(String strCircuitId)
+    {
+    	UUID circuitId = UUID.fromString(strCircuitId);
+    	AcmeControlCircuit controlCircuit = dao.findById(AcmeControlCircuit.class, circuitId);
+    	return controlCircuit;
+    }
+    
+    @Override
     public void createControlCircuit(AcmeControlCircuit controlCircuit)
     {
         dao.insert(controlCircuit);
@@ -115,6 +123,14 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return drcDeckList;
+    }
+    
+    @Override
+    public AcmeDrcDeck findDrcDeckById(String strDeckId)
+    {
+    	UUID deckId = UUID.fromString(strDeckId);
+    	AcmeDrcDeck deck = dao.findById(AcmeDrcDeck.class, deckId);
+    	return deck;
     }
     
     @Override
@@ -162,6 +178,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
     
     @Override
+    public AcmeLvsDeck findLvsDeckById(String strDeckId)
+    {
+    	UUID deckId = UUID.fromString(strDeckId);
+    	AcmeLvsDeck deck = dao.findById(AcmeLvsDeck.class, deckId);
+    	return deck;
+    }
+    
+    @Override
     public void createLvsDeck(AcmeLvsDeck deck)
     {
         dao.insert(deck);
@@ -206,6 +230,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
     
     @Override
+    public AcmeRcDeck findRcDeckById(String strDeckId)
+    {
+    	UUID deckId = UUID.fromString(strDeckId);
+    	AcmeRcDeck deck = dao.findById(AcmeRcDeck.class, deckId);
+    	return deck;
+    }
+    
+    @Override
     public void createRcDeck(AcmeRcDeck deck)
     {
         dao.insert(deck);
@@ -247,6 +279,14 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return spiceModelList;
+    }
+    
+    @Override
+    public AcmeSpiceModel findSpiceModelById(String strModelId)
+    {
+    	UUID modelId = UUID.fromString(strModelId);
+    	AcmeSpiceModel model = dao.findById(AcmeSpiceModel.class, modelId);
+    	return model;
     }
     
     @Override

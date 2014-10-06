@@ -745,7 +745,7 @@
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove Control Circuit</a>
 											</div>
 											
-											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:500px;height:300px;"
+											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:500px;height:320px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
 		
@@ -764,7 +764,12 @@
 																	<td>
 																		<select class="easyui-combobox" name="circuitType" style="width:150px;">
 																			<option value="588">588</option>
-																			<option value="1176">1176</option>
+																			<option value="1008">1008</option>
+																			<option value="504">504</option>
+																			<option value="336">336</option>
+																			<option value="84">84</option>
+																			<option value="cbcm">cbcm</option>
+																			<option value="rom">rom</option>
 																		</select>
 																	</td>
 																</tr>
@@ -779,6 +784,10 @@
 																<tr>
 																	<td>Cooridinate:</td>
 																	<td><input class="easyui-filebox" name="coordinateFile" data-options="prompt:'Choose a coordinate file...'" style="width:300px"></input></td>
+																</tr>
+																<tr>
+																	<td>Netlist:</td>
+																	<td><input class="easyui-filebox" name="netlistFile" data-options="prompt:'Choose a netlist file...'" style="width:300px"></input></td>
 																</tr>
 																<tr>
 																	<td>Primary:</td>

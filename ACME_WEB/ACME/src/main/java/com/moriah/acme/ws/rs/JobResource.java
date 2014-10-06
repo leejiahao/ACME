@@ -30,7 +30,13 @@ import com.moriah.acme.AcmeConfig;
 import com.moriah.acme.beans.JobCommand;
 import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.JobService;
+import com.moriah.acme.service.ProjectService;
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeControlCircuit;
+import com.moriah.acme.entities.AcmeDrcDeck;
+import com.moriah.acme.entities.AcmeLvsDeck;
+import com.moriah.acme.entities.AcmeRcDeck;
+import com.moriah.acme.entities.AcmeSpiceModel;
 import com.moriah.acme.utils.FileUtils;
 import com.moriah.acme.utils.ProcessUtils;
 
@@ -46,6 +52,7 @@ public class JobResource {
 	private static final String SERVER_UPLOAD_LOCATION_FOLDER = AcmeConfig.ACME_JOB_PATH;
 
 	private JobService jobService = ServiceUtil.getJobService();
+	private ProjectService projectService = ServiceUtil.getProjectService();
 
 	@POST
 	@Path("/new")
@@ -93,6 +100,8 @@ public class JobResource {
 		
 		// save the file to the server
 		FileUtils.mkdir(jobInputPath);
+
+		jobCommand.setPath(jobPath);;
 		
 		// job file
 		String jobFile = jobInputPath + "/" + jobId + AcmeConfig.JOB_FILE_SUFFIX;
@@ -136,6 +145,20 @@ public class JobResource {
 		String composedGdsFileName = composedGdsFileContentDispositionHeader.getFileName();
 		String composedGdsFileFullName = jobInputPath + "/" + composedGdsFileName;
 		FileUtils.saveFile(composedGdsFileInputStream, composedGdsFileFullName);
+		
+		// Control Circuit
+		AcmeControlCircuit controlCircuit = projectService.findControlCircuitById(strCircuitId);
+		jobCommand.setControlCircuitType(controlCircuit.getCircuitType());
+		jobCommand.setControlCircuitTop(controlCircuit.getCircuitGdsTopCell());
+		jobCommand.setControlCircuit(controlCircuit.getCircuitGdsFilePath() + "/" + controlCircuit.getCircuitGdsFileName());
+		
+		// DRC deck
+		AcmeDrcDeck drcDeck = projectService.findDrcDeckById(strDrcDeckId);
+		jobCommand.setControlCircuit(drcDeck.getDeckFilePath() + "/" + drcDeck.getDeckFileName());
+		
+		// LVS deck
+		AcmeLvsDeck lvsDeck = projectService.findLvsDeckById(strLvsDeckId);
+		jobCommand.setControlCircuit(lvsDeck.getDeckFilePath() + "/" + lvsDeck.getDeckFileName());
 		
 		// write job file
 		FileUtils.writeStringToFile(jobFile, jobCommand.toString());

@@ -178,7 +178,9 @@ public class ProjectResource {
             @FormDataParam("circuitFile") InputStream circuitFileInputStream,
             @FormDataParam("circuitFile") FormDataContentDisposition circuitFilecontentDispositionHeader,
             @FormDataParam("coordinateFile") InputStream coordinateFileInputStream,
-            @FormDataParam("coordinateFile") FormDataContentDisposition coordinateFilecontentDispositionHeader
+            @FormDataParam("coordinateFile") FormDataContentDisposition coordinateFilecontentDispositionHeader,
+            @FormDataParam("netlistFile") InputStream netlistFileInputStream,
+            @FormDataParam("netlistFile") FormDataContentDisposition netlistFilecontentDispositionHeader
 			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createControlCircuit strIsPrimary: {} information successfully created.", strIsPrimary);
@@ -196,6 +198,11 @@ public class ProjectResource {
 		String coordinateFileName = coordinateFilecontentDispositionHeader.getFileName();
 		String coordinateFileFullName = circuitFilePath + "/" + coordinateFileName;
 		FileUtils.saveFile(coordinateFileInputStream, coordinateFileFullName);
+		
+		// netlist
+		String netlistFileName = netlistFilecontentDispositionHeader.getFileName();
+		String netlistFileFullName = circuitFilePath + "/" + netlistFileName;
+		FileUtils.saveFile(netlistFileInputStream, netlistFileFullName);
 		
 		String output = "createControlCircuit:" + circuitFileFullName;
 		log.info("createControlCircuit output: {} information successfully created.", output);

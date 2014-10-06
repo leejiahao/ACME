@@ -43,6 +43,12 @@ public class AcmeControlCircuit {
     
     @Column(name = "coordinate_file_name")
     private String coordinateFileName;
+    
+    @Column(name = "netlist_file_path")
+    private String netlistFilePath;
+    
+    @Column(name = "netlist_file_name")
+    private String netlistFileName;
 
     @Column(name = "file_id")
     private UUID fileId;
@@ -203,5 +209,21 @@ public class AcmeControlCircuit {
 
 	public void setCoordinateFileName(String coordinateFileName) {
 		this.coordinateFileName = coordinateFileName;
+	}
+
+	public String getNetlistFilePath() {
+		return netlistFilePath;
+	}
+
+	public void setNetlistFilePath(String netlistFilePath) {
+		this.netlistFilePath = netlistFilePath;
+	}
+
+	public String getNetlistFileName() {
+		return netlistFileName;
+	}
+
+	public void setNetlistFileName(String netlistFileName) {
+		this.netlistFileName = netlistFileName;
 	}
 }
