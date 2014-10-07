@@ -151,14 +151,15 @@ public class JobResource {
 		jobCommand.setControlCircuitType(controlCircuit.getCircuitType());
 		jobCommand.setControlCircuitTop(controlCircuit.getCircuitGdsTopCell());
 		jobCommand.setControlCircuit(controlCircuit.getCircuitGdsFilePath() + "/" + controlCircuit.getCircuitGdsFileName());
+		jobCommand.setCoordinate(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getCoordinateFileName());
 		
 		// DRC deck
 		AcmeDrcDeck drcDeck = projectService.findDrcDeckById(strDrcDeckId);
-		jobCommand.setControlCircuit(drcDeck.getDeckFilePath() + "/" + drcDeck.getDeckFileName());
+		jobCommand.setDrcDeck(drcDeck.getDeckFilePath() + "/" + drcDeck.getDeckFileName());
 		
 		// LVS deck
 		AcmeLvsDeck lvsDeck = projectService.findLvsDeckById(strLvsDeckId);
-		jobCommand.setControlCircuit(lvsDeck.getDeckFilePath() + "/" + lvsDeck.getDeckFileName());
+		jobCommand.setLvsDeck(lvsDeck.getDeckFilePath() + "/" + lvsDeck.getDeckFileName());
 		
 		// write job file
 		FileUtils.writeStringToFile(jobFile, jobCommand.toString());

@@ -456,6 +456,20 @@ public class ProjectResource {
         return rcDeckList;
     }
     
+    /**
+     * Create SPICE model.
+     * 
+     * ex. cln16fll_1d8_sp_v1d0_2p1.tar.gz
+     * 
+     * @param tvId
+     * @param modelName
+     * @param modelType
+     * @param strIsPrimary
+     * @param fileInputStream
+     * @param contentDispositionHeader
+     * @return
+     * @throws IOException
+     */
 	@POST
 	@Path("/spice_model/new")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
