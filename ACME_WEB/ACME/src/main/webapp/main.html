@@ -60,6 +60,7 @@
 				    			toolbar:'#tb_my_jobs'">				        
 					    <thead>
 					        <tr>
+					        	<th data-options="field:'ck',checkbox:true"></th>
 					            <th data-options="field:'jobId',width:30">ID</th>
 					            <th data-options="field:'jobName',width:30">Name</th>
 					            <th data-options="field:'jobDesc',width:60">Description</th>
@@ -158,10 +159,6 @@
 											<tr>
 												<td>Source Cell GDS:</td>
 												<td><input class="easyui-filebox" name="sourceCellGdsFile" data-options="prompt:'Choose a source cell GDS file...'" style="width:290px"></input></td>
-											</tr>
-											<tr>
-												<td>Netlist:</td>
-												<td><input class="easyui-filebox" name="netlistFile" data-options="prompt:'Choose a netlist file...'" style="width:290px"></input></td>
 											</tr>
 											<tr>
 												<td>Testbench:</td>
@@ -844,6 +841,7 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
+											        	<th data-options="field:'ck',checkbox:true"></th>
 											            <th data-options="field:'modelId',width:30">ID</th>
 											            <th data-options="field:'modelName',width:50">Name</th>
 											            <th data-options="field:'modelType',width:50">Type</th>
@@ -972,6 +970,7 @@
     
     <script type="text/javascript">
     	$(document).ready(function() {
+    		initAllForms();
     		loadJobList();
     	});
     </script>

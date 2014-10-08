@@ -18,7 +18,7 @@ function addPanel(){
  */
 function loadJobList() {
 	$('#tb_job_list').datagrid('load',{
-		owner: 'CHLEEZO'
+		// owner: 'CHLEEZO'
 	});
 }
 
@@ -32,7 +32,6 @@ function onSelectJobTv(rec) {
 	$('#cb_new_job_lvs_deck_list').combobox('reload', './ws/rs/project/lvs_deck/list?tvId='+rec.tvId);
 	$('#cb_new_job_rc_deck_list').combobox('reload', './ws/rs/project/rc_deck/list?tvId='+rec.tvId);
 	$('#cb_new_job_spice_model_list').combobox('reload', './ws/rs/project/spice_model/list?tvId='+rec.tvId);
-
 }
 
 
@@ -290,8 +289,7 @@ var tb_my_jobs = [{
 
 
 // initialize
-$(document).ready(function() {
-	
+function initAllForms() {
 	// new job form
 	$('#form_add_job').form({
 	    url:'./ws/rs/job/new',
@@ -439,4 +437,5 @@ $(document).ready(function() {
 	    	});
 	    }
 	});
-});
+	
+}

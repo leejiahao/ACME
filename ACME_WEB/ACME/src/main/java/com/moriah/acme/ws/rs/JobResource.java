@@ -59,6 +59,7 @@ public class JobResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createJob(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormDataParam("tvId") String strTvId,
 			@FormDataParam("jobName") String jobName,
 			@FormDataParam("jobDesc") String jobDesc,
@@ -73,13 +74,13 @@ public class JobResource {
             @FormDataParam("placementFile") FormDataContentDisposition placementFileContentDispositionHeader,
             @FormDataParam("sourceCellGdsFile") InputStream sourceCellGdsFileInputStream,
             @FormDataParam("sourceCellGdsFile") FormDataContentDisposition sourceCellGdsFileContentDispositionHeader,
-            @FormDataParam("netlistFile") InputStream netlistFileInputStream,
-            @FormDataParam("netlistFile") FormDataContentDisposition netlistFileContentDispositionHeader,
             @FormDataParam("testbenchFile") InputStream testbenchFileInputStream,
             @FormDataParam("testbenchFile") FormDataContentDisposition testbenchFileContentDispositionHeader,
             @FormDataParam("composedGdsFile") InputStream composedGdsFileInputStream,
             @FormDataParam("composedGdsFile") FormDataContentDisposition composedGdsFileContentDispositionHeader
 			) throws IOException {
+		log.info("createJob userId: {} information successfully created.", userId);
+
 		// job command
 		JobCommand jobCommand = new JobCommand();
 
@@ -127,13 +128,6 @@ public class JobResource {
 		
 		jobCommand.setSrcGds(sourceCellGdsFileFullName);
 		
-		// netlist
-		String netlistFileName = netlistFileContentDispositionHeader.getFileName();
-		String netlistFileFullName = jobInputPath + "/" + netlistFileName;
-		FileUtils.saveFile(netlistFileInputStream, netlistFileFullName);
-		
-		jobCommand.setNetlist(netlistFileFullName);
-		
 		// testbench		
 		String testbenchFileName = testbenchFileContentDispositionHeader.getFileName();
 		String testbenchFileFullName = jobInputPath + "/" + testbenchFileName;
@@ -152,6 +146,9 @@ public class JobResource {
 		jobCommand.setControlCircuitTop(controlCircuit.getCircuitGdsTopCell());
 		jobCommand.setControlCircuit(controlCircuit.getCircuitGdsFilePath() + "/" + controlCircuit.getCircuitGdsFileName());
 		jobCommand.setCoordinate(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getCoordinateFileName());
+		
+		// netlist
+		jobCommand.setNetlist(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getNetlistFileName());
 		
 		// DRC deck
 		AcmeDrcDeck drcDeck = projectService.findDrcDeckById(strDrcDeckId);
@@ -175,9 +172,9 @@ public class JobResource {
 		job.setJobId(jobId);
 		job.setJobName(jobName);
 		job.setJobDesc(jobDesc);
-		job.setOwner("CHLEEZO");
-		job.setCreateUser("CHLEEZO");
-		job.setUpdateUser("CHLEEZO");
+		job.setOwner(userId);
+		job.setCreateUser(userId);
+		job.setUpdateUser(userId);
 		job.setStatus("Active");
 
 		job.setCreateTime(Calendar.getInstance().getTime());
@@ -199,7 +196,6 @@ public class JobResource {
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AcmeJob> getJobByOwner(
-    		@QueryParam("owner") String owner,
     		@CookieParam(value = "ACME_USER_ID") String userId
     		) {
     	log.info("getJobByOwner userId: {} information successfully received.", userId);

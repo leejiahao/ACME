@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -52,6 +53,7 @@ public class ProjectResource {
 	@Path("/new")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createProject(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormParam("tvName") String tvName,
 			@FormParam("tvDesc") String tvDesc,
 			@FormParam("techCd") String techCd,
@@ -67,8 +69,8 @@ public class ProjectResource {
 		String tvFullName = techCd + "/" + tvName;
 		tv.setTvFullName(tvFullName);
 
-		tv.setCreateUser("CHLEEZO");
-		tv.setUpdateUser("CHLEEZO");
+		tv.setCreateUser(userId);
+		tv.setUpdateUser(userId);
 		tv.setStatus("Active");
 
 		tv.setCreateTime(Calendar.getInstance().getTime());
@@ -170,6 +172,7 @@ public class ProjectResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createControlCircuit(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormDataParam("tvId") String tvId,
 			@FormDataParam("circuitName") String circuitName,
 			@FormDataParam("circuitType") String circuitType,
@@ -225,8 +228,8 @@ public class ProjectResource {
 		acmeControlCircuit.setCoordinateFileName(coordinateFileName);
 		acmeControlCircuit.setIsPrimary(isPrimary);
 
-		acmeControlCircuit.setCreateUser("CHLEEZO");
-		acmeControlCircuit.setUpdateUser("CHLEEZO");
+		acmeControlCircuit.setCreateUser(userId);
+		acmeControlCircuit.setUpdateUser(userId);
 		acmeControlCircuit.setStatus("Active");
 
 		acmeControlCircuit.setCreateTime(Calendar.getInstance().getTime());
@@ -257,6 +260,7 @@ public class ProjectResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createDrcDeck(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormDataParam("tvId") String tvId,
 			@FormDataParam("deckName") String deckName,
 			@FormDataParam("deckType") String deckType,
@@ -293,8 +297,8 @@ public class ProjectResource {
 		deck.setDeckFileName(fileName);
 		deck.setIsPrimary(isPrimary);
 
-		deck.setCreateUser("CHLEEZO");
-		deck.setUpdateUser("CHLEEZO");
+		deck.setCreateUser(userId);
+		deck.setUpdateUser(userId);
 		deck.setStatus("Active");
 
 		deck.setCreateTime(Calendar.getInstance().getTime());
@@ -325,6 +329,7 @@ public class ProjectResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createLvsDeck(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormDataParam("tvId") String tvId,
 			@FormDataParam("deckName") String deckName,
 			@FormDataParam("deckType") String deckType,
@@ -361,8 +366,8 @@ public class ProjectResource {
 		deck.setDeckFileName(fileName);
 		deck.setIsPrimary(isPrimary);
 
-		deck.setCreateUser("CHLEEZO");
-		deck.setUpdateUser("CHLEEZO");
+		deck.setCreateUser(userId);
+		deck.setUpdateUser(userId);
 		deck.setStatus("Active");
 
 		deck.setCreateTime(Calendar.getInstance().getTime());
@@ -393,6 +398,7 @@ public class ProjectResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createRcDeck(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormDataParam("tvId") String tvId,
 			@FormDataParam("deckName") String deckName,
 			@FormDataParam("deckType") String deckType,
@@ -429,8 +435,8 @@ public class ProjectResource {
 		deck.setDeckFileName(fileName);
 		deck.setIsPrimary(isPrimary);
 
-		deck.setCreateUser("CHLEEZO");
-		deck.setUpdateUser("CHLEEZO");
+		deck.setCreateUser(userId);
+		deck.setUpdateUser(userId);
 		deck.setStatus("Active");
 
 		deck.setCreateTime(Calendar.getInstance().getTime());
@@ -475,6 +481,7 @@ public class ProjectResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createSpiceModel(
+			@CookieParam(value = "ACME_USER_ID") String userId,
 			@FormDataParam("tvId") String tvId,
 			@FormDataParam("modelName") String modelName,
 			@FormDataParam("modelType") String modelType,
@@ -492,6 +499,10 @@ public class ProjectResource {
 		// save the file to the server
 		FileUtils.mkdir(filePath);
 		FileUtils.saveFile(fileInputStream, fileFullName);
+		
+		// extract SPICE model tgz file
+		String modelDestPath = filePath;
+		FileUtils.extractTgz(fileFullName, modelDestPath);
 		
 		String output = "createSpiceModel:" + fileFullName;
 		log.info("createSpiceModel output: {} information successfully created.", output);
@@ -511,8 +522,8 @@ public class ProjectResource {
 		model.setModelFileName(fileName);
 		model.setIsPrimary(isPrimary);
 
-		model.setCreateUser("CHLEEZO");
-		model.setUpdateUser("CHLEEZO");
+		model.setCreateUser(userId);
+		model.setUpdateUser(userId);
 		model.setStatus("Active");
 
 		model.setCreateTime(Calendar.getInstance().getTime());

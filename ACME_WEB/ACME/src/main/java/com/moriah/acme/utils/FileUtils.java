@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.rauschig.jarchivelib.ArchiverFactory;
+import org.rauschig.jarchivelib.Archiver;
+import org.rauschig.jarchivelib.ArchiveFormat;
+import org.rauschig.jarchivelib.CompressionType;
+
 //import org.apache.commons.io.FileUtils;
 
 public class FileUtils {
@@ -37,5 +42,13 @@ public class FileUtils {
 	public static void writeStringToFile(String fileFullName, String data) throws IOException {
 		File file = new File(fileFullName);
 		org.apache.commons.io.FileUtils.writeStringToFile(file, data);
+	}
+	
+	public static void extractTgz(String tgzFileName, String destPath) throws IOException {
+		File archive = new File(tgzFileName);
+		File destination = new File(destPath);
+		
+		Archiver archiver = ArchiverFactory.createArchiver(ArchiveFormat.TAR, CompressionType.GZIP);
+		archiver.extract(archive, destination);
 	}
 }
