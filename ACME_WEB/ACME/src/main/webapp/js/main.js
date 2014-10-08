@@ -1,8 +1,6 @@
 /**
  * Global Parameters
  */
-jobStageTabName = '#job_stage_tab';
-jobStageFlowSvgId = "submit_job_flow_svg";
 
 function addPanel(){
     index++;
@@ -11,6 +9,13 @@ function addPanel(){
         content: '<div style="padding:10px">Content'+index+'</div>',
         closable: true
     });
+}
+
+/**
+ * welcome dialog
+ */
+function closeWelcomeDialog() {
+	$('#welcome_dialog').dialog('close');
 }
 
 /**
@@ -33,8 +38,6 @@ function onSelectJobTv(rec) {
 	$('#cb_new_job_rc_deck_list').combobox('reload', './ws/rs/project/rc_deck/list?tvId='+rec.tvId);
 	$('#cb_new_job_spice_model_list').combobox('reload', './ws/rs/project/spice_model/list?tvId='+rec.tvId);
 }
-
-
 
 function submitNewJob() {
 	$('#form_add_job').form('submit');
@@ -84,6 +87,17 @@ function seleteComposedGds() {
 function seleteComposeNewGds() {
 	$("#seleteComposedGds").css("visibility", "hidden");
 	$("#seleteComposeNewGds").css("visibility", "visible");
+}
+
+/*
+ * Open job
+ */
+function openJob() {
+    var row = $('#tb_job_list').datagrid('getSelected');
+    if (row){
+        // $.messager.alert('Info', row.jobId + ":" + row.jobName + ":" + row.createTime);
+    	$('#win_job_detail').window('open');
+    }
 }
 
 /*
