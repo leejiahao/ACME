@@ -32,6 +32,7 @@ import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.JobService;
 import com.moriah.acme.service.ProjectService;
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobTestline;
 import com.moriah.acme.entities.AcmeControlCircuit;
 import com.moriah.acme.entities.AcmeDrcDeck;
 import com.moriah.acme.entities.AcmeLvsDeck;
@@ -39,7 +40,7 @@ import com.moriah.acme.entities.AcmeRcDeck;
 import com.moriah.acme.entities.AcmeSpiceModel;
 import com.moriah.acme.utils.FileUtils;
 import com.moriah.acme.utils.ProcessUtils;
-
+import com.moriah.acme.utils.CellInfoUtils;
 
 
 /**
@@ -74,120 +75,158 @@ public class JobResource {
             @FormDataParam("placementFile") FormDataContentDisposition placementFileContentDispositionHeader,
             @FormDataParam("sourceCellGdsFile") InputStream sourceCellGdsFileInputStream,
             @FormDataParam("sourceCellGdsFile") FormDataContentDisposition sourceCellGdsFileContentDispositionHeader,
+            @FormDataParam("netlistFile") InputStream netlistFileInputStream,
+            @FormDataParam("netlistFile") FormDataContentDisposition netlistFileContentDispositionHeader,
             @FormDataParam("testbenchFile") InputStream testbenchFileInputStream,
             @FormDataParam("testbenchFile") FormDataContentDisposition testbenchFileContentDispositionHeader,
             @FormDataParam("composedGdsFile") InputStream composedGdsFileInputStream,
             @FormDataParam("composedGdsFile") FormDataContentDisposition composedGdsFileContentDispositionHeader
-			) throws IOException {
-		log.info("createJob userId: {} information successfully created.", userId);
+			) throws JobException {
+		String output = "ERROR";
 
-		// job command
-		JobCommand jobCommand = new JobCommand();
-
-		// job id
-		UUID jobId = UUID.randomUUID();
-
-		log.info("createJob jobId: {} information successfully created.", jobId);
-		log.info("createJob tvId: {} information successfully created.", strTvId);
-		log.info("createJob circuitId: {} information successfully created.", strCircuitId);
-		log.info("createJob drcDeckId: {} information successfully created.", strDrcDeckId);
-		log.info("createJob lvsDeckId: {} information successfully created.", strLvsDeckId);
-		log.info("createJob rcDeckId: {} information successfully created.", strRcDeckId);
-		log.info("createJob spiceModelId: {} information successfully created.", strSpiceModelId);
+		try {
+			log.info("createJob userId: {} information successfully created.", userId);
+	
+			// job command
+			JobCommand jobCommand = new JobCommand();
+	
+			// job id
+			UUID jobId = UUID.randomUUID();
+	
+			log.info("createJob jobId: {} information successfully created.", jobId);
+			log.info("createJob tvId: {} information successfully created.", strTvId);
+			log.info("createJob circuitId: {} information successfully created.", strCircuitId);
+			log.info("createJob drcDeckId: {} information successfully created.", strDrcDeckId);
+			log.info("createJob lvsDeckId: {} information successfully created.", strLvsDeckId);
+			log.info("createJob rcDeckId: {} information successfully created.", strRcDeckId);
+			log.info("createJob spiceModelId: {} information successfully created.", strSpiceModelId);
+			
+			// job input path
+			String jobPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId;
+			String jobInputPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId + "/" + AcmeConfig.JOB_INPUT_PATH;
+			
+			// save the file to the server
+			FileUtils.mkdir(jobInputPath);
+	
+			jobCommand.setPath(jobPath);;
+			
+			// job file
+			String jobFile = jobInputPath + "/" + jobId + AcmeConfig.JOB_FILE_SUFFIX;
+			
+			// cell info file		
+			String cellInfoFileName = cellInfoFileContentDispositionHeader.getFileName();
+			String cellInfoFileFullName = jobInputPath + "/" + cellInfoFileName;
+			FileUtils.saveFile(cellInfoFileInputStream, cellInfoFileFullName);
+			
+			jobCommand.setInfo(cellInfoFileFullName);
+			
+			// get testline list
+			List<AcmeJobTestline> testlineList = CellInfoUtils.getAcmeJobTestlineListFromCellInfo(cellInfoFileFullName);
+			
+			// placement file		
+			String placementFileName = placementFileContentDispositionHeader.getFileName();
+			String placementFileFullName = jobInputPath + "/" + placementFileName;
+			FileUtils.saveFile(placementFileInputStream, placementFileFullName);
+			
+			jobCommand.setPlace(placementFileFullName);
+			
+			// source cell GDS file		
+			String sourceCellGdsFileName = sourceCellGdsFileContentDispositionHeader.getFileName();
+			String sourceCellGdsFileFullName = jobInputPath + "/" + sourceCellGdsFileName;
+			FileUtils.saveFile(sourceCellGdsFileInputStream, sourceCellGdsFileFullName);
+			
+			jobCommand.setSrcGds(sourceCellGdsFileFullName);
+			
+			// netlist		
+			String netlistFileName = netlistFileContentDispositionHeader.getFileName();
+			String netlistFileFullName = jobInputPath + "/" + netlistFileName;
+			FileUtils.saveFile(netlistFileInputStream, netlistFileFullName);
+			
+			jobCommand.setNetlist(netlistFileFullName);
+			
+			// testbench		
+			String testbenchFileName = testbenchFileContentDispositionHeader.getFileName();
+			String testbenchFileFullName = jobInputPath + "/" + testbenchFileName;
+			FileUtils.saveFile(testbenchFileInputStream, testbenchFileFullName);
+			
+			jobCommand.setTestbench(testbenchFileFullName);
+	
+			// composed GDS		
+			String composedGdsFileName = composedGdsFileContentDispositionHeader.getFileName();
+			String composedGdsFileFullName = jobInputPath + "/" + composedGdsFileName;
+			FileUtils.saveFile(composedGdsFileInputStream, composedGdsFileFullName);
+			
+			// Control Circuit
+			AcmeControlCircuit controlCircuit = projectService.findControlCircuitById(strCircuitId);
+			jobCommand.setControlCircuitType(controlCircuit.getCircuitType());
+			jobCommand.setControlCircuitTop(controlCircuit.getCircuitGdsTopCell());
+			jobCommand.setControlCircuit(controlCircuit.getCircuitGdsFilePath() + "/" + controlCircuit.getCircuitGdsFileName());
+			jobCommand.setCoordinate(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getCoordinateFileName());
+			
+			// control circuit netlist
+			jobCommand.setControlCircuitNetlist(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getNetlistFileName());
+			
+			// DRC deck
+			AcmeDrcDeck drcDeck = projectService.findDrcDeckById(strDrcDeckId);
+			jobCommand.setDrcDeck(drcDeck.getDeckFilePath() + "/" + drcDeck.getDeckFileName());
+			
+			// LVS deck
+			AcmeLvsDeck lvsDeck = projectService.findLvsDeckById(strLvsDeckId);
+			jobCommand.setLvsDeck(lvsDeck.getDeckFilePath() + "/" + lvsDeck.getDeckFileName());
+			
+			// SPICE model
+			AcmeSpiceModel spiceModel = projectService.findSpiceModelById(strSpiceModelId);
+			jobCommand.setSpiceModel(spiceModel.getModelFilePath() + "/" + spiceModel.getModelFileName());
+			
+			// write job file
+			FileUtils.writeStringToFile(jobFile, jobCommand.toString());
+			
+			output = "composedGdsFileFullName:" + composedGdsFileFullName;
+			log.info("composedGdsFileFullName output: {} information successfully created.", output);
+	
+			UUID tvId = UUID.fromString(strTvId);
+			UUID drcDeckId = UUID.fromString(strDrcDeckId);
+	
+			AcmeJob job = new AcmeJob();
+			job.setTvId(tvId);
+			job.setJobId(jobId);
+			job.setJobName(jobName);
+			job.setJobDesc(jobDesc);
+			job.setOwner(userId);
+			job.setCreateUser(userId);
+			job.setUpdateUser(userId);
+			job.setStatus("Active");
+	
+			job.setCreateTime(Calendar.getInstance().getTime());
+			job.setUpdateTime(Calendar.getInstance().getTime());
+	
+			jobService.createJob(job);
+			
+			// create job testlines
+			for (AcmeJobTestline jobTestline: testlineList) {
+				UUID jobTestlineId = UUID.randomUUID();
+				jobTestline.setJobTestlineId(jobTestlineId);
+				jobTestline.setJobId(jobId);
+				jobTestline.setCreateUser(userId);
+				jobTestline.setUpdateUser(userId);
+				jobTestline.setStatus("Active");
+				jobTestline.setCreateTime(Calendar.getInstance().getTime());
+				jobTestline.setUpdateTime(Calendar.getInstance().getTime());
+				
+				jobService.createJobTestline(jobTestline);
+			}
+			
+			// start command
+			String command = AcmeConfig.ACME_JOB_STARTER + " " + jobFile;
+			ProcessUtils.exec(command);
+			log.info("createJob command: {} information successfully created.", command);
+			
+			log.info("createJob job: {} information successfully created.", job);
 		
-		// job input path
-		String jobPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId;
-		String jobInputPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId + "/" + AcmeConfig.JOB_INPUT_PATH;
-		
-		// save the file to the server
-		FileUtils.mkdir(jobInputPath);
-
-		jobCommand.setPath(jobPath);;
-		
-		// job file
-		String jobFile = jobInputPath + "/" + jobId + AcmeConfig.JOB_FILE_SUFFIX;
-		
-		// cell info file		
-		String cellInfoFileName = cellInfoFileContentDispositionHeader.getFileName();
-		String cellInfoFileFullName = jobInputPath + "/" + cellInfoFileName;
-		FileUtils.saveFile(cellInfoFileInputStream, cellInfoFileFullName);
-		
-		jobCommand.setInfo(cellInfoFileFullName);
-		
-		// placement file		
-		String placementFileName = placementFileContentDispositionHeader.getFileName();
-		String placementFileFullName = jobInputPath + "/" + placementFileName;
-		FileUtils.saveFile(placementFileInputStream, placementFileFullName);
-		
-		jobCommand.setPlace(placementFileFullName);
-		
-		// source cell GDS file		
-		String sourceCellGdsFileName = sourceCellGdsFileContentDispositionHeader.getFileName();
-		String sourceCellGdsFileFullName = jobInputPath + "/" + sourceCellGdsFileName;
-		FileUtils.saveFile(sourceCellGdsFileInputStream, sourceCellGdsFileFullName);
-		
-		jobCommand.setSrcGds(sourceCellGdsFileFullName);
-		
-		// testbench		
-		String testbenchFileName = testbenchFileContentDispositionHeader.getFileName();
-		String testbenchFileFullName = jobInputPath + "/" + testbenchFileName;
-		FileUtils.saveFile(testbenchFileInputStream, testbenchFileFullName);
-		
-		jobCommand.setTestbench(testbenchFileFullName);
-
-		// composed GDS		
-		String composedGdsFileName = composedGdsFileContentDispositionHeader.getFileName();
-		String composedGdsFileFullName = jobInputPath + "/" + composedGdsFileName;
-		FileUtils.saveFile(composedGdsFileInputStream, composedGdsFileFullName);
-		
-		// Control Circuit
-		AcmeControlCircuit controlCircuit = projectService.findControlCircuitById(strCircuitId);
-		jobCommand.setControlCircuitType(controlCircuit.getCircuitType());
-		jobCommand.setControlCircuitTop(controlCircuit.getCircuitGdsTopCell());
-		jobCommand.setControlCircuit(controlCircuit.getCircuitGdsFilePath() + "/" + controlCircuit.getCircuitGdsFileName());
-		jobCommand.setCoordinate(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getCoordinateFileName());
-		
-		// netlist
-		jobCommand.setNetlist(controlCircuit.getCoordinateFilePath() + "/" + controlCircuit.getNetlistFileName());
-		
-		// DRC deck
-		AcmeDrcDeck drcDeck = projectService.findDrcDeckById(strDrcDeckId);
-		jobCommand.setDrcDeck(drcDeck.getDeckFilePath() + "/" + drcDeck.getDeckFileName());
-		
-		// LVS deck
-		AcmeLvsDeck lvsDeck = projectService.findLvsDeckById(strLvsDeckId);
-		jobCommand.setLvsDeck(lvsDeck.getDeckFilePath() + "/" + lvsDeck.getDeckFileName());
-		
-		// write job file
-		FileUtils.writeStringToFile(jobFile, jobCommand.toString());
-		
-		String output = "composedGdsFileFullName:" + composedGdsFileFullName;
-		log.info("composedGdsFileFullName output: {} information successfully created.", output);
-
-		UUID tvId = UUID.fromString(strTvId);
-		UUID drcDeckId = UUID.fromString(strDrcDeckId);
-
-		AcmeJob job = new AcmeJob();
-		job.setTvId(tvId);
-		job.setJobId(jobId);
-		job.setJobName(jobName);
-		job.setJobDesc(jobDesc);
-		job.setOwner(userId);
-		job.setCreateUser(userId);
-		job.setUpdateUser(userId);
-		job.setStatus("Active");
-
-		job.setCreateTime(Calendar.getInstance().getTime());
-		job.setUpdateTime(Calendar.getInstance().getTime());
-
-		jobService.createJob(job);
-		
-		// start command
-		String command = AcmeConfig.ACME_JOB_STARTER + " " + jobFile;
-		ProcessUtils.exec(command);
-		log.info("createJob command: {} information successfully created.", command);
-		
-		log.info("createJob job: {} information successfully created.", job);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JobException("Submit job failed.", e);
+		}
 		
 		return output;
 	}

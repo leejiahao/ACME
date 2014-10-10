@@ -44,10 +44,11 @@ public class FileUtils {
 		org.apache.commons.io.FileUtils.writeStringToFile(file, data);
 	}
 	
-	public static void extractTgz(String tgzFileName, String destPath) throws IOException {
-		File archive = new File(tgzFileName);
+	public static void extractArchive(String archiveFileName, String destPath) throws IOException {
+		File archive = new File(archiveFileName);
 		File destination = new File(destPath);
 		
+		// handling tgz or zip
 		Archiver archiver = ArchiverFactory.createArchiver(ArchiveFormat.TAR, CompressionType.GZIP);
 		archiver.extract(archive, destination);
 	}

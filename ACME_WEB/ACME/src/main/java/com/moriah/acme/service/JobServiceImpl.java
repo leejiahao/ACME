@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.moriah.acme.dao.AcmeDao;
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobTestline;
 import com.moriah.acme.entities.AcmeJobControlCircuit;
 import com.moriah.acme.entities.AcmeJobDrc;
 import com.moriah.acme.entities.AcmeJobLvs;
@@ -76,6 +77,13 @@ public class JobServiceImpl implements JobService {
     {
         dao.merge(job);
         log.info("AcmeJob job {} information successfully updated.", job);
+    }
+
+    // create JOB testline
+    @Override
+    public void createJobTestline(AcmeJobTestline jobTestline) {
+        dao.insert(jobTestline);
+        log.info("AcmeJobTestline jobTestline {} information successfully created.", jobTestline);
     }
     
 	// create Source Cell Gds of JOB

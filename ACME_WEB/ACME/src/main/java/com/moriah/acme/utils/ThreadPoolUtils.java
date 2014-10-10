@@ -7,7 +7,7 @@ public class ThreadPoolUtils {
 	private static final int NTHREDS = 10;
 	private static ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
 	
-	public void execute(Runnable command) {
+	public static void execute(Runnable command) {
 		executor.execute(command);
 	}
 }

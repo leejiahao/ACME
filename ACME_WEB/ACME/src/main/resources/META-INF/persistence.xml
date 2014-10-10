@@ -22,6 +22,7 @@
 		<class>com.moriah.acme.entities.AcmeGdsOwner</class>
 		<class>com.moriah.acme.entities.AcmeJob</class>
 		<class>com.moriah.acme.entities.AcmeJobDrc</class>
+		<class>com.moriah.acme.entities.AcmeJobTestline</class>
 		<class>com.moriah.acme.entities.AcmeJobLvs</class>
 		<class>com.moriah.acme.entities.AcmeJobRc</class>
 		<class>com.moriah.acme.entities.AcmeJobSpice</class>

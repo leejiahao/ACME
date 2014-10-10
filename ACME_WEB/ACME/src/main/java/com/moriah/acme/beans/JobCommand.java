@@ -12,15 +12,16 @@ public class JobCommand {
 	private String place;
 	private String coordinate;
 	private String srcGds;
+	private String netlist;
+	private String testbench;
 	private String controlCircuit;
 	private String controlCircuitTop;
 	private String controlCircuitType;
+	private String controlCircuitNetlist;
 	private String drcDeck;
 	private String lvsDeck;
 	private String rcDeck;
 	private String spiceModel;
-	private String netlist;
-	private String testbench;
 
 	public String toString() {
 		//return ToStringBuilder.reflectionToString(this);
@@ -79,6 +80,11 @@ public class JobCommand {
 		// CONTROL_CIRCUIT_TYPE
 		jobCommandContent.append("APV_JOB_CONTROL_CIRCUIT_TYPE=");
 		jobCommandContent.append(controlCircuitType);
+		jobCommandContent.append(AcmeConfig.LINE_SEPARATOR);
+		
+		// CONTROL_CIRCUIT_NETLIST
+		jobCommandContent.append("APV_JOB_CONTROL_CIRCUIT_NETLIST=");
+		jobCommandContent.append(controlCircuitNetlist);
 		jobCommandContent.append(AcmeConfig.LINE_SEPARATOR);
 		
 		// DRC_DECK
@@ -222,5 +228,13 @@ public class JobCommand {
 
 	public void setTestbench(String testbench) {
 		this.testbench = testbench;
+	}
+
+	public String getControlCircuitNetlist() {
+		return controlCircuitNetlist;
+	}
+
+	public void setControlCircuitNetlist(String controlCircuitNetlist) {
+		this.controlCircuitNetlist = controlCircuitNetlist;
 	}
 }

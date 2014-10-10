@@ -30,6 +30,8 @@ import com.moriah.acme.AcmeConfig;
 import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.ProjectService;
 import com.moriah.acme.utils.FileUtils;
+import com.moriah.acme.utils.ThreadPoolUtils;
+import com.moriah.acme.utils.FileExtractRunnable;
 import com.moriah.acme.entities.AcmeTv;
 import com.moriah.acme.entities.AcmeControlCircuit;
 import com.moriah.acme.entities.AcmeDrcDeck;
@@ -502,7 +504,8 @@ public class ProjectResource {
 		
 		// extract SPICE model tgz file
 		String modelDestPath = filePath;
-		FileUtils.extractTgz(fileFullName, modelDestPath);
+		FileExtractRunnable spiceModelExtractCommand = new FileExtractRunnable(fileFullName, modelDestPath);
+		ThreadPoolUtils.execute(spiceModelExtractCommand);
 		
 		String output = "createSpiceModel:" + fileFullName;
 		log.info("createSpiceModel output: {} information successfully created.", output);

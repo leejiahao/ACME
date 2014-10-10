@@ -90,15 +90,26 @@ function seleteComposeNewGds() {
 }
 
 /*
- * Open job
+ * Job Summary
  */
-function openJob() {
+function openJobSummary() {
     var row = $('#tb_job_list').datagrid('getSelected');
     if (row){
         // $.messager.alert('Info', row.jobId + ":" + row.jobName + ":" + row.createTime);
     	$('#win_job_detail').window('open');
     }
 }
+
+function closeJobSummary() {
+	$('#win_job_detail').window('close');
+}
+
+function getActiveJobSummaryTabId() {
+	var tab = $(jobStageTabName).tabs('getSelected');
+	var activeJobSummaryTabId = $(jobStageTabName).tabs('getTabIndex',tab);
+	
+	return activeJobSummaryTabId;
+};
 
 /*
  * maintain project
@@ -450,6 +461,40 @@ function initAllForms() {
 	    		tvId: selectedTvId
 	    	});
 	    }
+	});
+	
+	
+	// select job summary tab
+	$('#job_stage_tab').tabs('select', 'Input GDS');
+	
+	$('#job_stage_tab').tabs({
+		onSelect: function(title,index) {
+			$('#job_flow_gds_info').css('background-color', 'rgba(255,255,255,0.01)');
+			$('#job_flow_drc_result').css('background-color', 'rgba(255,255,255,0.01)');
+			$('#job_flow_lvs_result').css('background-color', 'rgba(255,255,255,0.01)');
+			$('#job_flow_rc_result').css('background-color', 'rgba(255,255,255,0.01)');
+			$('#job_flow_spice_result').css('background-color', 'rgba(255,255,255,0.01)');
+
+			switch(index) {
+		    case 0:
+		    	$('#job_flow_gds_info').css('background-color', 'rgba(155,255,255,0.3)');
+		        break;
+		    case 1:
+		    	$('#job_flow_drc_result').css('background-color', 'rgba(155,255,255,0.3)');
+		        break;
+		    case 2:
+		    	$('#job_flow_lvs_result').css('background-color', 'rgba(155,255,255,0.3)');
+		    	break;
+		    case 3:
+		    	$('#job_flow_rc_result').css('background-color', 'rgba(155,255,255,0.3)');
+		    	break;
+		    case 4:
+		    	$('#job_flow_spice_result').css('background-color', 'rgba(155,255,255,0.3)');
+		    	break;
+		    default:
+		        // default
+			}
+		}
 	});
 	
 }

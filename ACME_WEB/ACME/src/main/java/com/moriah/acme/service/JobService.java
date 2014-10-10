@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobTestline;
 import com.moriah.acme.entities.AcmeJobDrc;
 import com.moriah.acme.entities.AcmeJobLvs;
 import com.moriah.acme.entities.AcmeJobRc;
@@ -26,6 +27,9 @@ public interface JobService {
 	
 	// update JOB
 	public void updateJob(AcmeJob job);
+	
+	// create JOB testline
+	public void createJobTestline(AcmeJobTestline jobTestline);
 	
 	// create Source Cell Gds of JOB
 	public void createSourceCellGdsOfJob(AcmeJobSourceCellGds jobSourceCellGds);
