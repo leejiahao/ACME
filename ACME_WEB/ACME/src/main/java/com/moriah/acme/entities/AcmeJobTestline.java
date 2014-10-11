@@ -105,4 +105,5 @@ public class AcmeJobTestline {
 	public void setTestlineName(String testlineName) {
 		this.testlineName = testlineName;
 	}
+
 }

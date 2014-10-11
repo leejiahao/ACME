@@ -29,6 +29,24 @@
 		    <param-value>false</param-value>
 		</init-param>
         <init-param>
+            <!-- 
+            OFF - tracing support is disabled (default value).
+			ON_DEMAND - tracing support is in a stand-by mode; it is enabled selectively per request, via a special X-Jersey-Tracing-Accept HTTP request header.
+			ALL - tracing support is enabled for all request.
+             -->
+            <param-name>jersey.config.server.tracing.type</param-name>
+            <param-value>ALL</param-value>
+        </init-param>
+        <init-param>
+            <!-- 
+			SUMMARY - very basic summary information about the main request processing stages.
+			TRACE - detailed information about activities in all the main request processing stages (default threshold value).
+			VERBOSE - most verbose mode that provides extended information similar to TRACE level, however with details on entity providers (MBR/MBW) that were skipped during the provider selection phase for any reason (lower priority, pattern matching, etc). Additionally, in this mode all received request headers are echoed as part of the tracing information.
+             -->
+            <param-name>jersey.config.server.tracing.threshold</param-name>
+            <param-value>VERBOSE</param-value>
+        </init-param>
+        <init-param>
             <param-name>javax.json.stream.JsonGenerator.prettyPrinting</param-name>
             <param-value>true</param-value>
         </init-param>

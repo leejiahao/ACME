@@ -2,11 +2,15 @@ package com.moriah.acme.entities;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -46,6 +50,9 @@ public class AcmeJob {
     
     @Column(name = "update_user")
     private String updateUser;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobTestline> acmeJobTestlineList;
 
 	public UUID getJobId() {
 		return jobId;
@@ -137,5 +144,13 @@ public class AcmeJob {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public List<AcmeJobTestline> getAcmeJobTestlineList() {
+		return acmeJobTestlineList;
+	}
+
+	public void setAcmeJobTestlineList(List<AcmeJobTestline> acmeJobTestlineList) {
+		this.acmeJobTestlineList = acmeJobTestlineList;
 	}
 }

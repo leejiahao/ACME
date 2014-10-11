@@ -200,21 +200,24 @@ public class JobResource {
 			job.setCreateTime(Calendar.getInstance().getTime());
 			job.setUpdateTime(Calendar.getInstance().getTime());
 	
-			jobService.createJob(job);
+			//jobService.createJob(job);
 			
 			// create job testlines
 			for (AcmeJobTestline jobTestline: testlineList) {
 				UUID jobTestlineId = UUID.randomUUID();
 				jobTestline.setJobTestlineId(jobTestlineId);
-				jobTestline.setJobId(jobId);
 				jobTestline.setCreateUser(userId);
 				jobTestline.setUpdateUser(userId);
 				jobTestline.setStatus("Active");
 				jobTestline.setCreateTime(Calendar.getInstance().getTime());
 				jobTestline.setUpdateTime(Calendar.getInstance().getTime());
 				
-				jobService.createJobTestline(jobTestline);
+				//jobService.createJobTestline(jobTestline);
 			}
+			
+			job.setAcmeJobTestlineList(testlineList);
+			
+			jobService.createJob(job);
 			
 			// start command
 			String command = AcmeConfig.ACME_JOB_STARTER + " " + jobFile;
@@ -238,7 +241,10 @@ public class JobResource {
     		@CookieParam(value = "ACME_USER_ID") String userId
     		) {
     	log.info("getJobByOwner userId: {} information successfully received.", userId);
-    	return jobService.findJobListByOwner(userId);
+    	List<AcmeJob> jobList = jobService.findJobListByOwner(userId);
+    	log.info("getJobByOwner jobList.size(): {} information successfully received.", jobList.size());
+    	
+    	return jobList;
     }
 
 }
