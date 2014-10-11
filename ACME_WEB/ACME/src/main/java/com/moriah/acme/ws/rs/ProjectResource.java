@@ -228,6 +228,8 @@ public class ProjectResource {
 		acmeControlCircuit.setCircuitGdsTopCell(circuitGdsTopCell);
 		acmeControlCircuit.setCoordinateFilePath(circuitFilePath);
 		acmeControlCircuit.setCoordinateFileName(coordinateFileName);
+		acmeControlCircuit.setNetlistFilePath(circuitFilePath);
+		acmeControlCircuit.setNetlistFileName(netlistFileName);
 		acmeControlCircuit.setIsPrimary(isPrimary);
 
 		acmeControlCircuit.setCreateUser(userId);

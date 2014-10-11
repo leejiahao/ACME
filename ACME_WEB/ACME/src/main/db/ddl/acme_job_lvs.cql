@@ -8,6 +8,7 @@ DROP TABLE acme_job_lvs;
 CREATE TABLE acme_job_lvs (
     job_lvs_id uuid PRIMARY KEY,
     job_id uuid,
+    job_testline_id uuid,
     lvs_deck_id uuid,
     status text,
     update_time timestamp,
@@ -20,6 +21,7 @@ CREATE TABLE acme_job_lvs (
 -- INDEX
 -------------------------------------
 CREATE INDEX acme_job_lvs_idx_job_id ON acme_job_lvs (job_id);
+CREATE INDEX acme_job_lvs_idx_job_testline_id ON acme_job_lvs (job_testline_id);
 CREATE INDEX acme_job_lvs_idx_lvs_deck_id ON acme_job_lvs (lvs_deck_id);
 CREATE INDEX acme_job_lvs_idx_status ON acme_job_lvs (status);
 CREATE INDEX acme_job_lvs_idx_update_time ON acme_job_lvs (update_time);

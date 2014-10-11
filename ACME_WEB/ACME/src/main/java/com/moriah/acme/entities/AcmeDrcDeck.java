@@ -7,8 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.moriah.acme.utils.DateAdapter;
 
 @Entity
 @Table(name = "acme_drc_deck", schema = "acme_space@cassandra-pu")
@@ -112,6 +115,7 @@ public class AcmeDrcDeck {
 		this.status = status;
 	}
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -128,6 +132,7 @@ public class AcmeDrcDeck {
 		this.createUser = createUser;
 	}
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}

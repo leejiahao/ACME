@@ -14,6 +14,10 @@ import javax.persistence.FetchType;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.moriah.acme.utils.DateAdapter;
+
 @Entity
 @Table(name = "acme_job", schema = "acme_space@cassandra-pu")
 public class AcmeJob {
@@ -110,6 +114,7 @@ public class AcmeJob {
 		this.status = status;
 	}
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -126,6 +131,7 @@ public class AcmeJob {
 		this.createUser = createUser;
 	}
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}

@@ -4,13 +4,15 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.moriah.acme.utils.DateAdapter;
 
 @XmlRootElement
 @Entity
@@ -97,6 +99,7 @@ public class AcmeFile {
 		this.status = status;
 	}
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -113,6 +116,7 @@ public class AcmeFile {
 		this.createUser = createUser;
 	}
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}
