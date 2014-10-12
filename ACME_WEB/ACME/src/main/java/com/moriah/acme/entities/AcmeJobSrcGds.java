@@ -14,23 +14,17 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.moriah.acme.utils.DateAdapter;
 
 @Entity
-@Table(name = "acme_job_drc", schema = "acme_space@cassandra-pu")
-public class AcmeJobDrc {
+@Table(name = "acme_job_src_gds", schema = "acme_space@cassandra-pu")
+public class AcmeJobSrcGds {
     @Id
-    @Column(name = "job_drc_id")
-    private UUID jobDrcId;
+    @Column(name = "job_src_gds_id")
+    private UUID jobSrcGdsId;
 
     @Column(name = "job_id")
     private UUID jobId;
     
-    @Column(name = "job_testline_id")
-    private UUID jobTestlineId;
-    
-    @Column(name = "testline_name")
-    private String testlineName;
-    
-    @Column(name = "drc_deck_id")
-    private UUID drcDeckId;
+    @Column(name = "gds_id")
+    private UUID gdsId;
 
     @Column(name = "status")
     private String status;
@@ -51,12 +45,12 @@ public class AcmeJobDrc {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public UUID getJobDrcId() {
-		return jobDrcId;
+	public UUID getJobSrcGdsId() {
+		return jobSrcGdsId;
 	}
 
-	public void setJobDrcId(UUID jobDrcId) {
-		this.jobDrcId = jobDrcId;
+	public void setJobSrcGdsId(UUID jobSrcGdsId) {
+		this.jobSrcGdsId = jobSrcGdsId;
 	}
 
 	public UUID getJobId() {
@@ -65,14 +59,6 @@ public class AcmeJobDrc {
 
 	public void setJobId(UUID jobId) {
 		this.jobId = jobId;
-	}
-
-	public UUID getDrcDeckId() {
-		return drcDeckId;
-	}
-
-	public void setDrcDeckId(UUID drcDeckId) {
-		this.drcDeckId = drcDeckId;
 	}
 
 	public String getStatus() {
@@ -117,19 +103,12 @@ public class AcmeJobDrc {
 		this.updateUser = updateUser;
 	}
 
-	public UUID getJobTestlineId() {
-		return jobTestlineId;
+	public UUID getGdsId() {
+		return gdsId;
 	}
 
-	public void setJobTestlineId(UUID jobTestlineId) {
-		this.jobTestlineId = jobTestlineId;
+	public void setGdsId(UUID gdsId) {
+		this.gdsId = gdsId;
 	}
 
-	public String getTestlineName() {
-		return testlineName;
-	}
-
-	public void setTestlineName(String testlineName) {
-		this.testlineName = testlineName;
-	}
 }

@@ -32,7 +32,16 @@ import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.JobService;
 import com.moriah.acme.service.ProjectService;
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobInfo;
+import com.moriah.acme.entities.AcmeJobPlacement;
+import com.moriah.acme.entities.AcmeJobSrcGds;
+import com.moriah.acme.entities.AcmeJobNetlist;
 import com.moriah.acme.entities.AcmeJobTestline;
+import com.moriah.acme.entities.AcmeJobTestbench;
+import com.moriah.acme.entities.AcmeJobDrc;
+import com.moriah.acme.entities.AcmeJobLvs;
+import com.moriah.acme.entities.AcmeJobRc;
+import com.moriah.acme.entities.AcmeJobSpice;
 import com.moriah.acme.entities.AcmeControlCircuit;
 import com.moriah.acme.entities.AcmeDrcDeck;
 import com.moriah.acme.entities.AcmeLvsDeck;
@@ -152,9 +161,11 @@ public class JobResource {
 			jobCommand.setTestbench(testbenchFileFullName);
 	
 			// composed GDS		
-			String composedGdsFileName = composedGdsFileContentDispositionHeader.getFileName();
-			String composedGdsFileFullName = jobInputPath + "/" + composedGdsFileName;
-			FileUtils.saveFile(composedGdsFileInputStream, composedGdsFileFullName);
+			if (null != composedGdsFileContentDispositionHeader) {
+				String composedGdsFileName = composedGdsFileContentDispositionHeader.getFileName();
+				String composedGdsFileFullName = jobInputPath + "/" + composedGdsFileName;
+				FileUtils.saveFile(composedGdsFileInputStream, composedGdsFileFullName);
+			}
 			
 			// Control Circuit
 			AcmeControlCircuit controlCircuit = projectService.findControlCircuitById(strCircuitId);
@@ -181,7 +192,7 @@ public class JobResource {
 			// write job file
 			FileUtils.writeStringToFile(jobFile, jobCommand.toString());
 			
-			output = "composedGdsFileFullName:" + composedGdsFileFullName;
+			output = "composedGdsFileFullName:" + "composedGdsFileFullName";
 			log.info("composedGdsFileFullName output: {} information successfully created.", output);
 	
 			UUID tvId = UUID.fromString(strTvId);
@@ -199,11 +210,96 @@ public class JobResource {
 	
 			job.setCreateTime(Calendar.getInstance().getTime());
 			job.setUpdateTime(Calendar.getInstance().getTime());
-	
-			//jobService.createJob(job);
+			
+			// create job info file
+			List<AcmeJobInfo> infoList = new ArrayList<AcmeJobInfo>();
+			
+			AcmeJobInfo jobInfo = new AcmeJobInfo();
+			UUID jobInfoId = UUID.randomUUID();
+			jobInfo.setJobInfoId(jobInfoId);
+			jobInfo.setCreateUser(userId);
+			jobInfo.setUpdateUser(userId);
+			jobInfo.setStatus("Active");
+			jobInfo.setCreateTime(Calendar.getInstance().getTime());
+			jobInfo.setUpdateTime(Calendar.getInstance().getTime());
+			
+			infoList.add(jobInfo);
+			
+			job.setAcmeJobInfoList(infoList);
+			
+			// create job placement file
+			List<AcmeJobPlacement> placementList = new ArrayList<AcmeJobPlacement>();
+			
+			AcmeJobPlacement jobPlacement = new AcmeJobPlacement();
+			UUID jobPlacementId = UUID.randomUUID();
+			jobPlacement.setJobPlacementId(jobPlacementId);
+			jobPlacement.setCreateUser(userId);
+			jobPlacement.setUpdateUser(userId);
+			jobPlacement.setStatus("Active");
+			jobPlacement.setCreateTime(Calendar.getInstance().getTime());
+			jobPlacement.setUpdateTime(Calendar.getInstance().getTime());
+			
+			placementList.add(jobPlacement);
+			
+			job.setAcmeJobPlacementList(placementList);
+			
+			// create job source GDS
+			List<AcmeJobSrcGds> srcGdsList = new ArrayList<AcmeJobSrcGds>();
+			
+			AcmeJobSrcGds jobSrcGds = new AcmeJobSrcGds();
+			UUID jobSrcGdsId = UUID.randomUUID();
+			jobSrcGds.setJobSrcGdsId(jobSrcGdsId);
+			jobSrcGds.setCreateUser(userId);
+			jobSrcGds.setUpdateUser(userId);
+			jobSrcGds.setStatus("Active");
+			jobSrcGds.setCreateTime(Calendar.getInstance().getTime());
+			jobSrcGds.setUpdateTime(Calendar.getInstance().getTime());
+			
+			srcGdsList.add(jobSrcGds);
+			
+			job.setAcmeJobSrcGdsList(srcGdsList);
+			
+			// create job netlist
+			List<AcmeJobNetlist> netlistList = new ArrayList<AcmeJobNetlist>();
+			
+			AcmeJobNetlist jobNetlist = new AcmeJobNetlist();
+			UUID jobNetlistId = UUID.randomUUID();
+			jobNetlist.setJobNetlistId(jobNetlistId);
+			jobNetlist.setCreateUser(userId);
+			jobNetlist.setUpdateUser(userId);
+			jobNetlist.setStatus("Active");
+			jobNetlist.setCreateTime(Calendar.getInstance().getTime());
+			jobNetlist.setUpdateTime(Calendar.getInstance().getTime());
+			
+			netlistList.add(jobNetlist);
+			
+			job.setAcmeJobNetlistList(netlistList);
+			
+			// create job testbench
+			List<AcmeJobTestbench> testbenchList = new ArrayList<AcmeJobTestbench>();
+			
+			AcmeJobTestbench jobTestbench = new AcmeJobTestbench();
+			UUID jobTestbenchId = UUID.randomUUID();
+			jobTestbench.setJobTestbenchId(jobTestbenchId);
+			jobTestbench.setCreateUser(userId);
+			jobTestbench.setUpdateUser(userId);
+			jobTestbench.setStatus("Active");
+			jobTestbench.setCreateTime(Calendar.getInstance().getTime());
+			jobTestbench.setUpdateTime(Calendar.getInstance().getTime());
+			
+			testbenchList.add(jobTestbench);
+			
+			job.setAcmeJobTestbenchList(testbenchList);
+			
+			// result lists
+			List<AcmeJobDrc> jobDrcList = new ArrayList<AcmeJobDrc>();
+			List<AcmeJobLvs> jobLvsList = new ArrayList<AcmeJobLvs>();
+			List<AcmeJobRc> jobRcList = new ArrayList<AcmeJobRc>();
+			List<AcmeJobSpice> jobSpiceList = new ArrayList<AcmeJobSpice>();
 			
 			// create job testlines
 			for (AcmeJobTestline jobTestline: testlineList) {
+				// create job testline
 				UUID jobTestlineId = UUID.randomUUID();
 				jobTestline.setJobTestlineId(jobTestlineId);
 				jobTestline.setCreateUser(userId);
@@ -212,12 +308,75 @@ public class JobResource {
 				jobTestline.setCreateTime(Calendar.getInstance().getTime());
 				jobTestline.setUpdateTime(Calendar.getInstance().getTime());
 				
-				//jobService.createJobTestline(jobTestline);
+				// create job DRC result entities
+				AcmeJobDrc jobDrc = new AcmeJobDrc();
+				
+				UUID jobDrcId = UUID.randomUUID();
+				jobDrc.setJobDrcId(jobDrcId);
+				jobDrc.setJobTestlineId(jobTestlineId);
+				jobDrc.setTestlineName(jobTestline.getTestlineName());
+				jobDrc.setCreateUser(userId);
+				jobDrc.setUpdateUser(userId);
+				jobDrc.setStatus("Active");
+				jobDrc.setCreateTime(Calendar.getInstance().getTime());
+				jobDrc.setUpdateTime(Calendar.getInstance().getTime());
+				
+				jobDrcList.add(jobDrc);
+				
+				// create job LVS result entities
+				AcmeJobLvs jobLvs = new AcmeJobLvs();
+				
+				UUID jobLvsId = UUID.randomUUID();
+				jobLvs.setJobLvsId(jobLvsId);
+				jobLvs.setJobTestlineId(jobTestlineId);
+				jobLvs.setTestlineName(jobTestline.getTestlineName());
+				jobLvs.setCreateUser(userId);
+				jobLvs.setUpdateUser(userId);
+				jobLvs.setStatus("Active");
+				jobLvs.setCreateTime(Calendar.getInstance().getTime());
+				jobLvs.setUpdateTime(Calendar.getInstance().getTime());
+				
+				jobLvsList.add(jobLvs);
+				
+				// create job RC result entities
+				AcmeJobRc jobRc = new AcmeJobRc();
+				
+				UUID jobRcId = UUID.randomUUID();
+				jobRc.setJobRcId(jobRcId);
+				jobRc.setJobTestlineId(jobTestlineId);
+				jobRc.setTestlineName(jobTestline.getTestlineName());
+				jobRc.setCreateUser(userId);
+				jobRc.setUpdateUser(userId);
+				jobRc.setStatus("Active");
+				jobRc.setCreateTime(Calendar.getInstance().getTime());
+				jobRc.setUpdateTime(Calendar.getInstance().getTime());
+				
+				jobRcList.add(jobRc);
+				
+				// create job SPICE result entities
+				AcmeJobSpice jobSpice = new AcmeJobSpice();
+				
+				UUID jobSpiceId = UUID.randomUUID();
+				jobSpice.setJobSpiceId(jobSpiceId);
+				jobSpice.setJobTestlineId(jobTestlineId);
+				jobSpice.setTestlineName(jobTestline.getTestlineName());
+				jobSpice.setCreateUser(userId);
+				jobSpice.setUpdateUser(userId);
+				jobSpice.setStatus("Active");
+				jobSpice.setCreateTime(Calendar.getInstance().getTime());
+				jobSpice.setUpdateTime(Calendar.getInstance().getTime());
+				
+				jobSpiceList.add(jobSpice);
 			}
 			
 			job.setAcmeJobTestlineList(testlineList);
+			job.setAcmeJobDrcList(jobDrcList);
+			job.setAcmeJobLvsList(jobLvsList);
+			job.setAcmeJobRcList(jobRcList);
+			job.setAcmeJobSpiceList(jobSpiceList);
 			
 			jobService.createJob(job);
+			log.info("createJob job: {} information successfully created.", job);
 			
 			// start command
 			String command = AcmeConfig.ACME_JOB_STARTER + " " + jobFile;

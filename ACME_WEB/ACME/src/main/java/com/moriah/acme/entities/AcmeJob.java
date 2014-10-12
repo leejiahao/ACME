@@ -56,7 +56,34 @@ public class AcmeJob {
     private String updateUser;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobInfo> acmeJobInfoList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobPlacement> acmeJobPlacementList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobSrcGds> acmeJobSrcGdsList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
     private List<AcmeJobTestline> acmeJobTestlineList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobNetlist> acmeJobNetlistList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobTestbench> acmeJobTestbenchList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobDrc> acmeJobDrcList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobLvs> acmeJobLvsList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobRc> acmeJobRcList;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "job_id", cascade = CascadeType.ALL)
+    private List<AcmeJobSpice> acmeJobSpiceList;
 
 	public UUID getJobId() {
 		return jobId;
@@ -158,5 +185,77 @@ public class AcmeJob {
 
 	public void setAcmeJobTestlineList(List<AcmeJobTestline> acmeJobTestlineList) {
 		this.acmeJobTestlineList = acmeJobTestlineList;
+	}
+
+	public List<AcmeJobInfo> getAcmeJobInfoList() {
+		return acmeJobInfoList;
+	}
+
+	public void setAcmeJobInfoList(List<AcmeJobInfo> acmeJobInfoList) {
+		this.acmeJobInfoList = acmeJobInfoList;
+	}
+
+	public List<AcmeJobPlacement> getAcmeJobPlacementList() {
+		return acmeJobPlacementList;
+	}
+
+	public void setAcmeJobPlacementList(List<AcmeJobPlacement> acmeJobPlacementList) {
+		this.acmeJobPlacementList = acmeJobPlacementList;
+	}
+
+	public List<AcmeJobSrcGds> getAcmeJobSrcGdsList() {
+		return acmeJobSrcGdsList;
+	}
+
+	public void setAcmeJobSrcGdsList(List<AcmeJobSrcGds> acmeJobSrcGdsList) {
+		this.acmeJobSrcGdsList = acmeJobSrcGdsList;
+	}
+
+	public List<AcmeJobNetlist> getAcmeJobNetlistList() {
+		return acmeJobNetlistList;
+	}
+
+	public void setAcmeJobNetlistList(List<AcmeJobNetlist> acmeJobNetlistList) {
+		this.acmeJobNetlistList = acmeJobNetlistList;
+	}
+
+	public List<AcmeJobTestbench> getAcmeJobTestbenchList() {
+		return acmeJobTestbenchList;
+	}
+
+	public void setAcmeJobTestbenchList(List<AcmeJobTestbench> acmeJobTestbenchList) {
+		this.acmeJobTestbenchList = acmeJobTestbenchList;
+	}
+
+	public List<AcmeJobDrc> getAcmeJobDrcList() {
+		return acmeJobDrcList;
+	}
+
+	public void setAcmeJobDrcList(List<AcmeJobDrc> acmeJobDrcList) {
+		this.acmeJobDrcList = acmeJobDrcList;
+	}
+
+	public List<AcmeJobLvs> getAcmeJobLvsList() {
+		return acmeJobLvsList;
+	}
+
+	public void setAcmeJobLvsList(List<AcmeJobLvs> acmeJobLvsList) {
+		this.acmeJobLvsList = acmeJobLvsList;
+	}
+
+	public List<AcmeJobRc> getAcmeJobRcList() {
+		return acmeJobRcList;
+	}
+
+	public void setAcmeJobRcList(List<AcmeJobRc> acmeJobRcList) {
+		this.acmeJobRcList = acmeJobRcList;
+	}
+
+	public List<AcmeJobSpice> getAcmeJobSpiceList() {
+		return acmeJobSpiceList;
+	}
+
+	public void setAcmeJobSpiceList(List<AcmeJobSpice> acmeJobSpiceList) {
+		this.acmeJobSpiceList = acmeJobSpiceList;
 	}
 }

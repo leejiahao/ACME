@@ -18,13 +18,16 @@ import com.moriah.acme.utils.DateAdapter;
 public class AcmeJobSpice {
     @Id
     @Column(name = "job_spice_id")
-    private UUID jobDrcId;
+    private UUID jobSpiceId;
 
     @Column(name = "job_id")
     private UUID jobId;
     
     @Column(name = "job_testline_id")
     private UUID jobTestlineId;
+    
+    @Column(name = "testline_name")
+    private String testlineName;
     
     @Column(name = "spice_model_id")
     private UUID spiceModelId;
@@ -48,12 +51,12 @@ public class AcmeJobSpice {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public UUID getJobDrcId() {
-		return jobDrcId;
+	public UUID getJobSpiceId() {
+		return jobSpiceId;
 	}
 
-	public void setJobDrcId(UUID jobDrcId) {
-		this.jobDrcId = jobDrcId;
+	public void setJobSpiceId(UUID jobSpiceId) {
+		this.jobSpiceId = jobSpiceId;
 	}
 
 	public UUID getJobId() {
@@ -120,6 +123,14 @@ public class AcmeJobSpice {
 
 	public void setJobTestlineId(UUID jobTestlineId) {
 		this.jobTestlineId = jobTestlineId;
+	}
+
+	public String getTestlineName() {
+		return testlineName;
+	}
+
+	public void setTestlineName(String testlineName) {
+		this.testlineName = testlineName;
 	}
 
 }

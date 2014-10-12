@@ -21,15 +21,18 @@
 		<class>com.moriah.acme.entities.AcmeGds</class>
 		<class>com.moriah.acme.entities.AcmeGdsOwner</class>
 		<class>com.moriah.acme.entities.AcmeJob</class>
-		<class>com.moriah.acme.entities.AcmeJobDrc</class>
-		<class>com.moriah.acme.entities.AcmeJobTestline</class>
-		<class>com.moriah.acme.entities.AcmeJobLvs</class>
-		<class>com.moriah.acme.entities.AcmeJobRc</class>
-		<class>com.moriah.acme.entities.AcmeJobSpice</class>
+		<class>com.moriah.acme.entities.AcmeJobInfo</class>
+		<class>com.moriah.acme.entities.AcmeJobPlacement</class>
+		<class>com.moriah.acme.entities.AcmeJobSrcGds</class>
 		<class>com.moriah.acme.entities.AcmeJobControlCircuit</class>
 		<class>com.moriah.acme.entities.AcmeJobNetlist</class>
 		<class>com.moriah.acme.entities.AcmeJobTestbench</class>
 		<class>com.moriah.acme.entities.AcmeJobSourceCellGds</class>
+		<class>com.moriah.acme.entities.AcmeJobTestline</class>
+		<class>com.moriah.acme.entities.AcmeJobDrc</class>
+		<class>com.moriah.acme.entities.AcmeJobLvs</class>
+		<class>com.moriah.acme.entities.AcmeJobRc</class>
+		<class>com.moriah.acme.entities.AcmeJobSpice</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="kundera.nodes" value="192.168.56.101" />

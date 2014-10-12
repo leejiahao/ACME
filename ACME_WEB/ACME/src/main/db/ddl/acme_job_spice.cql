@@ -9,6 +9,7 @@ CREATE TABLE acme_job_spice (
     job_spice_id uuid PRIMARY KEY,
     job_id uuid,
     job_testline_id uuid,
+    testline_name text,
     spice_model_id uuid,
     status text,
     update_time timestamp,
@@ -22,6 +23,7 @@ CREATE TABLE acme_job_spice (
 -------------------------------------
 CREATE INDEX acme_job_spice_idx_job_id ON acme_job_spice (job_id);
 CREATE INDEX acme_job_spice_idx_job_testline_id ON acme_job_spice (job_testline_id);
+CREATE INDEX acme_job_spice_idx_testline_name ON acme_job_spice (testline_name);
 CREATE INDEX acme_job_spice_idx_spice_model_id ON acme_job_spice (spice_model_id);
 CREATE INDEX acme_job_spice_idx_status ON acme_job_spice (status);
 CREATE INDEX acme_job_spice_idx_update_time ON acme_job_spice (update_time);

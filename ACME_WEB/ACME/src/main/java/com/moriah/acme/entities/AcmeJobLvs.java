@@ -26,6 +26,9 @@ public class AcmeJobLvs {
     @Column(name = "job_testline_id")
     private UUID jobTestlineId;
     
+    @Column(name = "testline_name")
+    private String testlineName;
+    
     @Column(name = "lvs_deck_id")
     private UUID lvsDeckId;
 
@@ -120,6 +123,14 @@ public class AcmeJobLvs {
 
 	public void setJobTestlineId(UUID jobTestlineId) {
 		this.jobTestlineId = jobTestlineId;
+	}
+
+	public String getTestlineName() {
+		return testlineName;
+	}
+
+	public void setTestlineName(String testlineName) {
+		this.testlineName = testlineName;
 	}
 
 }

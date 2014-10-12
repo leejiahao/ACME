@@ -2,6 +2,9 @@
  * Global Parameters
  */
 
+// selected tvId
+selectedTvId = undefined;
+
 function addPanel(){
     index++;
     $('#tt').tabs('add',{
@@ -118,12 +121,6 @@ function reloadTvTree() {
 	//var node = $('#tree_tv_list').tree('find',113);
     //$('#tt').tree('expandTo', node.target).tree('select', node.target);
 }
-
-selectedTvId = undefined;
-
-
-
-
 
 function openWinAddVehicle() {
 	$('#win_add_vehicle').window('open');

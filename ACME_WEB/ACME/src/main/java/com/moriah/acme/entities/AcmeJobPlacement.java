@@ -14,23 +14,17 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.moriah.acme.utils.DateAdapter;
 
 @Entity
-@Table(name = "acme_job_drc", schema = "acme_space@cassandra-pu")
-public class AcmeJobDrc {
+@Table(name = "acme_job_placement", schema = "acme_space@cassandra-pu")
+public class AcmeJobPlacement {
     @Id
-    @Column(name = "job_drc_id")
-    private UUID jobDrcId;
+    @Column(name = "job_placement_id")
+    private UUID jobPlacementId;
 
     @Column(name = "job_id")
     private UUID jobId;
     
-    @Column(name = "job_testline_id")
-    private UUID jobTestlineId;
-    
-    @Column(name = "testline_name")
-    private String testlineName;
-    
-    @Column(name = "drc_deck_id")
-    private UUID drcDeckId;
+    @Column(name = "file_id")
+    private UUID fileId;
 
     @Column(name = "status")
     private String status;
@@ -51,12 +45,12 @@ public class AcmeJobDrc {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public UUID getJobDrcId() {
-		return jobDrcId;
+	public UUID getJobPlacementId() {
+		return jobPlacementId;
 	}
 
-	public void setJobDrcId(UUID jobDrcId) {
-		this.jobDrcId = jobDrcId;
+	public void setJobPlacementId(UUID jobPlacementId) {
+		this.jobPlacementId = jobPlacementId;
 	}
 
 	public UUID getJobId() {
@@ -65,14 +59,6 @@ public class AcmeJobDrc {
 
 	public void setJobId(UUID jobId) {
 		this.jobId = jobId;
-	}
-
-	public UUID getDrcDeckId() {
-		return drcDeckId;
-	}
-
-	public void setDrcDeckId(UUID drcDeckId) {
-		this.drcDeckId = drcDeckId;
 	}
 
 	public String getStatus() {
@@ -117,19 +103,12 @@ public class AcmeJobDrc {
 		this.updateUser = updateUser;
 	}
 
-	public UUID getJobTestlineId() {
-		return jobTestlineId;
+	public UUID getFileId() {
+		return fileId;
 	}
 
-	public void setJobTestlineId(UUID jobTestlineId) {
-		this.jobTestlineId = jobTestlineId;
+	public void setFileId(UUID fileId) {
+		this.fileId = fileId;
 	}
 
-	public String getTestlineName() {
-		return testlineName;
-	}
-
-	public void setTestlineName(String testlineName) {
-		this.testlineName = testlineName;
-	}
 }

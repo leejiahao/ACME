@@ -32,6 +32,9 @@ public class AcmeControlCircuit {
     @Column(name = "circuit_desc")
     private String circuitDesc;
     
+    @Column(name = "circuit_gds_id")
+    private UUID circuitGdsId;
+    
     @Column(name = "circuit_gds_file_path")
     private String circuitGdsFilePath;
     
@@ -230,5 +233,13 @@ public class AcmeControlCircuit {
 
 	public void setNetlistFileName(String netlistFileName) {
 		this.netlistFileName = netlistFileName;
+	}
+
+	public UUID getCircuitGdsId() {
+		return circuitGdsId;
+	}
+
+	public void setCircuitGdsId(UUID circuitGdsId) {
+		this.circuitGdsId = circuitGdsId;
 	}
 }
