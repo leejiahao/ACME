@@ -73,4 +73,16 @@ public interface JobService {
 	// find JOBs
 	public List<AcmeJob> findJobListByOwner(String owner);
 	
+	// find JOB DRC results
+	public List<AcmeJobDrc> findJobDrcListByJobId(String strJobId);
+	
+	// find JOB LVS results
+	public List<AcmeJobLvs> findJobLvsListByJobId(String strJobId);
+	
+	// find JOB RC results
+	public List<AcmeJobRc> findJobRcListByJobId(String strJobId);
+	
+	// find JOB SPICE results
+	public List<AcmeJobSpice> findJobSpiceListByJobId(String strJobId);
+	
 }

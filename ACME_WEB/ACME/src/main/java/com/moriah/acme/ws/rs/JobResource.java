@@ -405,5 +405,65 @@ public class JobResource {
     	
     	return jobList;
     }
+    
+    @GET
+    @Path("/drc/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobDrc> getJobDrcByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobDrcByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobDrcByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobDrc> jobDrcList = jobService.findJobDrcListByJobId(strJobId);
+    	log.info("getJobDrcByJobId jobDrcList.size(): {} information successfully received.", jobDrcList.size());
+    	
+    	return jobDrcList;
+    }
+    
+    @GET
+    @Path("/lvs/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobLvs> getJobLvsByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobLvsByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobLvsByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobLvs> jobLvsList = jobService.findJobLvsListByJobId(strJobId);
+    	log.info("getJobLvsByJobId jobLvsList.size(): {} information successfully received.", jobLvsList.size());
+    	
+    	return jobLvsList;
+    }
+    
+    @GET
+    @Path("/rc/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobRc> getJobRcByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobRcByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobRcByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobRc> jobRcList = jobService.findJobRcListByJobId(strJobId);
+    	log.info("getJobRcByJobId jobRcList.size(): {} information successfully received.", jobRcList.size());
+    	
+    	return jobRcList;
+    }
+    
+    @GET
+    @Path("/spice/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobSpice> getJobSpiceByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobSpiceByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobSpiceByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobSpice> jobSpiceList = jobService.findJobSpiceListByJobId(strJobId);
+    	log.info("getJobSpiceByJobId jobSpiceList.size(): {} information successfully received.", jobSpiceList.size());
+    	
+    	return jobSpiceList;
+    }
 
 }

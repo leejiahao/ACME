@@ -206,4 +206,40 @@ public class JobServiceImpl implements JobService {
 
         return jobs;
     }
+    
+    @Override
+    public List<AcmeJobDrc> findJobDrcListByJobId(String strJobId)
+    {
+        String query = "Select e from " + AcmeJobDrc.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobDrc> jobDrcList = (List<AcmeJobDrc>) dao.findByQuery(query);
+
+        return jobDrcList;
+    }
+    
+    @Override
+    public List<AcmeJobLvs> findJobLvsListByJobId(String strJobId)
+    {
+        String query = "Select e from " + AcmeJobLvs.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobLvs> jobLvsList = (List<AcmeJobLvs>) dao.findByQuery(query);
+
+        return jobLvsList;
+    }
+    
+    @Override
+    public List<AcmeJobRc> findJobRcListByJobId(String strJobId)
+    {
+        String query = "Select e from " + AcmeJobRc.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobRc> jobRcList = (List<AcmeJobRc>) dao.findByQuery(query);
+
+        return jobRcList;
+    }
+    
+    @Override
+    public List<AcmeJobSpice> findJobSpiceListByJobId(String strJobId)
+    {
+        String query = "Select e from " + AcmeJobSpice.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobSpice> jobSpiceList = (List<AcmeJobSpice>) dao.findByQuery(query);
+
+        return jobSpiceList;
+    }
 }

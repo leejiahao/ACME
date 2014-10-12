@@ -99,6 +99,25 @@ function openJobSummary() {
     var row = $('#tb_job_list').datagrid('getSelected');
     if (row){
         // $.messager.alert('Info', row.jobId + ":" + row.jobName + ":" + row.createTime);
+    	
+    	// load results
+    	$('#grid_job_drc_result').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_lvs_result').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_rc_result').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_spice_result').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	// open window
     	$('#win_job_detail').window('open');
     }
 }
