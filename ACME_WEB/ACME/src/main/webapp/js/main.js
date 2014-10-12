@@ -5,6 +5,21 @@
 // selected tvId
 selectedTvId = undefined;
 
+/**
+ * Download File
+ */
+function downloadURL(url) {
+    var hiddenIFrameID = 'hiddenDownloader',
+        iframe = document.getElementById(hiddenIFrameID);
+    if (iframe === null) {
+        iframe = document.createElement('iframe');
+        iframe.id = hiddenIFrameID;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+    }
+    iframe.src = url;
+};
+
 function addPanel(){
     index++;
     $('#tt').tabs('add',{
@@ -100,6 +115,28 @@ function openJobSummary() {
     if (row){
         // $.messager.alert('Info', row.jobId + ":" + row.jobName + ":" + row.createTime);
     	
+    	$('#grid_job_cell_info').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_placement').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_src_gds').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_netlist').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	
+    	$('#grid_job_testbench').datagrid('load', {
+    	    jobId: row.jobId
+    	});
+    	/*
+    	*/
+    	
     	// load results
     	$('#grid_job_drc_result').datagrid('load', {
     	    jobId: row.jobId
@@ -132,6 +169,14 @@ function getActiveJobSummaryTabId() {
 	
 	return activeJobSummaryTabId;
 };
+
+function formatDrcResultFile(val,row){
+	//return '<span style="color:red;">('+val+')</span>';
+
+	//var downloadFileUrl = './ws/rs/job/txt';
+	var downloadFileUrl = './ws/rs/job/zip';
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
 
 /*
  * maintain project
@@ -169,10 +214,12 @@ function loadControlCircuitListByTv(selectedTvId) {
 	});
 }
 
-
-
 function openWinAddControlCircuit() {
 	$('#win_add_control_circuit').window('open');
+}
+
+function openWinDelControlCircuit() {
+	$('#win_del_control_circuit').window('open');
 }
 
 function submitWinAddControlCircuit() {
@@ -200,10 +247,12 @@ function loadDrcDeckListByTv(selectedTvId) {
 	});
 }
 
-
-
 function openWinAddDrcDeck() {
 	$('#win_add_drc_deck').window('open');
+}
+
+function openWinDelDrcDeck() {
+	$('#win_del_drc_deck').window('open');
 }
 
 function submitWinAddDrcDeck() {
@@ -231,10 +280,12 @@ function loadLvsDeckListByTv(selectedTvId) {
 	});
 }
 
-
-
 function openWinAddLvsDeck() {
 	$('#win_add_lvs_deck').window('open');
+}
+
+function openWinDelLvsDeck() {
+	$('#win_del_lvs_deck').window('open');
 }
 
 function submitWinAddLvsDeck() {
@@ -266,6 +317,10 @@ function openWinAddRcDeck() {
 	$('#win_add_rc_deck').window('open');
 }
 
+function openWinDelRcDeck() {
+	$('#win_del_rc_deck').window('open');
+}
+
 function submitWinAddRcDeck() {
 	$('#win_add_rc_deck').window('close');
 	$("#form_add_rc_deck_tvId").val(selectedTvId);
@@ -290,6 +345,10 @@ function loadSpiceModelListByTv(selectedTvId) {
 	$('#grid_tv_spice_model').datagrid('load', {
 	    tvId: selectedTvId
 	});
+}
+
+function openWinDelSpiceModel() {
+	$('#win_del_spice_model').window('open');
 }
 
 function openWinAddSpiceModel() {

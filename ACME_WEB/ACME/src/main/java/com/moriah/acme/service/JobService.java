@@ -4,15 +4,17 @@ import java.util.List;
 import java.util.UUID;
 
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobInfo;
+import com.moriah.acme.entities.AcmeJobPlacement;
+import com.moriah.acme.entities.AcmeJobSrcGds;
+import com.moriah.acme.entities.AcmeJobNetlist;
+import com.moriah.acme.entities.AcmeJobTestbench;
 import com.moriah.acme.entities.AcmeJobTestline;
 import com.moriah.acme.entities.AcmeJobDrc;
 import com.moriah.acme.entities.AcmeJobLvs;
 import com.moriah.acme.entities.AcmeJobRc;
 import com.moriah.acme.entities.AcmeJobSpice;
 import com.moriah.acme.entities.AcmeJobControlCircuit;
-import com.moriah.acme.entities.AcmeJobSourceCellGds;
-import com.moriah.acme.entities.AcmeJobNetlist;
-import com.moriah.acme.entities.AcmeJobTestbench;
 
 public interface JobService {
 
@@ -32,7 +34,7 @@ public interface JobService {
 	public void createJobTestline(AcmeJobTestline jobTestline);
 	
 	// create Source Cell Gds of JOB
-	public void createSourceCellGdsOfJob(AcmeJobSourceCellGds jobSourceCellGds);
+	public void createSourceCellGdsOfJob(AcmeJobSrcGds jobSrcGds);
 	
 	// create Control Circuit of JOB
 	public void createControlCircuitOfJob(AcmeJobControlCircuit jobControlCircuit);
@@ -72,6 +74,21 @@ public interface JobService {
 	
 	// find JOBs
 	public List<AcmeJob> findJobListByOwner(String owner);
+	
+	// find JOB Cell Info
+	public List<AcmeJobInfo> findJobCellInfoListByJobId(String strJobId);
+	
+	// find JOB placement
+	public List<AcmeJobPlacement> findJobPlacementListByJobId(String strJobId);
+	
+	// find JOB source cell GDS
+	public List<AcmeJobSrcGds> findJobSrcGdsListByJobId(String strJobId);
+	
+	// find JOB netlist
+	public List<AcmeJobNetlist> findJobNetlistListByJobId(String strJobId);
+	
+	// find JOB testbench
+	public List<AcmeJobTestbench> findJobTestbenchListByJobId(String strJobId);
 	
 	// find JOB DRC results
 	public List<AcmeJobDrc> findJobDrcListByJobId(String strJobId);

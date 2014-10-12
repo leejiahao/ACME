@@ -8,13 +8,15 @@ import org.slf4j.LoggerFactory;
 
 import com.moriah.acme.dao.AcmeDao;
 import com.moriah.acme.entities.AcmeJob;
+import com.moriah.acme.entities.AcmeJobInfo;
+import com.moriah.acme.entities.AcmeJobPlacement;
 import com.moriah.acme.entities.AcmeJobTestline;
 import com.moriah.acme.entities.AcmeJobControlCircuit;
 import com.moriah.acme.entities.AcmeJobDrc;
 import com.moriah.acme.entities.AcmeJobLvs;
 import com.moriah.acme.entities.AcmeJobNetlist;
 import com.moriah.acme.entities.AcmeJobRc;
-import com.moriah.acme.entities.AcmeJobSourceCellGds;
+import com.moriah.acme.entities.AcmeJobSrcGds;
 import com.moriah.acme.entities.AcmeJobSpice;
 import com.moriah.acme.entities.AcmeJobTestbench;
 import com.moriah.acme.entities.AcmeTv;
@@ -88,10 +90,10 @@ public class JobServiceImpl implements JobService {
     
 	// create Source Cell Gds of JOB
     @Override
-	public void createSourceCellGdsOfJob(AcmeJobSourceCellGds jobSourceCellGds)
+	public void createSourceCellGdsOfJob(AcmeJobSrcGds jobSrcGds)
 	{
-        dao.insert(jobSourceCellGds);
-        log.info("AcmeJobSourceCellGds jobSourceCellGds {} information successfully created.", jobSourceCellGds);
+        dao.insert(jobSrcGds);
+        log.info("AcmeJobSourceCellGds jobSrcGds {} information successfully created.", jobSrcGds);
 	}
 	
 	// create Control Circuit of JOB
@@ -205,6 +207,51 @@ public class JobServiceImpl implements JobService {
         List<AcmeJob> jobs = (List<AcmeJob>) dao.findByQuery(query);
 
         return jobs;
+    }
+    
+	// find JOB Cell Info
+    @Override
+	public List<AcmeJobInfo> findJobCellInfoListByJobId(String strJobId) {
+        String query = "Select e from " + AcmeJobInfo.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobInfo> jobInfoList = (List<AcmeJobInfo>) dao.findByQuery(query);
+
+        return jobInfoList;
+    }
+	
+	// find JOB placement
+    @Override
+	public List<AcmeJobPlacement> findJobPlacementListByJobId(String strJobId) {
+        String query = "Select e from " + AcmeJobPlacement.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobPlacement> jobPlacementList = (List<AcmeJobPlacement>) dao.findByQuery(query);
+
+        return jobPlacementList;
+    }
+	
+	// find JOB source cell GDS
+    @Override
+	public List<AcmeJobSrcGds> findJobSrcGdsListByJobId(String strJobId) {
+        String query = "Select e from " + AcmeJobSrcGds.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobSrcGds> jobSrcGdsList = (List<AcmeJobSrcGds>) dao.findByQuery(query);
+
+        return jobSrcGdsList;
+    }
+	
+	// find JOB netlist
+    @Override
+	public List<AcmeJobNetlist> findJobNetlistListByJobId(String strJobId) {
+        String query = "Select e from " + AcmeJobNetlist.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobNetlist> jobNetlistList = (List<AcmeJobNetlist>) dao.findByQuery(query);
+
+        return jobNetlistList;
+    }
+	
+	// find JOB testbench
+    @Override
+	public List<AcmeJobTestbench> findJobTestbenchListByJobId(String strJobId) {
+        String query = "Select e from " + AcmeJobTestbench.class.getSimpleName() + " e where e.jobId = " + strJobId;
+        List<AcmeJobTestbench> jobTestbenchList = (List<AcmeJobTestbench>) dao.findByQuery(query);
+
+        return jobTestbenchList;
     }
     
     @Override

@@ -20,6 +20,8 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -31,6 +33,7 @@ import com.moriah.acme.beans.JobCommand;
 import com.moriah.acme.service.ServiceUtil;
 import com.moriah.acme.service.JobService;
 import com.moriah.acme.service.ProjectService;
+import com.moriah.acme.entities.AcmeFile;
 import com.moriah.acme.entities.AcmeJob;
 import com.moriah.acme.entities.AcmeJobInfo;
 import com.moriah.acme.entities.AcmeJobPlacement;
@@ -213,6 +216,17 @@ public class JobResource {
 			
 			// create job info file
 			List<AcmeJobInfo> infoList = new ArrayList<AcmeJobInfo>();
+			
+			/*
+			AcmeFile jobInfoFile = new AcmeFile();
+			UUID jobInfoFileId = UUID.randomUUID();
+			jobInfoFile.setFileId(fileId);
+			jobInfo.setCreateUser(userId);
+			jobInfo.setUpdateUser(userId);
+			jobInfo.setStatus("Active");
+			jobInfo.setCreateTime(Calendar.getInstance().getTime());
+			jobInfo.setUpdateTime(Calendar.getInstance().getTime());
+			*/
 			
 			AcmeJobInfo jobInfo = new AcmeJobInfo();
 			UUID jobInfoId = UUID.randomUUID();
@@ -407,6 +421,81 @@ public class JobResource {
     }
     
     @GET
+    @Path("/cell_info/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobInfo> getJobCellInfoByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobCellInfoByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobCellInfoByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobInfo> jobCellInfoList = jobService.findJobCellInfoListByJobId(strJobId);
+    	log.info("getJobCellInfoByJobId jobCellInfoList.size(): {} information successfully received.", jobCellInfoList.size());
+    	
+    	return jobCellInfoList;
+    }
+    
+    @GET
+    @Path("/placement/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobPlacement> getJobPlacementByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobPlacementByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobPlacementByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobPlacement> jobPlacementList = jobService.findJobPlacementListByJobId(strJobId);
+    	log.info("getJobPlacementByJobId jobPlacementList.size(): {} information successfully received.", jobPlacementList.size());
+    	
+    	return jobPlacementList;
+    }
+    
+    @GET
+    @Path("/src_gds/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobSrcGds> getJobSrcGdsByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobSrcGdsByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobSrcGdsByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobSrcGds> jobSrcGdsList = jobService.findJobSrcGdsListByJobId(strJobId);
+    	log.info("getJobSrcGdsByJobId jobSrcGdsList.size(): {} information successfully received.", jobSrcGdsList.size());
+    	
+    	return jobSrcGdsList;
+    }
+    
+    @GET
+    @Path("/netlist/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobNetlist> getJobNetlistByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobNetlistByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobNetlistByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobNetlist> jobNetlistList = jobService.findJobNetlistListByJobId(strJobId);
+    	log.info("getJobNetlistByJobId jobNetlistList.size(): {} information successfully received.", jobNetlistList.size());
+    	
+    	return jobNetlistList;
+    }
+    
+    @GET
+    @Path("/testbench/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AcmeJobTestbench> getJobTestbenchByJobId(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobId") String strJobId
+    		) {
+    	log.info("getJobTestbenchByJobId userId: {} information successfully received.", userId);
+    	log.info("getJobTestbenchByJobId strJobId: {} information successfully received.", strJobId);
+    	List<AcmeJobTestbench> jobTestbenchList = jobService.findJobTestbenchListByJobId(strJobId);
+    	log.info("getJobTestbenchByJobId jobTestbenchList.size(): {} information successfully received.", jobTestbenchList.size());
+    	
+    	return jobTestbenchList;
+    }
+    
+    @GET
     @Path("/drc/list")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AcmeJobDrc> getJobDrcByJobId(
@@ -464,6 +553,40 @@ public class JobResource {
     	log.info("getJobSpiceByJobId jobSpiceList.size(): {} information successfully received.", jobSpiceList.size());
     	
     	return jobSpiceList;
+    }
+    
+    /*
+    @Path("/lvs/report")
+    @GET
+    public Response get() throws Exception {
+        final File file = new File(filePath);
+
+        return Response
+                .ok(FileUtils.readFileToByteArray(file))
+                .type("application/zip")
+                .header("Content-Disposition", "attachment; filename=\"filename.zip\"")
+                .build();
+    }
+    */
+    
+    @GET
+    @Path("/zip")
+    @Produces("application/octet-stream")
+    public Response getZipFile() {
+    	File file = new File("D://temp/emoji_test.zip");
+    	ResponseBuilder response = Response.ok((Object) file);
+    	response.header("Content-Disposition", "attachment; filename=\"ptest.zip\"");
+    	return response.build();
+    }
+
+    @GET
+    @Path("/txt")
+    @Produces("text/plain")
+    public Response getTextFile() {
+    	File file = new File("D://temp/new_1.txt");
+    	ResponseBuilder response = Response.ok((Object) file);
+    	response.header("Content-Disposition", "attachment; filename=\"test_text_file.txt\"");
+    	return response.build();
     }
 
 }

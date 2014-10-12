@@ -61,7 +61,7 @@
 					    <thead>
 					        <tr>
 					        	<th data-options="field:'ck',checkbox:true"></th>
-					            <th data-options="field:'jobId',width:30">ID</th>
+					            <th data-options="field:'jobId',width:30,hidden:true">ID</th>
 					            <th data-options="field:'jobName',width:50">Name</th>
 					            <th data-options="field:'jobDesc',width:80">Description</th>
 					            <!-- 
@@ -166,28 +166,131 @@
 													    </div>
 							
 													    <div data-options="region:'center',title:'',border:false" style="padding:7px 0px 0px 0px;overflow:hidden;">
-															<table cellpadding="3">
-																<tr>
-																	<td>Cell Info:</td>
-																	<td><a href="#">info_588.txt</a></td>
-																</tr>
-																<tr>
-																	<td>Placement:</td>
-																	<td><a href="#">info_588.txt</a></td>
-																</tr>
-																<tr>
-																	<td>Source Cell GDS:</td>
-																	<td><a href="#">info_588.txt</a></td>
-																</tr>
-																<tr>
-																	<td>Netlist:</td>
-																	<td><a href="#">info_588.txt</a></td>
-																</tr>
-																<tr>
-																	<td>Testbench:</td>
-																	<td><a href="#">info_588.txt</a></td>
-																</tr>
-															</table>
+													    
+															<!-- Input GDS -->
+															<div id="job_stage_input_gds_tab" class="easyui-tabs" data-options="fit:true,plain:true,tabPosition:'left'">
+															    
+															    <!-- Cell Info -->
+															    <div title="Cell Info" style="overflow:auto;padding:5px;">
+															    
+																    <table id="grid_job_cell_info" class="easyui-datagrid" style="width:100%;height:245px;"
+																    		data-options="
+																    			rownumbers:true,
+																    			singleSelect:true,
+																    			pagination:true,
+																    			pageSize:20,
+																    			url:'./ws/rs/job/cell_info/list',
+																    			method:'get',
+																    			fitColumns:true">				        
+																	    <thead>
+																	        <tr>
+																	            <th data-options="field:'jobInfoId',width:50">Id</th>
+																	            <th data-options="field:'jobInfoFileName',width:80">File</th>
+																	            <th data-options="field:'status',width:50">Status</th>
+																	            <th data-options="field:'createTime',width:50">Create Date</th>
+																	        </tr>
+																	    </thead>
+																	</table>
+															    
+															    </div>
+															    
+															    <!-- Placement -->
+															    <div title="Placement" style="overflow:auto;padding:5px;">
+															    
+																    <table id="grid_job_placement" class="easyui-datagrid" style="width:100%;height:245px;"
+																    		data-options="
+																    			rownumbers:true,
+																    			singleSelect:true,
+																    			pagination:true,
+																    			pageSize:20,
+																    			url:'./ws/rs/job/placement/list',
+																    			method:'get',
+																    			fitColumns:true">				        
+																	    <thead>
+																	        <tr>
+																	            <th data-options="field:'jobPlacementId',width:50">Id</th>
+																	            <th data-options="field:'jobPlacementFileName',width:80">File</th>
+																	            <th data-options="field:'status',width:50">Status</th>
+																	            <th data-options="field:'createTime',width:50">Create Date</th>
+																	        </tr>
+																	    </thead>
+																	</table>
+															    
+															    </div>
+															    
+															    <!-- Source Cell GDS -->
+															    <div title="Source Cell GDS" style="overflow:auto;padding:5px;">
+															    
+																    <table id="grid_job_src_gds" class="easyui-datagrid" style="width:100%;height:245px;"
+																    		data-options="
+																    			rownumbers:true,
+																    			singleSelect:true,
+																    			pagination:true,
+																    			pageSize:20,
+																    			url:'./ws/rs/job/src_gds/list',
+																    			method:'get',
+																    			fitColumns:true">				        
+																	    <thead>
+																	        <tr>
+																	            <th data-options="field:'jobSrcGdsId',width:50">Id</th>
+																	            <th data-options="field:'jobSrcGdsFileName',width:80">File</th>
+																	            <th data-options="field:'status',width:50">Status</th>
+																	            <th data-options="field:'createTime',width:50">Create Date</th>
+																	        </tr>
+																	    </thead>
+																	</table>
+															    
+															    </div>
+															    
+															    <!-- Netlist -->
+															    <div title="Netlist" style="overflow:auto;padding:5px;">
+															    
+																    <table id="grid_job_netlist" class="easyui-datagrid" style="width:100%;height:245px;"
+																    		data-options="
+																    			rownumbers:true,
+																    			singleSelect:true,
+																    			pagination:true,
+																    			pageSize:20,
+																    			url:'./ws/rs/job/netlist/list',
+																    			method:'get',
+																    			fitColumns:true">				        
+																	    <thead>
+																	        <tr>
+																	            <th data-options="field:'jobNetlistId',width:50">Id</th>
+																	            <th data-options="field:'jobNetlistFileName',width:80">File</th>
+																	            <th data-options="field:'status',width:50">Status</th>
+																	            <th data-options="field:'createTime',width:50">Create Date</th>
+																	        </tr>
+																	    </thead>
+																	</table>
+															    
+															    </div>
+															    
+															    <!-- Testbench -->
+															    <div title="Testbench" style="overflow:auto;padding:5px;">
+															    
+																    <table id="grid_job_testbench" class="easyui-datagrid" style="width:100%;height:245px;"
+																    		data-options="
+																    			rownumbers:true,
+																    			singleSelect:true,
+																    			pagination:true,
+																    			pageSize:20,
+																    			url:'./ws/rs/job/testbench/list',
+																    			method:'get',
+																    			fitColumns:true">				        
+																	    <thead>
+																	        <tr>
+																	            <th data-options="field:'jobTestbenchId',width:50">Id</th>
+																	            <th data-options="field:'jobTestbenchFileName',width:80">File</th>
+																	            <th data-options="field:'status',width:50">Status</th>
+																	            <th data-options="field:'createTime',width:50">Create Date</th>
+																	        </tr>
+																	    </thead>
+																	</table>
+															    
+															    </div>
+														    </div>
+
 													    </div>
 													</div>
 				
@@ -232,10 +335,13 @@
 														    			fitColumns:true">				        
 															    <thead>
 															        <tr>
-															            <th data-options="field:'jobDrcId',width:30">ID</th>
+															        	<!-- 
+															            <th data-options="field:'jobDrcId',width:30,hidden:true">ID</th>
+															             -->
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckType',width:50">Type</th>
-															            <th data-options="field:'deckFileName',width:80">File</th>
+															            <th data-options="field:'resultFileName',width:80">Result File</th>
+															            <th data-options="field:'jobDrcId',width:50,formatter:formatDrcResultFile"></th>
+															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>
 															    </thead>
@@ -289,10 +395,10 @@
 														    			fitColumns:true">				        
 															    <thead>
 															        <tr>
-															            <th data-options="field:'jobLvsId',width:30">ID</th>
+															            <th data-options="field:'jobLvsId',width:30,hidden:true">ID</th>
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckType',width:50">Type</th>
-															            <th data-options="field:'deckFileName',width:80">File</th>
+															            <th data-options="field:'deckFileName',width:80">Result File</th>
+															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>
 															    </thead>
@@ -346,10 +452,10 @@
 														    			fitColumns:true">				        
 															    <thead>
 															        <tr>
-															            <th data-options="field:'jobRcId',width:30">ID</th>
+															            <th data-options="field:'jobRcId',width:30,hidden:true">ID</th>
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckType',width:50">Type</th>
-															            <th data-options="field:'deckFileName',width:80">File</th>
+															            <th data-options="field:'deckFileName',width:80">Result File</th>
+															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>
 															    </thead>
@@ -403,10 +509,10 @@
 														    			fitColumns:true">				        
 															    <thead>
 															        <tr>
-															            <th data-options="field:'jobSpiceId',width:30">ID</th>
+															            <th data-options="field:'jobSpiceId',width:30,hidden:true">ID</th>
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckType',width:50">Type</th>
-															            <th data-options="field:'deckFileName',width:80">File</th>
+															            <th data-options="field:'deckFileName',width:80">Result File</th>
+															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>
 															    </thead>
@@ -725,7 +831,7 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'circuitId',width:30">ID</th>
+											            <th data-options="field:'circuitId',width:30,hidden:true">ID</th>
 											            <th data-options="field:'circuitName',width:50">Name</th>
 											            <th data-options="field:'circuitType',width:50">Type</th>
 											            <th data-options="field:'circuitGdsFileName',width:80">Frame GDS</th>
@@ -740,9 +846,10 @@
 											</table>
 											<div id="tb_grid_tv_control_circuit">
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openWinAddControlCircuit()">New Control Circuit</a>
-												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove Control Circuit</a>
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="openWinDelControlCircuit()">Remove Control Circuit</a>
 											</div>
 											
+											<!-- New control circuit window -->
 											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:500px;height:320px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
@@ -813,6 +920,61 @@
 											    </div>
 											</div>
 											
+											<!-- Delete control circuit window -->
+											<div id="win_del_control_circuit" class="easyui-window" title="Delete Control Circuit" style="width:500px;height:220px;"
+											        data-options="iconCls:'icon-save',closed:true,modal:true">
+										        <div class="easyui-layout" data-options="fit:true">
+										        	<div data-options="region:'center'" style="padding:5px;">
+										        	
+														<form id="form_del_control_circuit" method="post" enctype="multipart/form-data" >
+															<p>Deleting control circuit.</p>
+															<input type="hidden" id="form_del_control_circuit_tvId" name="tvId" value="" />
+															<input type="hidden" id="form_del_control_circuit_circuitId" name="circuitId" value="" />
+															<table cellpadding="2">
+																<tr>
+																	<td>Circuit Name:</td>
+																	<td><input class="easyui-textbox" type="text" name="circuitName" data-options="required:true"></input></td>
+																</tr>
+																<tr>
+																	<td>Circuit Type:</td>
+																	<td>
+																		<select class="easyui-combobox" name="circuitType" style="width:150px;">
+																			<option value="588">588</option>
+																			<option value="1008">1008</option>
+																			<option value="504">504</option>
+																			<option value="336">336</option>
+																			<option value="84">84</option>
+																			<option value="cbcm">cbcm</option>
+																			<option value="rom">rom</option>
+																		</select>
+																	</td>
+																</tr>
+																<tr>
+																	<td>Circuit GDS:</td>
+																	<td><input class="easyui-filebox" name="circuitFile" data-options="prompt:'Choose a GDS file...'" style="width:300px"></input></td>
+																</tr>
+															</table>
+														</form>
+														
+														<div style="text-align:center;padding:5px">
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitWinDelControlCircuit()">Delete</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearWinDelControlCircuit()">Clear</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancelWinDelControlCircuit()">Cancel</a>
+														</div>
+														
+														<div id="dialog_submit_del_control_circuit" class="easyui-dialog" title="Deleting control circuit" style="width:300px;height:150px;"
+														        data-options="iconCls:'icon-save',resizable:true,closable:false,closed:true,modal:true">
+																<div class="easyui-panel" data-options="fit:true,border:false" style="padding:1px;" align="center">
+																	<p>Deleting control circuit ...</p>
+																	
+																	<div id="pg_submit_del_control_circuit" class="easyui-progressbar" style="width:200px;"></div>
+																</div>
+														</div>
+										        	
+										        	</div>
+										        </div>
+									        </div>
+											
 									    </div>
 									</div>
 
@@ -858,7 +1020,7 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'deckId',width:30">ID</th>
+											            <th data-options="field:'deckId',width:30,hidden:true">ID</th>
 											            <th data-options="field:'deckName',width:50">Name</th>
 											            <th data-options="field:'deckType',width:50">Type</th>
 											            <th data-options="field:'deckFileName',width:80">File</th>
@@ -870,9 +1032,10 @@
 											</table>
 											<div id="tb_grid_tv_drc_deck">
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openWinAddDrcDeck()">New DRC Deck</a>
-												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove DRC Deck</a>
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="openWinDelDrcDeck()">Remove DRC Deck</a>
 											</div>
 											
+											<!-- New DRC deck window -->
 											<div id="win_add_drc_deck" class="easyui-window" title="Add New DRC Deck" style="width:450px;height:270px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
@@ -921,6 +1084,47 @@
 											    </div>
 											</div>
 											
+											<!-- Delete DRC deck window -->
+											<div id="win_del_drc_deck" class="easyui-window" title="Delete DRC Deck" style="width:500px;height:200px;"
+											        data-options="iconCls:'icon-save',closed:true,modal:true">
+										        <div class="easyui-layout" data-options="fit:true">
+										        	<div data-options="region:'center'" style="padding:5px;">
+										        	
+														<form id="form_del_drc_deck" method="post" enctype="multipart/form-data" >
+															<p>Deleting DRC deck.</p>
+															<input type="hidden" id="form_del_drc_deck_tvId" name="tvId" value="" />
+															<input type="hidden" id="form_del_drc_deck_deckId" name="deckId" value="" />
+															<table cellpadding="2">
+																<tr>
+																	<td>Deck Name:</td>
+																	<td><input class="easyui-textbox" type="text" name="deckName" data-options="required:true"></input></td>
+																</tr>
+																<tr>
+																	<td>Deck File:</td>
+																	<td><input class="easyui-filebox" name="deckFile" data-options="prompt:'Choose a GDS file...'" style="width:300px"></input></td>
+																</tr>
+															</table>
+														</form>
+														
+														<div style="text-align:center;padding:5px">
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitWinDelDrcDeck()">Delete</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearWinDelDrcDeck()">Clear</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancelWinDelDrcDeck()">Cancel</a>
+														</div>
+														
+														<div id="dialog_submit_del_drc_deck" class="easyui-dialog" title="Deleting DRC deck" style="width:300px;height:150px;"
+														        data-options="iconCls:'icon-save',resizable:true,closable:false,closed:true,modal:true">
+																<div class="easyui-panel" data-options="fit:true,border:false" style="padding:1px;" align="center">
+																	<p>Deleting DRC deck ...</p>
+																	
+																	<div id="pg_submit_del_drc_deck" class="easyui-progressbar" style="width:200px;"></div>
+																</div>
+														</div>
+										        	
+										        	</div>
+										        </div>
+									        </div>
+											
 									    </div>
 									</div>
 
@@ -966,7 +1170,7 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'deckId',width:30">ID</th>
+											            <th data-options="field:'deckId',width:30,hidden:true">ID</th>
 											            <th data-options="field:'deckName',width:50">Name</th>
 											            <th data-options="field:'deckType',width:50">Type</th>
 											            <th data-options="field:'deckFileName',width:80">File</th>
@@ -978,9 +1182,10 @@
 											</table>
 											<div id="tb_grid_tv_lvs_deck">
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openWinAddLvsDeck()">New LVS Deck</a>
-												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove LVS Deck</a>
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="openWinDelLvsDeck()">Remove LVS Deck</a>
 											</div>
 											
+											<!-- New LVS deck window -->
 											<div id="win_add_lvs_deck" class="easyui-window" title="Add New LVS Deck" style="width:450px;height:270px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
@@ -1029,6 +1234,47 @@
 											    </div>
 											</div>
 											
+											<!-- Delete LVS deck window -->
+											<div id="win_del_lvs_deck" class="easyui-window" title="Delete LVS Deck" style="width:500px;height:200px;"
+											        data-options="iconCls:'icon-save',closed:true,modal:true">
+										        <div class="easyui-layout" data-options="fit:true">
+										        	<div data-options="region:'center'" style="padding:5px;">
+										        	
+														<form id="form_del_lvs_deck" method="post" enctype="multipart/form-data" >
+															<p>Deleting DRC deck.</p>
+															<input type="hidden" id="form_del_lvs_deck_tvId" name="tvId" value="" />
+															<input type="hidden" id="form_del_lvs_deck_deckId" name="deckId" value="" />
+															<table cellpadding="2">
+																<tr>
+																	<td>Deck Name:</td>
+																	<td><input class="easyui-textbox" type="text" name="deckName" data-options="required:true"></input></td>
+																</tr>
+																<tr>
+																	<td>Deck File:</td>
+																	<td><input class="easyui-filebox" name="deckFile" data-options="prompt:'Choose a GDS file...'" style="width:300px"></input></td>
+																</tr>
+															</table>
+														</form>
+														
+														<div style="text-align:center;padding:5px">
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitWinDelLvsDeck()">Delete</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearWinDelLvsDeck()">Clear</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancelWinDelLvsDeck()">Cancel</a>
+														</div>
+														
+														<div id="dialog_submit_del_lvs_deck" class="easyui-dialog" title="Deleting LVS deck" style="width:300px;height:150px;"
+														        data-options="iconCls:'icon-save',resizable:true,closable:false,closed:true,modal:true">
+																<div class="easyui-panel" data-options="fit:true,border:false" style="padding:1px;" align="center">
+																	<p>Deleting LVS deck ...</p>
+																	
+																	<div id="pg_submit_del_lvs_deck" class="easyui-progressbar" style="width:200px;"></div>
+																</div>
+														</div>
+										        	
+										        	</div>
+										        </div>
+									        </div>
+											
 									    </div>
 									</div>
 
@@ -1074,7 +1320,7 @@
 										    			fitColumns:true">				        
 											    <thead>
 											        <tr>
-											            <th data-options="field:'deckId',width:30">ID</th>
+											            <th data-options="field:'deckId',width:30,hidden:true">ID</th>
 											            <th data-options="field:'deckName',width:50">Name</th>
 											            <th data-options="field:'deckType',width:50">Type</th>
 											            <th data-options="field:'deckFileName',width:80">File</th>
@@ -1086,9 +1332,10 @@
 											</table>
 											<div id="tb_grid_tv_rc_deck">
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openWinAddRcDeck()">New RC Deck</a>
-												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove RC Deck</a>
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="openWinDelRcDeck()">Remove RC Deck</a>
 											</div>
 											
+											<!-- New RC deck window -->
 											<div id="win_add_rc_deck" class="easyui-window" title="Add New RC Deck" style="width:450px;height:270px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
@@ -1137,7 +1384,47 @@
 											    </div>
 											</div>
 											
-											
+											<!-- Delete RC deck window -->
+											<div id="win_del_rc_deck" class="easyui-window" title="Delete RC Deck" style="width:500px;height:200px;"
+											        data-options="iconCls:'icon-save',closed:true,modal:true">
+										        <div class="easyui-layout" data-options="fit:true">
+										        	<div data-options="region:'center'" style="padding:5px;">
+										        	
+														<form id="form_del_rc_deck" method="post" enctype="multipart/form-data" >
+															<p>Deleting RC deck.</p>
+															<input type="hidden" id="form_del_rc_deck_tvId" name="tvId" value="" />
+															<input type="hidden" id="form_del_rc_deck_deckId" name="deckId" value="" />
+															<table cellpadding="2">
+																<tr>
+																	<td>Deck Name:</td>
+																	<td><input class="easyui-textbox" type="text" name="deckName" data-options="required:true"></input></td>
+																</tr>
+																<tr>
+																	<td>Deck File:</td>
+																	<td><input class="easyui-filebox" name="deckFile" data-options="prompt:'Choose a GDS file...'" style="width:300px"></input></td>
+																</tr>
+															</table>
+														</form>
+														
+														<div style="text-align:center;padding:5px">
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitWinDelRcDeck()">Delete</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearWinDelRcDeck()">Clear</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancelWinDelRcDeck()">Cancel</a>
+														</div>
+														
+														<div id="dialog_submit_del_rc_deck" class="easyui-dialog" title="Deleting RC deck" style="width:300px;height:150px;"
+														        data-options="iconCls:'icon-save',resizable:true,closable:false,closed:true,modal:true">
+																<div class="easyui-panel" data-options="fit:true,border:false" style="padding:1px;" align="center">
+																	<p>Deleting RC deck ...</p>
+																	
+																	<div id="pg_submit_del_rc_deck" class="easyui-progressbar" style="width:200px;"></div>
+																</div>
+														</div>
+										        	
+										        	</div>
+										        </div>
+									        </div>
+
 									    </div>
 									</div>
 
@@ -1184,7 +1471,7 @@
 											    <thead>
 											        <tr>
 											        	<th data-options="field:'ck',checkbox:true"></th>
-											            <th data-options="field:'modelId',width:30">ID</th>
+											            <th data-options="field:'modelId',width:30,hidden:true">ID</th>
 											            <th data-options="field:'modelName',width:50">Name</th>
 											            <th data-options="field:'modelType',width:50">Type</th>
 											            <th data-options="field:'modelFileName',width:80">File</th>
@@ -1196,9 +1483,10 @@
 											</table>
 											<div id="tb_grid_tv_spice_model">
 												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="openWinAddSpiceModel()">New SPICE Model</a>
-												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">Remove SPICE Model</a>
+												<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="openWinDelSpiceModel()">Remove SPICE Model</a>
 											</div>
 											
+											<!-- New SPICE model window -->
 											<div id="win_add_spice_model" class="easyui-window" title="Add New SPICE Model" style="width:450px;height:270px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
@@ -1246,6 +1534,47 @@
 											        </div>
 											    </div>
 											</div>
+											
+											<!-- Delete SPICE model window -->
+											<div id="win_del_spice_model" class="easyui-window" title="Delete SPICE Model" style="width:500px;height:200px;"
+											        data-options="iconCls:'icon-save',closed:true,modal:true">
+										        <div class="easyui-layout" data-options="fit:true">
+										        	<div data-options="region:'center'" style="padding:5px;">
+										        	
+														<form id="form_del_spice_model" method="post" enctype="multipart/form-data" >
+															<p>Deleting SPICE model.</p>
+															<input type="hidden" id="form_del_spice_model_tvId" name="tvId" value="" />
+															<input type="hidden" id="form_del_spice_model_modelId" name="modelId" value="" />
+															<table cellpadding="2">
+																<tr>
+																	<td>Model Name:</td>
+																	<td><input class="easyui-textbox" type="text" name="modelName" data-options="required:true"></input></td>
+																</tr>
+																<tr>
+																	<td>Model File:</td>
+																	<td><input class="easyui-filebox" name="modelFile" data-options="prompt:'Choose a GDS file...'" style="width:300px"></input></td>
+																</tr>
+															</table>
+														</form>
+														
+														<div style="text-align:center;padding:5px">
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitWinDelSpiceModel()">Delete</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearWinDelSpiceModel()">Clear</a>
+														    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancelWinDelSpiceModel()">Cancel</a>
+														</div>
+														
+														<div id="dialog_submit_del_spice_model" class="easyui-dialog" title="Deleting RC deck" style="width:300px;height:150px;"
+														        data-options="iconCls:'icon-save',resizable:true,closable:false,closed:true,modal:true">
+																<div class="easyui-panel" data-options="fit:true,border:false" style="padding:1px;" align="center">
+																	<p>Deleting SPICE Model ...</p>
+																	
+																	<div id="pg_submit_del_spice_model" class="easyui-progressbar" style="width:200px;"></div>
+																</div>
+														</div>
+										        	
+										        	</div>
+										        </div>
+									        </div>
 											
 									    </div>
 									</div>
