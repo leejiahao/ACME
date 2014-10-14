@@ -29,6 +29,12 @@ public class AcmeJobDrc {
     @Column(name = "testline_name")
     private String testlineName;
     
+    @Column(name = "result_file_path")
+    private String resultFilePath;
+    
+    @Column(name = "result_file_name")
+    private String resultFileName;
+    
     @Column(name = "drc_deck_id")
     private UUID drcDeckId;
 
@@ -131,5 +137,21 @@ public class AcmeJobDrc {
 
 	public void setTestlineName(String testlineName) {
 		this.testlineName = testlineName;
+	}
+
+	public String getResultFilePath() {
+		return resultFilePath;
+	}
+
+	public void setResultFilePath(String resultFilePath) {
+		this.resultFilePath = resultFilePath;
+	}
+
+	public String getResultFileName() {
+		return resultFileName;
+	}
+
+	public void setResultFileName(String resultFileName) {
+		this.resultFileName = resultFileName;
 	}
 }

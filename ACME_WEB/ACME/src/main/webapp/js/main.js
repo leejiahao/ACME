@@ -172,9 +172,22 @@ function getActiveJobSummaryTabId() {
 
 function formatDrcResultFile(val,row){
 	//return '<span style="color:red;">('+val+')</span>';
+	var downloadFileUrl = './ws/rs/job/drc/report?jobDrcId=' + val;
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
 
-	//var downloadFileUrl = './ws/rs/job/txt';
-	var downloadFileUrl = './ws/rs/job/zip';
+function formatLvsResultFile(val,row){
+	var downloadFileUrl = './ws/rs/job/lvs/report?jobLvsId=' + val;
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
+
+function formatRcResultFile(val,row){
+	var downloadFileUrl = './ws/rs/job/rc/report?jobRcId=' + val;
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
+
+function formatSpiceResultFile(val,row){
+	var downloadFileUrl = './ws/rs/job/spice/report?jobSpiceId=' + val;
 	return '<a href="' + downloadFileUrl  + '">Download</a>';
 }
 

@@ -10,6 +10,8 @@ CREATE TABLE acme_job_spice (
     job_id uuid,
     job_testline_id uuid,
     testline_name text,
+    result_file_path text,
+    result_file_name text,
     spice_model_id uuid,
     status text,
     update_time timestamp,

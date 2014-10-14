@@ -93,13 +93,25 @@ public interface JobService {
 	// find JOB DRC results
 	public List<AcmeJobDrc> findJobDrcListByJobId(String strJobId);
 	
+	// find JOB DRC entity
+	public AcmeJobDrc getJobDrcById(UUID jobDrcId);
+	
 	// find JOB LVS results
 	public List<AcmeJobLvs> findJobLvsListByJobId(String strJobId);
+	
+	// find JOB LVS entity
+	public AcmeJobLvs getJobLvsById(UUID jobLvsId);
 	
 	// find JOB RC results
 	public List<AcmeJobRc> findJobRcListByJobId(String strJobId);
 	
+	// find JOB RC entity
+	public AcmeJobRc getJobRcById(UUID jobRcId);
+	
 	// find JOB SPICE results
 	public List<AcmeJobSpice> findJobSpiceListByJobId(String strJobId);
+	
+	// find JOB SPICE entity
+	public AcmeJobSpice getJobSpiceById(UUID jobSpiceId);
 	
 }

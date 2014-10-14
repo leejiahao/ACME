@@ -264,12 +264,28 @@ public class JobServiceImpl implements JobService {
     }
     
     @Override
+	public AcmeJobDrc getJobDrcById(UUID jobDrcId) {
+    	AcmeJobDrc jobDrc = dao.findById(AcmeJobDrc.class, jobDrcId);
+        log.info("getJobDrcById jobDrc {} information successfully read.", jobDrc);
+        
+        return jobDrc;
+    }
+    
+    @Override
     public List<AcmeJobLvs> findJobLvsListByJobId(String strJobId)
     {
         String query = "Select e from " + AcmeJobLvs.class.getSimpleName() + " e where e.jobId = " + strJobId;
         List<AcmeJobLvs> jobLvsList = (List<AcmeJobLvs>) dao.findByQuery(query);
 
         return jobLvsList;
+    }
+    
+    @Override
+	public AcmeJobLvs getJobLvsById(UUID jobLvsId) {
+    	AcmeJobLvs jobLvs = dao.findById(AcmeJobLvs.class, jobLvsId);
+        log.info("getJobLvsById jobLvs {} information successfully read.", jobLvs);
+        
+        return jobLvs;
     }
     
     @Override
@@ -282,11 +298,27 @@ public class JobServiceImpl implements JobService {
     }
     
     @Override
+	public AcmeJobRc getJobRcById(UUID jobRcId) {
+    	AcmeJobRc jobRc = dao.findById(AcmeJobRc.class, jobRcId);
+        log.info("getJobRcById jobRc {} information successfully read.", jobRc);
+        
+        return jobRc;
+    }
+    
+    @Override
     public List<AcmeJobSpice> findJobSpiceListByJobId(String strJobId)
     {
         String query = "Select e from " + AcmeJobSpice.class.getSimpleName() + " e where e.jobId = " + strJobId;
         List<AcmeJobSpice> jobSpiceList = (List<AcmeJobSpice>) dao.findByQuery(query);
 
         return jobSpiceList;
+    }
+    
+    @Override
+	public AcmeJobSpice getJobSpiceById(UUID jobSpiceId) {
+    	AcmeJobSpice jobSpice = dao.findById(AcmeJobSpice.class, jobSpiceId);
+        log.info("getJobSpiceById jobSpice {} information successfully read.", jobSpice);
+        
+        return jobSpice;
     }
 }

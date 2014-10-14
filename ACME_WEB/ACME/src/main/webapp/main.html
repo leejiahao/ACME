@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Basic Layout - jQuery EasyUI Demo</title>
+    <title>APCM System</title>
     <link rel="icon" href="images/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="/LIB/jquery-easyui-1.4/themes/default/easyui.css">
@@ -394,10 +394,10 @@
 														    			method:'get',
 														    			fitColumns:true">				        
 															    <thead>
-															        <tr>
-															            <th data-options="field:'jobLvsId',width:30,hidden:true">ID</th>
+															        <tr>															            
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckFileName',width:80">Result File</th>
+															            <th data-options="field:'resultFileName',width:80">Result File</th>
+															            <th data-options="field:'jobLvsId',width:50,formatter:formatLvsResultFile"></th>
 															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>
@@ -451,10 +451,10 @@
 														    			method:'get',
 														    			fitColumns:true">				        
 															    <thead>
-															        <tr>
-															            <th data-options="field:'jobRcId',width:30,hidden:true">ID</th>
+															        <tr>															            
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckFileName',width:80">Result File</th>
+															            <th data-options="field:'resultFileName',width:80">Result File</th>
+															            <th data-options="field:'jobRcId',width:50,formatter:formatRcResultFile"></th>
 															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>
@@ -508,10 +508,10 @@
 														    			method:'get',
 														    			fitColumns:true">				        
 															    <thead>
-															        <tr>
-															            <th data-options="field:'jobSpiceId',width:30,hidden:true">ID</th>
+															        <tr>															            
 															            <th data-options="field:'testlineName',width:50">Testline Name</th>
-															            <th data-options="field:'deckFileName',width:80">Result File</th>
+															            <th data-options="field:'resultFileName',width:80">Result File</th>
+															            <th data-options="field:'jobSpiceId',width:50,formatter:formatSpiceResultFile"></th>
 															            <th data-options="field:'status',width:50">Status</th>
 															            <th data-options="field:'createTime',width:50">Create Date</th>
 															        </tr>

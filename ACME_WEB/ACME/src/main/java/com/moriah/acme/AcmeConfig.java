@@ -25,6 +25,8 @@ public class AcmeConfig {
 	public static String ACME_PROJECT_PATH = "D://temp/test/ACME_TEST/PROJECT";
 	public static String ACME_JOB_PATH = "D://temp/test/ACME_TEST/JOB";
 	public static String JOB_INPUT_PATH = "IN";
+	public static String JOB_RUN_PATH = "RUN";
+	public static String JOB_VERIFY_PATH = "verify";
 	public static String JOB_FILE_SUFFIX = ".job";
 	
 	public static String CONTROL_CIRCUIT_PATH = "FRAME";

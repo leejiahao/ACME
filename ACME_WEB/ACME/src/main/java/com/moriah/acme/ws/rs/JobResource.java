@@ -115,7 +115,9 @@ public class JobResource {
 			
 			// job input path
 			String jobPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId;
-			String jobInputPath = SERVER_UPLOAD_LOCATION_FOLDER	+ "/" + jobId + "/" + AcmeConfig.JOB_INPUT_PATH;
+			String jobInputPath = jobPath + "/" + AcmeConfig.JOB_INPUT_PATH;
+			String jobRunPath = jobPath + "/" + AcmeConfig.JOB_RUN_PATH;
+			String jobVerifyPath = jobRunPath + "/" + AcmeConfig.JOB_VERIFY_PATH;
 			
 			// save the file to the server
 			FileUtils.mkdir(jobInputPath);
@@ -313,6 +315,8 @@ public class JobResource {
 			
 			// create job testlines
 			for (AcmeJobTestline jobTestline: testlineList) {
+				String testlineName = jobTestline.getTestlineName();
+
 				// create job testline
 				UUID jobTestlineId = UUID.randomUUID();
 				jobTestline.setJobTestlineId(jobTestlineId);
@@ -328,7 +332,7 @@ public class JobResource {
 				UUID jobDrcId = UUID.randomUUID();
 				jobDrc.setJobDrcId(jobDrcId);
 				jobDrc.setJobTestlineId(jobTestlineId);
-				jobDrc.setTestlineName(jobTestline.getTestlineName());
+				jobDrc.setTestlineName(testlineName);
 				jobDrc.setCreateUser(userId);
 				jobDrc.setUpdateUser(userId);
 				jobDrc.setStatus("Active");
@@ -340,10 +344,14 @@ public class JobResource {
 				// create job LVS result entities
 				AcmeJobLvs jobLvs = new AcmeJobLvs();
 				
+				String jobLvsResultFileName = testlineName + ".rep";
+				
 				UUID jobLvsId = UUID.randomUUID();
 				jobLvs.setJobLvsId(jobLvsId);
 				jobLvs.setJobTestlineId(jobTestlineId);
-				jobLvs.setTestlineName(jobTestline.getTestlineName());
+				jobLvs.setTestlineName(testlineName);
+				jobLvs.setResultFilePath(jobVerifyPath);
+				jobLvs.setResultFileName(jobLvsResultFileName);
 				jobLvs.setCreateUser(userId);
 				jobLvs.setUpdateUser(userId);
 				jobLvs.setStatus("Active");
@@ -358,7 +366,7 @@ public class JobResource {
 				UUID jobRcId = UUID.randomUUID();
 				jobRc.setJobRcId(jobRcId);
 				jobRc.setJobTestlineId(jobTestlineId);
-				jobRc.setTestlineName(jobTestline.getTestlineName());
+				jobRc.setTestlineName(testlineName);
 				jobRc.setCreateUser(userId);
 				jobRc.setUpdateUser(userId);
 				jobRc.setStatus("Active");
@@ -370,10 +378,14 @@ public class JobResource {
 				// create job SPICE result entities
 				AcmeJobSpice jobSpice = new AcmeJobSpice();
 				
+				String jobSpiceResultFileName = testlineName + "_posim.fsdb";
+				
 				UUID jobSpiceId = UUID.randomUUID();
 				jobSpice.setJobSpiceId(jobSpiceId);
 				jobSpice.setJobTestlineId(jobTestlineId);
-				jobSpice.setTestlineName(jobTestline.getTestlineName());
+				jobSpice.setTestlineName(testlineName);
+				jobSpice.setResultFilePath(jobVerifyPath);
+				jobSpice.setResultFileName(jobSpiceResultFileName);
 				jobSpice.setCreateUser(userId);
 				jobSpice.setUpdateUser(userId);
 				jobSpice.setStatus("Active");
@@ -511,6 +523,22 @@ public class JobResource {
     }
     
     @GET
+    @Path("/drc/report")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getJobDrcReportById(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobDrcId") String strJobDrcId
+    		) {
+    	UUID jobDrcId = UUID.fromString(strJobDrcId);
+    	AcmeJobDrc jobDrc = jobService.getJobDrcById(jobDrcId);
+    	String jobDrcResultFileFullName = jobDrc.getResultFilePath() + "/" + jobDrc.getResultFileName();
+    	File file = new File(jobDrcResultFileFullName);
+    	ResponseBuilder response = Response.ok((Object) file);
+    	response.header("Content-Disposition", "attachment; filename=\"" + jobDrc.getResultFileName() + "\"");
+    	return response.build();
+    }
+    
+    @GET
     @Path("/lvs/list")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AcmeJobLvs> getJobLvsByJobId(
@@ -523,6 +551,22 @@ public class JobResource {
     	log.info("getJobLvsByJobId jobLvsList.size(): {} information successfully received.", jobLvsList.size());
     	
     	return jobLvsList;
+    }
+    
+    @GET
+    @Path("/lvs/report")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getJobLvsReportById(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobLvsId") String strJobLvsId
+    		) {
+    	UUID jobLvsId = UUID.fromString(strJobLvsId);
+    	AcmeJobLvs jobLvs = jobService.getJobLvsById(jobLvsId);
+    	String jobLvsResultFileFullName = jobLvs.getResultFilePath() + "/" + jobLvs.getResultFileName();
+    	File file = new File(jobLvsResultFileFullName);
+    	ResponseBuilder response = Response.ok((Object) file);
+    	response.header("Content-Disposition", "attachment; filename=\"" + jobLvs.getResultFileName() + "\"");
+    	return response.build();
     }
     
     @GET
@@ -541,6 +585,22 @@ public class JobResource {
     }
     
     @GET
+    @Path("/rc/report")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getJobRcReportById(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobRcId") String strJobRcId
+    		) {
+    	UUID jobRcId = UUID.fromString(strJobRcId);
+    	AcmeJobRc jobRc = jobService.getJobRcById(jobRcId);
+    	String jobRcResultFileFullName = jobRc.getResultFilePath() + "/" + jobRc.getResultFileName();
+    	File file = new File(jobRcResultFileFullName);
+    	ResponseBuilder response = Response.ok((Object) file);
+    	response.header("Content-Disposition", "attachment; filename=\"" + jobRc.getResultFileName() + "\"");
+    	return response.build();
+    }
+    
+    @GET
     @Path("/spice/list")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AcmeJobSpice> getJobSpiceByJobId(
@@ -553,6 +613,22 @@ public class JobResource {
     	log.info("getJobSpiceByJobId jobSpiceList.size(): {} information successfully received.", jobSpiceList.size());
     	
     	return jobSpiceList;
+    }
+    
+    @GET
+    @Path("/spice/report")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getJobSpiceReportById(
+    		@CookieParam(value = "ACME_USER_ID") String userId,
+    		@QueryParam("jobSpiceId") String strJobSpiceId
+    		) {
+    	UUID jobSpiceId = UUID.fromString(strJobSpiceId);
+    	AcmeJobSpice jobSpice = jobService.getJobSpiceById(jobSpiceId);
+    	String jobSpiceResultFileFullName = jobSpice.getResultFilePath() + "/" + jobSpice.getResultFileName();
+    	File file = new File(jobSpiceResultFileFullName);
+    	ResponseBuilder response = Response.ok((Object) file);
+    	response.header("Content-Disposition", "attachment; filename=\"" + jobSpice.getResultFileName() + "\"");
+    	return response.build();
     }
     
     /*
