@@ -184,8 +184,8 @@
 																    			fitColumns:true">				        
 																	    <thead>
 																	        <tr>
-																	            <th data-options="field:'jobInfoId',width:50">Id</th>
-																	            <th data-options="field:'jobInfoFileName',width:80">File</th>
+																	            <th data-options="field:'jobInfoFileName',width:80">Cell Info File</th>
+																	            <th data-options="field:'jobInfoId',width:50,formatter:formatPlacementFile,hidden:true"></th>
 																	            <th data-options="field:'status',width:50">Status</th>
 																	            <th data-options="field:'createTime',width:50">Create Date</th>
 																	        </tr>
@@ -208,8 +208,8 @@
 																    			fitColumns:true">				        
 																	    <thead>
 																	        <tr>
-																	            <th data-options="field:'jobPlacementId',width:50">Id</th>
-																	            <th data-options="field:'jobPlacementFileName',width:80">File</th>
+																	            <th data-options="field:'jobPlacementFileName',width:80">Placement File</th>
+																	            <th data-options="field:'jobPlacementId',width:50,formatter:formatPlacementFile,hidden:true"></th>
 																	            <th data-options="field:'status',width:50">Status</th>
 																	            <th data-options="field:'createTime',width:50">Create Date</th>
 																	        </tr>
@@ -232,8 +232,8 @@
 																    			fitColumns:true">				        
 																	    <thead>
 																	        <tr>
-																	            <th data-options="field:'jobSrcGdsId',width:50">Id</th>
-																	            <th data-options="field:'jobSrcGdsFileName',width:80">File</th>
+																	            <th data-options="field:'jobSrcGdsFileName',width:80">Cell GDS</th>
+																	            <th data-options="field:'jobSrcGdsId',width:50,formatter:formatSrcGdsFile,hidden:true"></th>
 																	            <th data-options="field:'status',width:50">Status</th>
 																	            <th data-options="field:'createTime',width:50">Create Date</th>
 																	        </tr>
@@ -243,6 +243,7 @@
 															    </div>
 															    
 															    <!-- Netlist -->
+															    <!-- 
 															    <div title="Netlist" style="overflow:auto;padding:5px;">
 															    
 																    <table id="grid_job_netlist" class="easyui-datagrid" style="width:100%;height:245px;"
@@ -265,8 +266,9 @@
 																	</table>
 															    
 															    </div>
-															    
+															     -->
 															    <!-- Testbench -->
+															    <!-- 
 															    <div title="Testbench" style="overflow:auto;padding:5px;">
 															    
 																    <table id="grid_job_testbench" class="easyui-datagrid" style="width:100%;height:245px;"
@@ -289,6 +291,7 @@
 																	</table>
 															    
 															    </div>
+															     -->
 														    </div>
 
 													    </div>
@@ -594,6 +597,7 @@
 												<td>Source Cell GDS:</td>
 												<td><input class="easyui-filebox" name="sourceCellGdsFile" data-options="prompt:'Choose a source cell GDS file...'" style="width:290px"></input></td>
 											</tr>
+											<!-- 
 											<tr>
 												<td>Netlist:</td>
 												<td><input class="easyui-filebox" name="netlistFile" data-options="prompt:'Choose a netlist file...'" style="width:290px"></input></td>
@@ -602,6 +606,7 @@
 												<td>Testbench:</td>
 												<td><input class="easyui-filebox" name="testbenchFile" data-options="prompt:'Choose a test-bench file...'" style="width:290px"></input></td>
 											</tr>
+											 -->
 										</table>
 									
 									</div>
@@ -838,6 +843,7 @@
 											            <th data-options="field:'circuitGdsTopCell',width:50">Frame Top Cell</th>
 											            <th data-options="field:'coordinateFileName',width:80">Coordinate</th>
 											            <th data-options="field:'netlistFileName',width:80">Netlist</th>
+											            <th data-options="field:'testbenchFileName',width:80">Testbench</th>
 											            <th data-options="field:'isPrimary',width:30">Primary</th>
 											            <th data-options="field:'createUser',width:30">Creator</th>
 											            <th data-options="field:'createTime',width:50">Create Date</th>
@@ -850,7 +856,7 @@
 											</div>
 											
 											<!-- New control circuit window -->
-											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:500px;height:320px;"
+											<div id="win_add_control_circuit" class="easyui-window" title="Add New Control Circuit" style="width:500px;height:350px;"
 											        data-options="iconCls:'icon-save',closed:true,modal:true">
 											    <div class="easyui-layout" data-options="fit:true">
 		
@@ -893,6 +899,10 @@
 																<tr>
 																	<td>Netlist:</td>
 																	<td><input class="easyui-filebox" name="netlistFile" data-options="prompt:'Choose a netlist file...'" style="width:300px"></input></td>
+																</tr>
+																<tr>
+																	<td>Testbench:</td>
+																	<td><input class="easyui-filebox" name="testbenchFile" data-options="prompt:'Choose a testbench file...'" style="width:300px"></input></td>
 																</tr>
 																<tr>
 																	<td>Primary:</td>

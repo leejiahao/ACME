@@ -152,18 +152,22 @@ public class JobResource {
 			jobCommand.setSrcGds(sourceCellGdsFileFullName);
 			
 			// netlist		
+			/*
 			String netlistFileName = netlistFileContentDispositionHeader.getFileName();
 			String netlistFileFullName = jobInputPath + "/" + netlistFileName;
 			FileUtils.saveFile(netlistFileInputStream, netlistFileFullName);
 			
 			jobCommand.setNetlist(netlistFileFullName);
+			*/
 			
 			// testbench		
+			/*
 			String testbenchFileName = testbenchFileContentDispositionHeader.getFileName();
 			String testbenchFileFullName = jobInputPath + "/" + testbenchFileName;
 			FileUtils.saveFile(testbenchFileInputStream, testbenchFileFullName);
 			
 			jobCommand.setTestbench(testbenchFileFullName);
+			*/
 	
 			// composed GDS		
 			if (null != composedGdsFileContentDispositionHeader) {
@@ -233,6 +237,8 @@ public class JobResource {
 			AcmeJobInfo jobInfo = new AcmeJobInfo();
 			UUID jobInfoId = UUID.randomUUID();
 			jobInfo.setJobInfoId(jobInfoId);
+			jobInfo.setJobInfoFilePath(jobInputPath);
+			jobInfo.setJobInfoFileName(cellInfoFileName);
 			jobInfo.setCreateUser(userId);
 			jobInfo.setUpdateUser(userId);
 			jobInfo.setStatus("Active");
@@ -249,6 +255,8 @@ public class JobResource {
 			AcmeJobPlacement jobPlacement = new AcmeJobPlacement();
 			UUID jobPlacementId = UUID.randomUUID();
 			jobPlacement.setJobPlacementId(jobPlacementId);
+			jobPlacement.setJobPlacementFilePath(jobInputPath);
+			jobPlacement.setJobPlacementFileName(placementFileName);
 			jobPlacement.setCreateUser(userId);
 			jobPlacement.setUpdateUser(userId);
 			jobPlacement.setStatus("Active");
@@ -265,6 +273,8 @@ public class JobResource {
 			AcmeJobSrcGds jobSrcGds = new AcmeJobSrcGds();
 			UUID jobSrcGdsId = UUID.randomUUID();
 			jobSrcGds.setJobSrcGdsId(jobSrcGdsId);
+			jobSrcGds.setJobSrcGdsFilePath(jobInputPath);
+			jobSrcGds.setJobSrcGdsFileName(sourceCellGdsFileName);
 			jobSrcGds.setCreateUser(userId);
 			jobSrcGds.setUpdateUser(userId);
 			jobSrcGds.setStatus("Active");
@@ -276,6 +286,7 @@ public class JobResource {
 			job.setAcmeJobSrcGdsList(srcGdsList);
 			
 			// create job netlist
+			/*
 			List<AcmeJobNetlist> netlistList = new ArrayList<AcmeJobNetlist>();
 			
 			AcmeJobNetlist jobNetlist = new AcmeJobNetlist();
@@ -290,8 +301,10 @@ public class JobResource {
 			netlistList.add(jobNetlist);
 			
 			job.setAcmeJobNetlistList(netlistList);
+			*/
 			
 			// create job testbench
+			/*
 			List<AcmeJobTestbench> testbenchList = new ArrayList<AcmeJobTestbench>();
 			
 			AcmeJobTestbench jobTestbench = new AcmeJobTestbench();
@@ -306,6 +319,7 @@ public class JobResource {
 			testbenchList.add(jobTestbench);
 			
 			job.setAcmeJobTestbenchList(testbenchList);
+			*/
 			
 			// result lists
 			List<AcmeJobDrc> jobDrcList = new ArrayList<AcmeJobDrc>();

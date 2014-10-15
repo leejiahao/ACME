@@ -25,6 +25,12 @@ public class AcmeJobSrcGds {
     
     @Column(name = "gds_id")
     private UUID gdsId;
+    
+    @Column(name = "job_src_gds_file_path")
+    private String jobSrcGdsFilePath;
+    
+    @Column(name = "job_src_gds_file_name")
+    private String jobSrcGdsFileName;
 
     @Column(name = "status")
     private String status;
@@ -109,6 +115,22 @@ public class AcmeJobSrcGds {
 
 	public void setGdsId(UUID gdsId) {
 		this.gdsId = gdsId;
+	}
+
+	public String getJobSrcGdsFilePath() {
+		return jobSrcGdsFilePath;
+	}
+
+	public void setJobSrcGdsFilePath(String jobSrcGdsFilePath) {
+		this.jobSrcGdsFilePath = jobSrcGdsFilePath;
+	}
+
+	public String getJobSrcGdsFileName() {
+		return jobSrcGdsFileName;
+	}
+
+	public void setJobSrcGdsFileName(String jobSrcGdsFileName) {
+		this.jobSrcGdsFileName = jobSrcGdsFileName;
 	}
 
 }

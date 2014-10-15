@@ -9,6 +9,8 @@ CREATE TABLE acme_job_placement (
     job_placement_id uuid PRIMARY KEY,
     job_id uuid,
     file_id uuid,
+    job_placement_file_path text,
+    job_placement_file_name text,
     status text,
     update_time timestamp,
     update_user text,

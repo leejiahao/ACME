@@ -170,8 +170,23 @@ function getActiveJobSummaryTabId() {
 	return activeJobSummaryTabId;
 };
 
-function formatDrcResultFile(val,row){
+function formatInfoFile(val,row){
 	//return '<span style="color:red;">('+val+')</span>';
+	var downloadFileUrl = './ws/rs/job/info/file?jobInfoId=' + val;
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
+
+function formatPlacementFile(val,row){
+	var downloadFileUrl = './ws/rs/job/placement/file?jobPlacementId=' + val;
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
+
+function formatSrcGdsFile(val,row){
+	var downloadFileUrl = './ws/rs/job/src_gds/file?jobSrcGdsId=' + val;
+	return '<a href="' + downloadFileUrl  + '">Download</a>';
+}
+
+function formatDrcResultFile(val,row){
 	var downloadFileUrl = './ws/rs/job/drc/report?jobDrcId=' + val;
 	return '<a href="' + downloadFileUrl  + '">Download</a>';
 }

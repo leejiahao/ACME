@@ -9,6 +9,8 @@ CREATE TABLE acme_job_src_gds (
     job_src_gds_id uuid PRIMARY KEY,
     job_id uuid,
     gds_id uuid,
+    job_src_gds_file_path text,
+    job_src_gds_file_name text,
     status text,
     update_time timestamp,
     update_user text,
@@ -20,7 +22,7 @@ CREATE TABLE acme_job_src_gds (
 -- INDEX
 -------------------------------------
 CREATE INDEX acme_job_src_gds_idx_job_id ON acme_job_src_gds (job_id);
-CREATE INDEX acme_job_src_gds_idx_file_id ON acme_job_src_gds (file_id);
+CREATE INDEX acme_job_src_gds_idx_gds_id ON acme_job_src_gds (gds_id);
 CREATE INDEX acme_job_src_gds_idx_status ON acme_job_src_gds (status);
 CREATE INDEX acme_job_src_gds_idx_update_time ON acme_job_src_gds (update_time);
 CREATE INDEX acme_job_src_gds_idx_update_user ON acme_job_src_gds (update_user);

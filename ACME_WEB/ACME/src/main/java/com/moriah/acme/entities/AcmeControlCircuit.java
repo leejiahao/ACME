@@ -55,6 +55,12 @@ public class AcmeControlCircuit {
     
     @Column(name = "netlist_file_name")
     private String netlistFileName;
+    
+    @Column(name = "testbench_file_path")
+    private String testbenchFilePath;
+    
+    @Column(name = "testbench_file_name")
+    private String testbenchFileName;
 
     @Column(name = "file_id")
     private UUID fileId;
@@ -241,5 +247,21 @@ public class AcmeControlCircuit {
 
 	public void setCircuitGdsId(UUID circuitGdsId) {
 		this.circuitGdsId = circuitGdsId;
+	}
+
+	public String getTestbenchFilePath() {
+		return testbenchFilePath;
+	}
+
+	public void setTestbenchFilePath(String testbenchFilePath) {
+		this.testbenchFilePath = testbenchFilePath;
+	}
+
+	public String getTestbenchFileName() {
+		return testbenchFileName;
+	}
+
+	public void setTestbenchFileName(String testbenchFileName) {
+		this.testbenchFileName = testbenchFileName;
 	}
 }

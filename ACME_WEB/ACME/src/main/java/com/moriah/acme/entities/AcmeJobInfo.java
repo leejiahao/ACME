@@ -25,6 +25,12 @@ public class AcmeJobInfo {
     
     @Column(name = "file_id")
     private UUID fileId;
+    
+    @Column(name = "job_info_file_path")
+    private String jobInfoFilePath;
+    
+    @Column(name = "job_info_file_name")
+    private String jobInfoFileName;
 
     @Column(name = "status")
     private String status;
@@ -109,6 +115,22 @@ public class AcmeJobInfo {
 
 	public void setFileId(UUID fileId) {
 		this.fileId = fileId;
+	}
+
+	public String getJobInfoFilePath() {
+		return jobInfoFilePath;
+	}
+
+	public void setJobInfoFilePath(String jobInfoFilePath) {
+		this.jobInfoFilePath = jobInfoFilePath;
+	}
+
+	public String getJobInfoFileName() {
+		return jobInfoFileName;
+	}
+
+	public void setJobInfoFileName(String jobInfoFileName) {
+		this.jobInfoFileName = jobInfoFileName;
 	}
 
 }

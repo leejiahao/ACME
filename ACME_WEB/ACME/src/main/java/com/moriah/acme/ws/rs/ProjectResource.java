@@ -185,7 +185,9 @@ public class ProjectResource {
             @FormDataParam("coordinateFile") InputStream coordinateFileInputStream,
             @FormDataParam("coordinateFile") FormDataContentDisposition coordinateFilecontentDispositionHeader,
             @FormDataParam("netlistFile") InputStream netlistFileInputStream,
-            @FormDataParam("netlistFile") FormDataContentDisposition netlistFilecontentDispositionHeader
+            @FormDataParam("netlistFile") FormDataContentDisposition netlistFilecontentDispositionHeader,
+            @FormDataParam("testbenchFile") InputStream testbenchFileInputStream,
+            @FormDataParam("testbenchFile") FormDataContentDisposition testbenchFilecontentDispositionHeader
 			) throws IOException {	
 		// 'P' or null: "createControlCircuit isPrimary: null information successfully created."
 		log.info("createControlCircuit strIsPrimary: {} information successfully created.", strIsPrimary);
@@ -209,6 +211,11 @@ public class ProjectResource {
 		String netlistFileFullName = circuitFilePath + "/" + netlistFileName;
 		FileUtils.saveFile(netlistFileInputStream, netlistFileFullName);
 		
+		// testbench
+		String testbenchFileName = testbenchFilecontentDispositionHeader.getFileName();
+		String testbenchFileFullName = circuitFilePath + "/" + testbenchFileName;
+		FileUtils.saveFile(testbenchFileInputStream, testbenchFileFullName);
+		
 		String output = "createControlCircuit:" + circuitFileFullName;
 		log.info("createControlCircuit output: {} information successfully created.", output);
 		
@@ -230,6 +237,8 @@ public class ProjectResource {
 		acmeControlCircuit.setCoordinateFileName(coordinateFileName);
 		acmeControlCircuit.setNetlistFilePath(circuitFilePath);
 		acmeControlCircuit.setNetlistFileName(netlistFileName);
+		acmeControlCircuit.setTestbenchFilePath(circuitFilePath);
+		acmeControlCircuit.setTestbenchFileName(testbenchFileName);
 		acmeControlCircuit.setIsPrimary(isPrimary);
 
 		acmeControlCircuit.setCreateUser(userId);

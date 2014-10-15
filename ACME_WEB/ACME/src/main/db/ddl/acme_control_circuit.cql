@@ -19,6 +19,8 @@ CREATE TABLE acme_control_circuit (
     coordinate_file_name text,
     netlist_file_path text,
     netlist_file_name text,
+    testbench_file_path text,
+    testbench_file_name text,
     file_id uuid,
     is_primary boolean,
     status text,
